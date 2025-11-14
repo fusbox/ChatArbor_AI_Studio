@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import NavButton from './NavButton';
 
 interface HeaderProps {
   title: string;
@@ -7,24 +8,6 @@ interface HeaderProps {
   onViewChange: (view: 'chat' | 'admin') => void;
   onAuthClick: () => void;
 }
-
-const NavButton: React.FC<{
-    label: string;
-    isActive: boolean;
-    onClick: () => void;
-}> = ({ label, isActive, onClick }) => (
-    <button
-        onClick={onClick}
-        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-            isActive
-                ? 'bg-primary text-white shadow'
-                : 'text-neutral-100 hover:bg-primary-dark'
-        }`}
-    >
-        {label}
-    </button>
-);
-
 
 const Header: React.FC<HeaderProps> = ({ title, currentView, onViewChange, onAuthClick }) => {
   const { currentUser, logout } = useAuth();

@@ -1,22 +1,33 @@
 {
-  "name": "job-connections-ai-assistant",
+  "name": "vite-react-starter",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.0.0-rc-f994737d14-20240522",
+    "react-dom": "^19.0.0-rc-f994737d14-20240522",
     "@google/genai": "^1.29.0"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "@playwright/test": "^1.45.1",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.0",
+    "@vitest/ui": "^2.0.2",
+    "jsdom": "^24.1.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vitest": "^2.0.2"
   }
 }
