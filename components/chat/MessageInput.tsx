@@ -49,9 +49,11 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
           disabled={disabled}
           style={{ maxHeight: '100px' }}
         />
+        {/* Fix: Added aria-label to provide an accessible name for this icon button. This fixes the Playwright test which was failing to find the button by its name. */}
         <button
           type="submit"
           disabled={disabled || !text.trim()}
+          aria-label="Send message"
           className="bg-primary text-white rounded-full p-3 hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark disabled:bg-neutral-400 disabled:cursor-not-allowed transition-colors"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

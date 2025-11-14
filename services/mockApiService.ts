@@ -203,12 +203,17 @@ export const handleGetChatResponse = async (
   const systemInstruction = await handleGetSystemPrompt();
   
   try {
+    // Fix: The chatHistory from useChat already contains the latest user message.
+    // To add context, we must replace that last message instead of appending a new one,
+    // which would result in two consecutive user turns.
+    const contentsWithContext = [
+        ...chatHistory.slice(0, -1),
+        { role: 'user', parts: [{text: `Context:\n${contextText}\n\nQuestion: ${userQuery}`}] }
+    ];
+
     const response = await ai.models.generateContent({
         model: model,
-        contents: [
-            ...chatHistory,
-            { role: 'user', parts: [{text: `Context:\n${contextText}\n\nQuestion: ${userQuery}`}] }
-        ],
+        contents: contentsWithContext,
         config: { systemInstruction }
     });
     return response.text;

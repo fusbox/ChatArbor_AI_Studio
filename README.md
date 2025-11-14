@@ -24,6 +24,7 @@ The application features a user-friendly chat interface and a comprehensive admi
 
 *   **Frontend:** React, TypeScript, Tailwind CSS
 *   **AI Model:** Google Gemini API (`@google/genai`)
+*   **Testing:** Vitest, React Testing Library, Playwright (for E2E)
 *   **Backend (Current):** A mock API service (`mockApiService.ts`) using Browser Local Storage to simulate a database and backend logic. **This must be replaced for production.**
 
 ## 3. Project Structure
@@ -37,22 +38,74 @@ The project is organized into a logical structure to separate concerns and impro
 │   ├── auth/             # Sign-in/Sign-up modal component
 │   ├── chat/             # Components for the Chat interface
 │   └── shared/           # Common components (Header, Spinner, etc.)
-├── constants.ts          # Application-wide constants
 ├── contexts/             # React Context providers (e.g., AuthContext)
+├── e2e/                  # End-to-end tests (Playwright)
 ├── hooks/                # Custom React hooks (e.g., useChat)
 ├── services/             # API communication and external service logic
-│   ├── apiService.ts     # Frontend service to call the backend (currently points to mock)
-│   ├── mockApiService.ts # Mock backend using Local Storage (FOR DEVELOPMENT ONLY)
-│   └── geminiService.ts  # Logic related to embedding generation
+├── tests/                # Unit and integration test setup and mocks (Vitest)
 ├── types.ts              # TypeScript type definitions and interfaces
-├── App.tsx               # Main application component and routing
+├── App.tsx               # Main application component
 ├── index.html            # Main HTML entry point
-└── index.tsx             # React application root
+├── package.json          # Project dependencies and scripts
+└── vitest.config.ts      # Configuration for Vitest
 ```
+
+## 4. Getting Started
+
+### Prerequisites
+
+*   Node.js (v18 or later recommended)
+*   npm or yarn
+
+### Installation
+
+1.  Clone the repository to your local machine.
+2.  Install the required dependencies:
+    ```bash
+    npm install
+    ```
+
+### Running the Development Server
+
+To start the application in development mode, run:
+
+```bash
+npm run dev
+```
+
+This will start a local server, typically at `http://localhost:5173`. The application will automatically reload if you make changes to the source files.
+
+## 5. Running Tests
+
+The project includes a comprehensive test suite to ensure code quality and prevent regressions.
+
+### Unit & Integration Tests
+
+To run all unit and integration tests in your terminal, use:
+
+```bash
+npm test
+```
+
+For a more interactive experience, you can start the Vitest UI, which allows you to view test results in your browser and re-run tests on file changes:
+
+```bash
+npm run test:ui
+```
+
+### End-to-End (E2E) Tests
+
+E2E tests simulate real user interactions in a browser. They are run using Playwright. To execute the E2E test suite, use the following command:
+
+```bash
+npm run test:e2e
+```
+
+This command will first start the development server (if not already running) and then run the Playwright tests against it. You can view the results in the terminal and a detailed HTML report will be generated in the `playwright-report` directory.
 
 ---
 
-## 4. Production Implementation Guide
+## 6. Production Implementation Guide
 
 The current application runs entirely in the browser with a mock backend. To make it production-ready, you must build a real backend service to handle business logic, security, and data persistence securely.
 

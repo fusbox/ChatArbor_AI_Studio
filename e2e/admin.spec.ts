@@ -33,11 +33,10 @@ test.describe('Admin Knowledge Base Management', () => {
 
     // Click the delete button within that container
     const deleteButton = sourceContainer.locator('button').last(); // Assuming delete is the last button
-    await deleteButton.click();
-
-    // Handle the confirmation dialog
+    
+    // Fix: The dialog handler must be registered *before* the action that triggers it.
+    // The redundant second click and incorrect handler placement have been fixed.
     page.on('dialog', dialog => dialog.accept());
-    // Re-trigger the delete action after setting up the dialog handler
     await deleteButton.click();
     
     // Verify the source is removed from the list
