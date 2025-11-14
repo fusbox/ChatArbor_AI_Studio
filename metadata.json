@@ -1,0 +1,5 @@
+{
+  "name": "Job Connections AI Assistant",
+  "description": "A RAG AI conversational chatbot to assist job seekers. Features persistent memory for logged-in users and an admin panel for managing knowledge base content, prompts, and viewing chat logs.",
+  "requestFramePermissions": []
+}
