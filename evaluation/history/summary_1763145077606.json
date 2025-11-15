@@ -1,0 +1,9 @@
+{
+  "runAt": 1763145077604,
+  "backend": "local",
+  "count": 3,
+  "avgLength": 252,
+  "nonEmptyRate": 1,
+  "avgKeywordCoverage": 0.3333333333333333,
+  "avgEmbeddingSimilarity": -0.011890247600801143
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "q1",
+    "query": "How do I write a resume for an entry-level software engineer?",
+    "expectedKeywords": ["resume", "experience", "skills"],
+    "reference": "To write a resume for an entry-level software engineer, highlight your education, relevant coursework, internships, technical skills (such as programming languages), and any projects or extracurricular activities that demonstrate your abilities. Focus on clear formatting and quantifiable achievements."
+  },
+  {
+    "id": "q2",
+    "query": "What should I include in a cover letter for a product manager position?",
+    "expectedKeywords": ["cover letter", "product manager", "impact"],
+    "reference": "A cover letter for a product manager position should include a brief introduction, your passion for product management, examples of how you've driven impact or led teams, and how your skills align with the company's goals. Mention specific products or industries if relevant."
+  },
+  {
+    "id": "q3",
+    "query": "Can you suggest interview tips for behavioral interviews?",
+    "expectedKeywords": ["STAR", "examples", "practice"],
+    "reference": "For behavioral interviews, use the STAR method (Situation, Task, Action, Result) to structure your answers. Practice common questions, provide specific examples from your experience, and focus on what you learned or achieved."
+  }
+]
