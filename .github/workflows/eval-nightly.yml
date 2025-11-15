@@ -24,8 +24,8 @@ jobs:
       - name: Run evaluation
         env:
           # Optional: set these in repository Secrets to evaluate a remote backend
-          EVAL_API_HOST: ${{ secrets.EVAL_API_HOST || '' }}
-          EVAL_API_KEY: ${{ secrets.EVAL_API_KEY || '' }}
+          EVAL_API_HOST: ${{ secrets.EVAL_API_HOST }}
+          EVAL_API_KEY: ${{ secrets.EVAL_API_KEY }}
         run: npm run eval:run
 
       - name: Upload summary artifact

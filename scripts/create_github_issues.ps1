@@ -25,7 +25,7 @@ try {
 }
 
 # Helper: normalize titles for comparison (replace smart dashes/quotes, collapse whitespace, lowercase)
-function Normalize-Title {
+function ConvertTo-NormalizedTitle {
   param($s)
   if (-not $s) { return '' }
   # replace proper Unicode dashes/quotes
@@ -33,7 +33,7 @@ function Normalize-Title {
   $s = $s -replace "[\u2018\u2019]", "'"
   $s = $s -replace "[\u201C\u201D]", '"'
   # handle common mojibake sequences when files are read with wrong encoding
-  $s = $s -replace 'â€”|â€“|â€"', ' - '
+  $s = $s -replace 'â€"|â€"|â€"', ' - '
   $s = $s -replace 'â€™|â€˜', "'"
   $s = $s -replace 'â€œ|â€�', '"'
   # normalize ampersand to 'and' for comparison
@@ -46,7 +46,7 @@ function Normalize-Title {
 # Fetch existing issue titles to avoid creating duplicates (idempotence)
 $existingIssueTitles = @()
 try {
-  $existingIssueTitles = gh api "/repos/$repo/issues?state=all&per_page=200" --method GET --jq '.[] | .title' | ForEach-Object { Normalize-Title $_ }
+  $existingIssueTitles = gh api "/repos/$repo/issues?state=all&per_page=200" --method GET --jq '.[] | .title' | ForEach-Object { ConvertTo-NormalizedTitle $_ }
 } catch {
   Write-Host "Warning: could not fetch existing issues: $_"
 }
@@ -71,7 +71,7 @@ foreach ($f in $files) {
 
   # Create the issue with labels
   # Skip creation if an issue with the same normalized title already exists
-  $normLocal = Normalize-Title $f.title
+  $normLocal = ConvertTo-NormalizedTitle $f.title
   if ($existingIssueTitles -contains $normLocal) {
     Write-Host "Skipping creation; issue with title already exists (normalized): $($f.title)"
     continue
