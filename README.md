@@ -65,6 +65,17 @@ The project is organized into a logical structure to separate concerns and impro
     npm install
     ```
 
+## Contributing & Templates
+
+We include templates and reference documents to streamline reporting, prioritization, and releases. See:
+
+- `docs/CONTRIBUTING_TEMPLATES.md` — quick guide to templates and how to use them
+- `.github/ISSUE_TEMPLATE/` — issue templates (bug_report, feature_request, security_issue, performance, accessibility, documentation)
+- `.github/PULL_REQUEST_TEMPLATE.md` — PR checklist
+- `docs/projects/project-board-template.md` — starter project board and suggested automation
+
+When opening issues or PRs, please use the appropriate template so triage and automation can route work to the right team. The repo also includes a workflow (`.github/workflows/auto-label-issues.yml`) that applies labels based on keywords in the issue title/body.
+
 ### Running the Development Server
 
 To start the application in development mode, run:

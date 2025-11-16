@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "eval:run": "node --loader ts-node/esm --no-warnings=ExperimentalWarning evaluation/runner.ts"
   },
   "dependencies": {
     "react": "^19.0.0-rc-f994737d14-20240522",
@@ -28,6 +29,8 @@
     "jsdom": "^24.1.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
-    "vitest": "^2.0.2"
+    "vitest": "^2.0.2",
+    "ts-node": "^10.9.1",
+    "@types/node": "^18.16.0"
   }
 }

@@ -1,5 +1,5 @@
-import { KnowledgeSource, Message, ChatLog, UserFeedback, Greeting, User } from '../types';
-import * as mockApi from './mockApiService';
+import { KnowledgeSource, Message, ChatLog, UserFeedback, Greeting, User } from '../types.js';
+import * as mockApi from './mockApiService.js';
 
 // --- API Client Service ---
 // This service simulates making network requests to a backend.

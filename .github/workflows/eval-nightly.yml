@@ -1,0 +1,35 @@
+name: Nightly Evaluation
+
+on:
+  schedule:
+    # Runs at 04:00 UTC every day
+    - cron: '0 4 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  run-eval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run evaluation
+        env:
+          # Optional: set these in repository Secrets to evaluate a remote backend
+          EVAL_API_HOST: ${{ secrets.EVAL_API_HOST }}
+          EVAL_API_KEY: ${{ secrets.EVAL_API_KEY }}
+        run: npm run eval:run
+
+      - name: Upload summary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-summary
+          path: evaluation/summary.json

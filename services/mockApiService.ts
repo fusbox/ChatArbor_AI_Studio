@@ -1,5 +1,5 @@
-import { KnowledgeSource, Message, ChatLog, UserFeedback, Greeting, User, KnowledgeSourceType } from '../types';
-import { generateEmbedding } from './geminiService';
+import { KnowledgeSource, Message, ChatLog, UserFeedback, Greeting, User, KnowledgeSourceType } from '../types.js';
+import { generateEmbedding } from './geminiService.js';
 import { GoogleGenAI } from "@google/genai";
 
 // --- SIMULATED BACKEND SERVER ---

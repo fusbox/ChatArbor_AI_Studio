@@ -1,0 +1,41 @@
+name: Auto-label issues
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Apply labels based on title/body
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            if (!issue) return;
+            const labels = new Set();
+            const text = (issue.title + '\n' + (issue.body || '')).toLowerCase();
+
+            if (/\b(bug|error|exception|crash)\b/.test(text)) labels.add('bug');
+            if (/\b(feature|enhancement|proposal)\b/.test(text)) labels.add('enhancement');
+            if (/\b(doc|docs|documentation|readme)\b/.test(text)) labels.add('documentation');
+            if (/\b(perf|performance|latency|throughput|memory)\b/.test(text)) labels.add('performance');
+            if (/\b(security|vuln|vulnerability|xss|csrf|sql injection)\b/.test(text)) labels.add('security');
+            if (/\b(a11y|accessibil|screen reader|keyboard)\b/.test(text)) labels.add('accessibility');
+            if (/\b(ci|deploy|pipeline|infra|infrastructure)\b/.test(text)) labels.add('infra / ops');
+            if (/\b(test|qa|regression|flake)\b/.test(text)) labels.add('qa');
+            if (/\b(ux|ui|design)\b/.test(text)) labels.add('ux');
+
+            if (labels.size > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: Array.from(labels)
+              });
+            }

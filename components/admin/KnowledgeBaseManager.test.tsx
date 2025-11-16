@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import KnowledgeBaseManager from './KnowledgeBaseManager';
@@ -6,7 +6,9 @@ import * as apiService from '../../services/apiService';
 import { KnowledgeSource, KnowledgeSourceType } from '../../types';
 
 vi.mock('../../services/apiService');
-const mockApiService = apiService as vi.Mocked<typeof apiService>;
+
+// Use runtime helper instead of type namespace
+const mockApiService = vi.mocked(apiService, true);
 
 const mockSources: KnowledgeSource[] = [
     { id: '1', type: KnowledgeSourceType.TEXT, content: 'This is a test source.', createdAt: Date.now(), embedding: [0.1] },
@@ -26,7 +28,9 @@ describe('KnowledgeBaseManager', () => {
         expect(screen.getByText('Knowledge Base Manager')).toBeInTheDocument();
         
         await waitFor(() => {
-            expect(screen.getByText('This is a test source.')).toBeInTheDocument();
+            expect(screen.getByText((_content, element) => {
+                return element?.textContent === 'This is a test source....';
+            })).toBeInTheDocument();
             expect(screen.getByText('https://example.com')).toBeInTheDocument();
         });
         
@@ -56,21 +60,27 @@ describe('KnowledgeBaseManager', () => {
 
     it('validates and adds a new URL source', async () => {
         const user = userEvent.setup();
-        mockApiService.validateAndScrapeUrl.mockResolvedValue({ success: true, content: 'Scraped content' });
-        
+        mockApiService.validateAndScrapeUrl.mockImplementation(() =>
+            new Promise(resolve =>
+                setTimeout(() => resolve({ success: true, content: 'Scraped content' }), 100)
+            )
+        );
+
         render(<KnowledgeBaseManager />);
-        
+
         const urlTab = screen.getByRole('button', { name: 'url' });
         await user.click(urlTab);
-        
+
         const input = screen.getByPlaceholderText('https://example.com/job-resources');
         await user.type(input, 'https://valid-url.com');
-        
+
         const addButton = screen.getByRole('button', { name: /Add Source/i });
         await user.click(addButton);
 
-        expect(screen.getByText(/Validating URL.../i)).toBeInTheDocument();
-        
+        // Wait for the loading state which changes the label
+        const validatingBtn = await screen.findByRole('button', { name: /Validating URL/i });
+        expect(validatingBtn).toHaveAttribute('aria-busy', 'true');
+
         await waitFor(() => {
             expect(mockApiService.validateAndScrapeUrl).toHaveBeenCalledWith('https://valid-url.com');
         });

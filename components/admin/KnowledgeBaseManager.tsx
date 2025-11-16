@@ -68,44 +68,56 @@ const KnowledgeBaseManager: React.FC = () => {
     setValidationError(null);
 
     let sourceToAdd: Omit<KnowledgeSource, 'id' | 'createdAt' | 'embedding'> | null = null;
-    
-    if (newSourceType === KnowledgeSourceType.TEXT) {
-        if (!textContent.trim()) {
-            setValidationError('Text content cannot be empty.');
-            return;
-        }
-        sourceToAdd = { type: KnowledgeSourceType.TEXT, content: textContent };
-    } else if (newSourceType === KnowledgeSourceType.URL) {
-        if (!urlContent.trim()) {
-            setValidationError('URL field cannot be empty.');
-            return;
-        }
-        
-        setIsSubmitting(true);
-        const validationResult = await apiService.validateAndScrapeUrl(urlContent);
 
+    if (newSourceType === KnowledgeSourceType.TEXT) {
+      if (!textContent.trim()) {
+        setValidationError('Text content cannot be empty.');
+        return;
+      }
+      sourceToAdd = { type: KnowledgeSourceType.TEXT, content: textContent };
+    } else if (newSourceType === KnowledgeSourceType.URL) {
+      if (!urlContent.trim()) {
+        setValidationError('URL field cannot be empty.');
+        return;
+      }
+
+      setIsSubmitting(true);
+      try {
+        const validationResult = await apiService.validateAndScrapeUrl(urlContent);
         if (!validationResult.success) {
-            setValidationError(validationResult.message || 'Failed to validate URL.');
-            setIsSubmitting(false);
-            return;
+          setValidationError(validationResult.message || 'Failed to validate URL.');
+          setIsSubmitting(false);
+          return;
         }
-        
         sourceToAdd = {
-            type: KnowledgeSourceType.URL,
-            content: urlContent,
-            data: validationResult.content,
+          type: KnowledgeSourceType.URL,
+          content: urlContent,
+          data: validationResult.content,
         };
-        
+      } catch (err) {
+        setValidationError('Failed to validate URL. Please try again.');
+        setIsSubmitting(false);
+        return;
+      }
     } else if (newSourceType === KnowledgeSourceType.FILE) {
-        if (!fileContent) {
-            setValidationError('Please select a file to add.');
-            return;
-        }
-        sourceToAdd = { type: KnowledgeSourceType.FILE, content: fileContent.name, data: fileContent.data };
+      if (!fileContent) {
+        setValidationError('Please select a file to add.');
+        return;
+      }
+      sourceToAdd = {
+        type: KnowledgeSourceType.FILE,
+        content: fileContent.name,
+        data: fileContent.data,
+      };
     }
 
-    if (sourceToAdd) {
-      if (!isSubmitting) setIsSubmitting(true);
+    if (!sourceToAdd) {
+      setValidationError('Invalid source data.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
       await apiService.addKnowledgeSource(sourceToAdd);
       setTextContent('');
       setUrlContent('');
@@ -113,9 +125,11 @@ const KnowledgeBaseManager: React.FC = () => {
       const fileInput = document.getElementById('file-input') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
       await fetchSources();
+    } catch (err) {
+      setValidationError('Failed to add source. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setIsSubmitting(false);
   };
   
   const handleUpdate = async () => {
@@ -190,15 +204,22 @@ const KnowledgeBaseManager: React.FC = () => {
           {validationError && (
             <p className="text-red-600 text-sm mb-4 bg-red-50 p-3 rounded-lg">{validationError}</p>
           )}
-          <button 
-            type="submit" 
+          <button
+            type="submit"
+            aria-busy={isSubmitting}
             disabled={isSubmitting}
             className="bg-secondary text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors disabled:bg-neutral-400 disabled:cursor-wait flex items-center justify-center min-w-[140px]"
           >
             {isSubmitting ? (
               <>
                 <Spinner />
-                <span className="ml-2">{newSourceType === KnowledgeSourceType.URL ? 'Validating URL...' : 'Adding Source...'}</span>
+                <span className="ml-2">
+                  {newSourceType === KnowledgeSourceType.URL
+                    ? 'Validating URL...'
+                    : newSourceType === KnowledgeSourceType.FILE
+                    ? 'Uploading File...'
+                    : 'Adding Source...'}
+                </span>
               </>
             ) : (
               'Add Source'
@@ -207,16 +228,16 @@ const KnowledgeBaseManager: React.FC = () => {
         </form>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md flex-1 flex flex-col min-h-0">
+    <div className="bg-white p-6 rounded-lg shadow-md flex-shrink-0 flex flex-col" style={{ maxHeight: '460px' }}>
         <div className="flex justify-between items-center mb-3 flex-shrink-0">
             <h3 className="text-lg font-semibold">Existing Sources ({filteredSources.length})</h3>
             <button
-                onClick={handleReIndex}
-                disabled={isIndexing}
-                className="bg-sky-100 text-primary px-4 py-2 text-sm font-semibold rounded-lg hover:bg-sky-200 transition-colors disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-wait flex items-center"
+              onClick={handleReIndex}
+              disabled={isIndexing}
+              className="bg-sky-100 text-primary px-4 py-2 text-sm font-semibold rounded-lg hover:bg-sky-200 transition-colors disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-wait flex items-center justify-center gap-2"
             >
-                {isIndexing && <Spinner />}
-                <span className="ml-2">{isIndexing ? 'Indexing...' : 'Re-Index Knowledge Base'}</span>
+              {isIndexing && <Spinner />}
+              <span>{isIndexing ? 'Indexing...' : 'Re-Index Knowledge Base'}</span>
             </button>
         </div>
 
@@ -233,22 +254,22 @@ const KnowledgeBaseManager: React.FC = () => {
             </svg>
         </div>
         
-        <div className="flex-1 overflow-y-auto">
+          <div className="overflow-y-auto" style={{ maxHeight: '348px' }}>
             {isLoading ? <Spinner /> : error ? <p className="text-red-500">{error}</p> : (
             <div className="space-y-3">
                 {filteredSources.map(source => (
                 <div key={source.id} className="flex justify-between items-center p-3 bg-neutral-50 rounded-lg border">
                     <div className="flex-1 min-w-0 flex items-center">
                     <span className={`flex-shrink-0 w-2 h-2 rounded-full mr-3 ${source.embedding ? 'bg-emerald-500' : 'bg-neutral-300'}`} title={source.embedding ? 'Indexed' : 'Not Indexed'}></span>
-                    <span className="font-mono text-xs px-2 py-1 bg-neutral-200 text-neutral-600 rounded mr-3 capitalize">{source.type}</span>
+                    <span className="inline-flex w-16 justify-center font-mono text-xs px-2 py-1 bg-neutral-200 text-neutral-600 rounded mr-3 capitalize">{source.type}</span>
                     <span className="text-sm text-neutral-700 truncate">{source.type === 'text' ? `${source.content.substring(0, 70)}...` : source.content}</span>
                     </div>
                     <div className="flex space-x-2">
-                        <button onClick={() => setEditingSource(source)} className="text-primary hover:text-primary-dark p-1 rounded-full hover:bg-sky-100 transition-colors">
+                        <button onClick={() => setEditingSource(source)} aria-label="Edit source" className="text-primary hover:text-primary-dark p-1 rounded-full hover:bg-sky-100 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" /></svg>
                         </button>
-                        <button onClick={() => handleDelete(source.id)} className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                        <button onClick={() => handleDelete(source.id)} aria-label="Delete source" className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </button>
                     </div>
                 </div>

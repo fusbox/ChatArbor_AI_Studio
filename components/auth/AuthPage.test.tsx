@@ -33,7 +33,7 @@ describe('AuthPage', () => {
         const user = userEvent.setup();
         render(<AuthPage onClose={mockOnClose} />);
         
-        await user.click(screen.getByRole('button', { name: 'Sign Up' }));
+        await user.click(screen.getByRole('button', { name: /Switch to Sign Up/i }));
         
         expect(screen.getByRole('heading', { name: 'Create Your Account' })).toBeInTheDocument();
         expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('AuthPage', () => {
         const user = userEvent.setup();
         render(<AuthPage onClose={mockOnClose} />);
         
-        await user.click(screen.getByRole('button', { name: 'Sign Up' }));
+        await user.click(screen.getByRole('button', { name: /Switch to Sign Up/i }));
 
         await user.type(screen.getByLabelText(/Name/i), 'Test User');
         await user.type(screen.getByLabelText(/Email Address/i), 'new@example.com');
