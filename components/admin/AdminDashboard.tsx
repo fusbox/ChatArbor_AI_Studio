@@ -30,7 +30,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-neutral-100">
+    <div className="flex flex-col bg-neutral-100">
        <nav className="bg-white border-b border-neutral-200 px-4 flex-shrink-0">
         <div className="flex items-center space-x-2">
           {tabs.map(tab => (
@@ -49,7 +49,7 @@ const AdminDashboard: React.FC = () => {
           ))}
         </div>
       </nav>
-      <div className="flex-1 p-6 overflow-hidden">
+      <div className="flex-1 p-6">
           {renderContent()}
       </div>
     </div>

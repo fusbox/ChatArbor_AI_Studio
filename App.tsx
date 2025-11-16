@@ -12,14 +12,14 @@ const App: React.FC = () => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
   return (
-    <div className="flex flex-col h-screen font-sans text-neutral-800">
+    <div className="flex flex-col min-h-screen font-sans text-neutral-800">
       <Header 
         title={APP_NAME} 
         currentView={view} 
         onViewChange={setView}
         onAuthClick={() => setAuthModalOpen(true)}
       />
-      <main className="flex-1 overflow-hidden">
+      <main className="flex-1">
         {view === 'chat' ? <ChatWindow /> : <AdminDashboard />}
       </main>
       {isAuthModalOpen && (

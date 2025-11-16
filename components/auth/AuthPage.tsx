@@ -64,10 +64,10 @@ const AuthPage: React.FC<AuthPageProps> = ({ onClose }) => {
         </div>
 
         <div className="flex mb-6 border-b">
-          <button onClick={() => switchMode('signin')} className={`flex-1 pb-2 text-center text-sm font-medium ${mode === 'signin' ? 'border-b-2 border-primary text-primary' : 'text-neutral-500'}`}>
+          <button onClick={() => switchMode('signin')} aria-label="Switch to Sign In" className={`flex-1 pb-2 text-center text-sm font-medium ${mode === 'signin' ? 'border-b-2 border-primary text-primary' : 'text-neutral-500'}`}>
             Sign In
           </button>
-          <button onClick={() => switchMode('signup')} className={`flex-1 pb-2 text-center text-sm font-medium ${mode === 'signup' ? 'border-b-2 border-primary text-primary' : 'text-neutral-500'}`}>
+          <button onClick={() => switchMode('signup')} aria-label="Switch to Sign Up" className={`flex-1 pb-2 text-center text-sm font-medium ${mode === 'signup' ? 'border-b-2 border-primary text-primary' : 'text-neutral-500'}`}>
             Sign Up
           </button>
         </div>
@@ -86,7 +86,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onClose }) => {
             <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} required className="mt-1 w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" />
           </div>
           <div>
-            <label htmlFor="password"className="block text-sm font-medium text-neutral-700">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-neutral-700">Password</label>
             <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-1 w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" />
           </div>
           <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3 rounded-md font-semibold hover:bg-primary-dark transition-colors disabled:bg-neutral-400 flex items-center justify-center">
