@@ -1,80 +1,145 @@
-import { KnowledgeSource, Message, ChatLog, UserFeedback, Greeting, User } from '../types.js';
-import * as mockApi from './mockApiService.js';
-
-// --- API Client Service ---
-// This service simulates making network requests to a backend.
-// In a real app, this would use `fetch` to call a REST or GraphQL API.
-// To simulate latency, a small delay is added to each call.
-
-const SIMULATED_LATENCY_MS = 250;
-
-const apiCall = <T>(fn: () => T | Promise<T>): Promise<T> => {
-    return new Promise((resolve, reject) => {
-        setTimeout(async () => {
-            try {
-                const result = await fn();
-                resolve(result);
-            } catch (error) {
-                reject(error);
-            }
-        }, SIMULATED_LATENCY_MS);
-    });
-};
+import { KnowledgeSource, Message, ChatLog, UserFeedback, Greeting, User, KnowledgeSourceType } from '../types.js';
+import { supabase } from './supabaseClient';
 
 // --- User Management ---
-export const getGuestUserId = (): string => mockApi.handleGetGuestUserId();
-export const clearGuestUserId = (): void => localStorage.removeItem('guestUserId');
-
-export const signUp = (name: string, email: string, password: string): Promise<User> => {
-    return apiCall(() => mockApi.handleSignUp(name, email, password));
+export const getGuestUserId = (): string => {
+    let guestId = localStorage.getItem('guestUserId');
+    if (!guestId) {
+        guestId = `guest_${Date.now()}`;
+        localStorage.setItem('guestUserId', guestId);
+    }
+    return guestId;
 };
-export const login = (email: string, password: string): Promise<User> => {
-    return apiCall(() => mockApi.handleLogin(email, password));
+export const clearGuestUserId = (): void => {
+    localStorage.removeItem('guestUserId');
 };
-export const logout = (): Promise<void> => apiCall(mockApi.handleLogout);
-export const getCurrentUser = (): Promise<User | null> => apiCall(mockApi.handleGetCurrentUser);
-
 
 // --- Knowledge Base ---
-export const getKnowledgeBase = (): Promise<KnowledgeSource[]> => apiCall(mockApi.handleGetKnowledgeBase);
-export const addKnowledgeSource = (source: Omit<KnowledgeSource, 'id' | 'createdAt' | 'embedding'>): Promise<KnowledgeSource> => {
-    return apiCall(() => mockApi.handleAddKnowledgeSource(source));
-};
-export const updateKnowledgeSource = (updatedSource: KnowledgeSource): Promise<KnowledgeSource> => {
-    return apiCall(() => mockApi.handleUpdateKnowledgeSource(updatedSource));
-};
-export const deleteKnowledgeSource = (id: string): Promise<void> => apiCall(() => mockApi.handleDeleteKnowledgeSource(id));
-export const reIndexKnowledgeBase = (): Promise<{ count: number }> => apiCall(mockApi.handleReIndexKnowledgeBase);
-export const validateAndScrapeUrl = (url: string): Promise<{ success: boolean; message?: string; content?: string }> => {
-    // This has a longer delay to simulate network + scraping time
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(mockApi.handleValidateAndScrapeUrl(url));
-        }, 1500);
-    });
+export const getKnowledgeBase = async (): Promise<KnowledgeSource[]> => {
+    const { data, error } = await supabase.from('knowledge_sources').select('*');
+    if (error) throw error;
+    return data;
 };
 
+export const addKnowledgeSource = async (source: Omit<KnowledgeSource, 'id' | 'createdAt' | 'embedding'>): Promise<KnowledgeSource> => {
+    const { data, error } = await supabase.from('knowledge_sources').insert(source).single();
+    if (error) throw error;
+    return data;
+};
+
+export const updateKnowledgeSource = async (updatedSource: KnowledgeSource): Promise<KnowledgeSource> => {
+    const { data, error } = await supabase.from('knowledge_sources').update(updatedSource).eq('id', updatedSource.id).single();
+    if (error) throw error;
+    return data;
+};
+
+export const deleteKnowledgeSource = async (id: string): Promise<void> => {
+    const { error } = await supabase.from('knowledge_sources').delete().eq('id', id);
+    if (error) throw error;
+};
+
+export const reIndexKnowledgeBase = async (): Promise<{ count: number }> => {
+    const { data, error } = await supabase.functions.invoke('reindex-knowledge-base');
+    if (error) throw error;
+    return data;
+};
+
+export const validateAndScrapeUrl = (url: string): Promise<{ success: boolean; message?: string; content?: string }> => {
+    // This will be replaced with a call to a Supabase Edge Function
+    return Promise.resolve({ success: true, content: `[Simulated Content] This is the scraped text from ${url}.` });
+};
 
 // --- Chat ---
-export const getChatResponse = (userQuery: string, chatHistory: { role: string; parts: { text: string }[] }[]): Promise<string> => {
-    // No extra latency here, as Gemini API has its own response time.
-    return mockApi.handleGetChatResponse(userQuery, chatHistory);
+export const getChatResponse = async (userQuery: string, chatHistory: { role: string; parts: { text: string }[] }[]): Promise<string> => {
+    const { data, error } = await supabase.functions.invoke('get-chat-response', {
+        body: { query: userQuery, history: chatHistory },
+    });
+    if (error) throw error;
+    return data;
 };
 
-
 // --- Chat History ---
-export const getChatHistory = (userId: string): Promise<Message[]> => apiCall(() => mockApi.handleGetChatHistory(userId));
-export const saveMessage = (userId: string, message: Message): Promise<void> => apiCall(() => mockApi.handleSaveMessage(userId, message));
-export const saveFullChatHistory = (userId: string, messages: Message[]): Promise<void> => apiCall(() => mockApi.handleSaveFullChatHistory(userId, messages));
-export const clearChatHistory = (userId: string): Promise<void> => apiCall(() => mockApi.handleClearChatHistory(userId));
+export const createChatLog = async (userId: string | null): Promise<ChatLog> => {
+    const { data, error } = await supabase.from('chat_logs').insert({ user_id: userId }).single();
+    if (error) throw error;
+    return data;
+};
+
+export const getChatLog = async (chatLogId: string): Promise<ChatLog> => {
+    const { data, error } = await supabase.from('chat_logs').select('*').eq('id', chatLogId).single();
+    if (error) throw error;
+    return data;
+};
+
+export const getChatHistory = async (chatLogId: string): Promise<Message[]> => {
+    const { data, error } = await supabase.from('messages').select('*').eq('chat_log_id', chatLogId);
+    if (error) throw error;
+    return data;
+};
+
+export const saveMessage = async (chatLogId: string, message: Message): Promise<void> => {
+    const { error } = await supabase.from('messages').insert({ ...message, chat_log_id: chatLogId });
+    if (error) throw error;
+};
+
+export const saveFullChatHistory = async (chatLogId: string, messages: Message[]): Promise<void> => {
+    const { error } = await supabase.from('messages').insert(messages.map(m => ({ ...m, chat_log_id: chatLogId })));
+    if (error) throw error;
+};
+
+export const clearChatHistory = async (chatLogId: string): Promise<void> => {
+    const { error } = await supabase.from('messages').delete().eq('chat_log_id', chatLogId);
+    if (error) throw error;
+};
 
 // --- Admin ---
-export const getChatLogs = (): Promise<ChatLog[]> => apiCall(mockApi.handleGetChatLogs);
-export const saveChatLog = (userId: string, messages: Message[]): Promise<void> => apiCall(() => mockApi.handleSaveChatLog(userId, messages));
-export const getSystemPrompt = (): Promise<string> => apiCall(mockApi.handleGetSystemPrompt);
-export const saveSystemPrompt = (prompt: string): Promise<void> => apiCall(() => mockApi.handleSaveSystemPrompt(prompt));
-export const getGreetings = (): Promise<Greeting[]> => apiCall(mockApi.handleGetGreetings);
-export const saveGreetings = (greetings: Greeting[]): Promise<void> => apiCall(() => mockApi.handleSaveGreetings(greetings));
-export const getActiveGreeting = (): Promise<string> => apiCall(mockApi.handleGetActiveGreeting);
-export const saveFeedback = (feedback: Omit<UserFeedback, 'id' | 'submittedAt'>): Promise<void> => apiCall(() => mockApi.handleSaveFeedback(feedback));
-export const getFeedback = (): Promise<UserFeedback[]> => apiCall(mockApi.handleGetFeedback);
+export const getChatLogs = async (): Promise<ChatLog[]> => {
+    const { data, error } = await supabase.from('chat_logs').select('*');
+    if (error) throw error;
+    return data;
+};
+
+export const saveChatLog = async (userId: string, messages: Message[]): Promise<void> => {
+    const { data, error } = await supabase.from('chat_logs').insert({ user_id: userId }).single();
+    if (error) throw error;
+    await saveFullChatHistory(data.id, messages);
+};
+
+export const getSystemPrompt = async (): Promise<string> => {
+    const { data, error } = await supabase.from('system_prompts').select('content').single();
+    if (error) throw error;
+    return data.content;
+};
+
+export const saveSystemPrompt = async (prompt: string): Promise<void> => {
+    const { error } = await supabase.from('system_prompts').update({ content: prompt }).eq('id', 1);
+    if (error) throw error;
+};
+
+export const getGreetings = async (): Promise<Greeting[]> => {
+    const { data, error } = await supabase.from('greetings').select('*');
+    if (error) throw error;
+    return data;
+};
+
+export const saveGreetings = async (greetings: Greeting[]): Promise<void> => {
+    const { error } = await supabase.from('greetings').upsert(greetings);
+    if (error) throw error;
+};
+
+export const getActiveGreeting = async (): Promise<string> => {
+    const { data, error } = await supabase.from('greetings').select('text').eq('is_active', true).single();
+    if (error) throw error;
+    return data.text;
+};
+
+export const saveFeedback = async (feedback: Omit<UserFeedback, 'id' | 'submittedAt'>): Promise<void> => {
+    const { error } = await supabase.from('feedback').insert(feedback);
+    if (error) throw error;
+};
+
+export const getFeedback = async (): Promise<UserFeedback[]> => {
+    const { data, error } = await supabase.from('feedback').select('*');
+    if (error) throw error;
+    return data;
+};

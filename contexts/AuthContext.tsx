@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import { supabase } from '../services/supabaseClient';
 import * as apiService from '../services/apiService';
-import { User } from '../types';
+import { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
   currentUser: User | null;
@@ -17,46 +18,65 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const checkLoggedInUser = async () => {
-      try {
-        const user = await apiService.getCurrentUser();
-        setCurrentUser(user);
-      } catch (error) {
-        console.error("Failed to fetch current user", error);
-      } finally {
-        setIsLoading(false);
-      }
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setCurrentUser(session?.user ?? null);
+      setIsLoading(false);
     };
-    checkLoggedInUser();
+
+    getSession();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setCurrentUser(session?.user ?? null);
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const migrateGuestChat = async (userId: string) => {
-    const guestId = apiService.getGuestUserId();
-    if (guestId) {
-        const guestHistory = await apiService.getChatHistory(guestId);
+    const chatLogId = sessionStorage.getItem('chat_log_id');
+    if (chatLogId) {
+        const guestHistory = await apiService.getChatHistory(chatLogId);
         if (guestHistory.length > 1) { 
-            const userHistory = await apiService.getChatHistory(userId);
-            const combinedHistory = [...guestHistory, ...userHistory];
-            await apiService.saveFullChatHistory(userId, combinedHistory);
+            const newChatLog = await apiService.createChatLog(userId);
+            await apiService.saveFullChatHistory(newChatLog.id, guestHistory);
         }
-        await apiService.clearChatHistory(guestId);
-        apiService.clearGuestUserId(); // Clear the guest ID from local storage
+        await apiService.clearChatHistory(chatLogId);
+        sessionStorage.removeItem('chat_log_id');
     }
   };
 
   const login = async (email: string, password: string) => {
-    const user = await apiService.login(email, password);
-    await migrateGuestChat(user.id);
-    setCurrentUser(user);
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    if (data.user) {
+      await migrateGuestChat(data.user.id);
+      setCurrentUser(data.user);
+    }
   };
 
   const signUp = async (name: string, email: string, password: string) => {
-    const user = await apiService.signUp(name, email, password);
-    await login(user.email, user.password); // Log in to migrate chat and set current user
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name: name,
+        }
+      }
+    });
+    if (error) throw error;
+    if (data.user) {
+        await migrateGuestChat(data.user.id);
+        setCurrentUser(data.user)
+    }
   };
 
   const logout = async () => {
-    await apiService.logout();
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
     setCurrentUser(null);
   };
 

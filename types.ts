@@ -65,6 +65,163 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  // In a real app, this would be a securely hashed password, not plain text.
-  password: string; 
+}
+
+export type Database = {
+  public: {
+    Tables: {
+      users: {
+        Row: {
+          id: string
+          name: string
+          email: string
+        }
+        Insert: {
+          id: string
+          name: string
+          email: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          email?: string
+        }
+      },
+      knowledge_sources: {
+        Row: {
+          id: string
+          user_id: string
+          type: string
+          content: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          type: string
+          content: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          type?: string
+          content?: string
+          created_at?: string
+        }
+      },
+      document_chunks: {
+        Row: {
+          id: string
+          knowledge_source_id: string
+          content: string
+          embedding: number[]
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          knowledge_source_id: string
+          content: string
+          embedding: number[]
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          knowledge_source_id?: string
+          content?: string
+          embedding?: number[]
+          created_at?: string
+        }
+      },
+      chat_logs: {
+        Row: {
+          id: string
+          user_id: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          created_at?: string
+        }
+      },
+      messages: {
+        Row: {
+          id: string
+          chat_log_id: string
+          author: string
+          text: string
+          timestamp: string
+        }
+        Insert: {
+          id?: string
+          chat_log_id: string
+          author: string
+          text: string
+          timestamp?: string
+        }
+        Update: {
+          id?: string
+          chat_log_id?: string
+          author?: string
+          text?: string
+          timestamp?: string
+        }
+      },
+      feedback: {
+        Row: {
+          id: string
+          message_id: string
+          user_message: string
+          ai_message: string
+          chat_id: string
+          initial_rating: string
+          comment: string | null
+          submitted_at: string
+        }
+        Insert: {
+          id?: string
+          message_id: string
+          user_message: string
+          ai_message: string
+          chat_id: string
+          initial_rating: string
+          comment?: string | null
+          submitted_at?: string
+        }
+        Update: {
+          id?: string
+          message_id?: string
+          user_message?: string
+          ai_message?: string
+          chat_id?: string
+          initial_rating?: string
+          comment?: string | null
+          submitted_at?: string
+        }
+      },
+      greetings: {
+        Row: {
+          id: string
+          text: string
+          is_active: boolean
+        }
+        Insert: {
+          id?: string
+          text: string
+          is_active?: boolean
+        }
+        Update: {
+          id?: string
+          text?: string
+          is_active?: boolean
+        }
+      }
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { KnowledgeSource, KnowledgeSourceType } from '../../types';
 import * as apiService from '../../services/apiService';
+import { supabase } from '../../services/supabaseClient';
 import Spinner from '../shared/Spinner';
 
 const KnowledgeBaseManager: React.FC = () => {
@@ -11,7 +12,7 @@ const KnowledgeBaseManager: React.FC = () => {
   const [newSourceType, setNewSourceType] = useState<KnowledgeSourceType>(KnowledgeSourceType.TEXT);
   const [textContent, setTextContent] = useState('');
   const [urlContent, setUrlContent] = useState('');
-  const [fileContent, setFileContent] = useState<{name: string, data: string} | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   const [editingSource, setEditingSource] = useState<KnowledgeSource | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,19 +46,10 @@ const KnowledgeBaseManager: React.FC = () => {
       
       if (allowedTypes.includes(file.type) || allowedExtensions.includes(fileExtension)) {
         setValidationError(null);
-        if (file.type === "text/plain" || file.type === "text/markdown") {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              const text = e.target?.result as string;
-              setFileContent({ name: file.name, data: text });
-            };
-            reader.readAsText(file);
-        } else {
-          setFileContent({ name: file.name, data: `[Content of ${file.name}. In a real app, this file would be processed on a server.]` });
-        }
+        setFile(file);
       } else {
         setValidationError('Unsupported file type. Please upload a PDF, DOCX, TXT, or MD file.');
-        setFileContent(null);
+        setFile(null);
         event.target.value = ''; // Clear the input
       }
     }
@@ -100,14 +92,28 @@ const KnowledgeBaseManager: React.FC = () => {
         return;
       }
     } else if (newSourceType === KnowledgeSourceType.FILE) {
-      if (!fileContent) {
+      if (!file) {
         setValidationError('Please select a file to add.');
         return;
       }
+
+      setIsSubmitting(true);
+      const fileName = `${Date.now()}_${file.name}`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('knowledge_files')
+        .upload(fileName, file);
+
+      if (uploadError) {
+        setValidationError('Failed to upload file. Please try again.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage.from('knowledge_files').getPublicUrl(fileName);
+
       sourceToAdd = {
         type: KnowledgeSourceType.FILE,
-        content: fileContent.name,
-        data: fileContent.data,
+        content: publicUrl,
       };
     }
 
@@ -121,7 +127,7 @@ const KnowledgeBaseManager: React.FC = () => {
       await apiService.addKnowledgeSource(sourceToAdd);
       setTextContent('');
       setUrlContent('');
-      setFileContent(null);
+      setFile(null);
       const fileInput = document.getElementById('file-input') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
       await fetchSources();
