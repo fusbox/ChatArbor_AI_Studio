@@ -1,22 +1,30 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Message, MessageAuthor } from '../types';
+import { Message, MessageAuthor, ChatLog } from '../types';
 import * as apiService from '../services/apiService';
 import { useAuth } from '../contexts/AuthContext';
 
 export const useChat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [chatLog, setChatLog] = useState<ChatLog | null>(null);
   const { currentUser } = useAuth();
   
-  const activeUserId = currentUser?.id || apiService.getGuestUserId();
+  const activeUserId = currentUser?.id || null;
 
   useEffect(() => {
-    if (!activeUserId) return;
-    
     const loadHistory = async () => {
       setIsLoading(true);
-      const history = await apiService.getChatHistory(activeUserId);
-      if (history.length === 0) {
+      const chatLogId = sessionStorage.getItem('chat_log_id');
+      if (chatLogId) {
+        const existingChatLog = await apiService.getChatLog(chatLogId);
+        setChatLog(existingChatLog);
+        const history = await apiService.getChatHistory(existingChatLog.id);
+        setMessages(history);
+      } else {
+        const newChatLog = await apiService.createChatLog(activeUserId);
+        setChatLog(newChatLog);
+        sessionStorage.setItem('chat_log_id', newChatLog.id);
+
         const activeGreeting = await apiService.getActiveGreeting();
         const greetingMessage = {
             id: `ai_${Date.now()}`,
@@ -25,9 +33,7 @@ export const useChat = () => {
             timestamp: Date.now(),
         };
         setMessages([greetingMessage]);
-        await apiService.saveMessage(activeUserId, greetingMessage);
-      } else {
-        setMessages(history);
+        await apiService.saveMessage(newChatLog.id, greetingMessage);
       }
       setIsLoading(false);
     };
@@ -35,7 +41,7 @@ export const useChat = () => {
   }, [activeUserId]);
 
   const sendMessage = useCallback(async (text: string) => {
-    if (!text.trim() || !activeUserId) return;
+    if (!text.trim() || !chatLog) return;
 
     const userMessage: Message = {
       id: `user_${Date.now()}`,
@@ -46,7 +52,7 @@ export const useChat = () => {
     
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
-    await apiService.saveMessage(activeUserId, userMessage);
+    await apiService.saveMessage(chatLog.id, userMessage);
     setIsLoading(true);
 
     try {
@@ -67,7 +73,7 @@ export const useChat = () => {
       };
       
       setMessages(prev => [...prev, aiMessage]);
-      await apiService.saveMessage(activeUserId, aiMessage);
+      await apiService.saveMessage(chatLog.id, aiMessage);
 
     } catch (error) {
       console.error("Failed to get AI response:", error);
@@ -81,15 +87,13 @@ export const useChat = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [messages, activeUserId]);
+  }, [messages, chatLog]);
 
   const clearChat = useCallback(async () => {
-      if (!activeUserId) return;
+      if (!chatLog) return;
 
-      if (messages.length > 1) { 
-        await apiService.saveChatLog(activeUserId, messages);
-      }
-      await apiService.clearChatHistory(activeUserId);
+      await apiService.clearChatHistory(chatLog.id);
+      sessionStorage.removeItem('chat_log_id');
       const activeGreeting = await apiService.getActiveGreeting();
       const greetingMessage = {
           id: `ai_${Date.now()}`,
@@ -98,8 +102,11 @@ export const useChat = () => {
           timestamp: Date.now(),
       };
       setMessages([greetingMessage]);
-      await apiService.saveMessage(activeUserId, greetingMessage);
-  }, [messages, activeUserId]);
+      const newChatLog = await apiService.createChatLog(activeUserId);
+      setChatLog(newChatLog);
+      sessionStorage.setItem('chat_log_id', newChatLog.id);
+      await apiService.saveMessage(newChatLog.id, greetingMessage);
+  }, [messages, chatLog, activeUserId]);
 
   return { messages, isLoading, sendMessage, clearChat };
 };
