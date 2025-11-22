@@ -1,209 +1,627 @@
+# ChatArbor AI Studio v2
 
-# Job Connections AI Assistant
-
-## 1. Overview
-
-The Job Connections AI Assistant is a sophisticated, RAG (Retrieval-Augmented Generation) powered conversational chatbot designed to assist job seekers. It provides users with accurate, context-aware answers to their questions by drawing from a managed knowledge base.
-
-The application features a user-friendly chat interface and a comprehensive admin panel for full control over the AI's knowledge, behavior, and for monitoring user interactions.
-
-### Key Features:
-
-*   **Conversational AI:** A dynamic chat interface powered by the Google Gemini API for natural and helpful conversations.
-*   **Retrieval-Augmented Generation (RAG):** The AI's responses are grounded in a curated knowledge base, ensuring answers are relevant and accurate.
-*   **Comprehensive Admin Panel:**
-    *   **Knowledge Base Management:** Add, edit, and delete knowledge sources from text, URLs, or file uploads (.txt, .md, .pdf, .docx).
-    *   **Greeting Management:** Customize and control the AI's initial greeting messages.
-    *   **System Prompt Control:** Define the AI's core persona, instructions, and constraints.
-    *   **Chat Log Viewer:** Review past conversations to understand user interactions.
-    *   **User Feedback Analysis:** View and analyze detailed feedback submitted by users to improve AI performance.
-*   **User Authentication:** Supports both guest users (with session-based history) and registered users (with persistent chat history).
-*   **Persistent Memory:** Logged-in users' chat histories are saved, allowing conversations to be picked up later.
-
-## 2. Tech Stack
-
-*   **Frontend:** React, TypeScript, Tailwind CSS
-*   **AI Model:** Google Gemini API (`@google/genai`)
-*   **Testing:** Vitest, React Testing Library, Playwright (for E2E)
-*   **Backend (Current):** A mock API service (`mockApiService.ts`) using Browser Local Storage to simulate a database and backend logic. **This must be replaced for production.**
-
-## 3. Project Structure
-
-The project is organized into a logical structure to separate concerns and improve maintainability:
-
-```
-/
-├── components/           # Reusable React components
-│   ├── admin/            # Components for the Admin Dashboard
-│   ├── auth/             # Sign-in/Sign-up modal component
-│   ├── chat/             # Components for the Chat interface
-│   └── shared/           # Common components (Header, Spinner, etc.)
-├── contexts/             # React Context providers (e.g., AuthContext)
-├── e2e/                  # End-to-end tests (Playwright)
-├── hooks/                # Custom React hooks (e.g., useChat)
-├── services/             # API communication and external service logic
-├── tests/                # Unit and integration test setup and mocks (Vitest)
-├── types.ts              # TypeScript type definitions and interfaces
-├── App.tsx               # Main application component
-├── index.html            # Main HTML entry point
-├── package.json          # Project dependencies and scripts
-└── vitest.config.ts      # Configuration for Vitest
-```
-
-## 4. Getting Started
-
-### Prerequisites
-
-*   Node.js (v18 or later recommended)
-*   npm or yarn
-
-### Installation
-
-1.  Clone the repository to your local machine.
-2.  Install the required dependencies:
-    ```bash
-    npm install
-    ```
-
-## Contributing & Templates
-
-We include templates and reference documents to streamline reporting, prioritization, and releases. See:
-
-- `docs/CONTRIBUTING_TEMPLATES.md` — quick guide to templates and how to use them
-- `.github/ISSUE_TEMPLATE/` — issue templates (bug_report, feature_request, security_issue, performance, accessibility, documentation)
-- `.github/PULL_REQUEST_TEMPLATE.md` — PR checklist
-- `docs/projects/project-board-template.md` — starter project board and suggested automation
-
-When opening issues or PRs, please use the appropriate template so triage and automation can route work to the right team. The repo also includes a workflow (`.github/workflows/auto-label-issues.yml`) that applies labels based on keywords in the issue title/body.
-
-### Running the Development Server
-
-To start the application in development mode, run:
-
-```bash
-npm run dev
-```
-
-This will start a local server, typically at `http://localhost:5173`. The application will automatically reload if you make changes to the source files.
-
-## 5. Running Tests
-
-The project includes a comprehensive test suite to ensure code quality and prevent regressions.
-
-### Unit & Integration Tests
-
-To run all unit and integration tests in your terminal, use:
-
-```bash
-npm test
-```
-
-For a more interactive experience, you can start the Vitest UI, which allows you to view test results in your browser and re-run tests on file changes:
-
-```bash
-npm run test:ui
-```
-
-### End-to-End (E2E) Tests
-
-E2E tests simulate real user interactions in a browser. They are run using Playwright. To execute the E2E test suite, use the following command:
-
-```bash
-npm run test:e2e
-```
-
-This command will first start the development server (if not already running) and then run the Playwright tests against it. You can view the results in the terminal and a detailed HTML report will be generated in the `playwright-report` directory.
+> **Production-Ready AI Chatbot Platform** | Built with React, Express, ChromaDB, and Google Gemini
 
 ---
 
-## 6. Production Implementation Guide
+## 📋 Table of Contents
 
-The current application runs entirely in the browser with a mock backend. To make it production-ready, you must build a real backend service to handle business logic, security, and data persistence securely.
+1. [Executive Summary](#executive-summary)
+2. [Product Vision](#product-vision)
+3. [Architecture Overview](#architecture-overview)
+4. [Technology Stack](#technology-stack)
+5. [Implementation Guide](#implementation-guide)
+6. [Testing Strategy](#testing-strategy)
+7. [Deployment Guide](#deployment-guide)
+8. [Technical Analysis](#technical-analysis)
+9. [Development Roadmap](#development-roadmap)
+10. [Contributing](#contributing)
 
-### Step 1: Set Up a Backend Server
+---
 
-First, choose a backend framework. A Node.js-based solution is a natural fit for a React frontend.
+## 1. Executive Summary
 
-*   **Recommended:** **Next.js (API Routes)** or **Express.js**.
-    *   **Next.js:** If you plan to migrate the entire app to Next.js for features like Server-Side Rendering (SSR), its built-in API routes are a perfect choice.
-    *   **Express.js:** A robust, minimalist framework ideal for creating a standalone API server that the React client can communicate with.
+**ChatArbor AI Studio v2** is a next-generation AI-powered chatbot platform designed to replace ChatArbor v1 with full control over performance, knowledge management, and agentic capabilities.
 
-The backend server will be responsible for:
-1.  **Securing API Keys:** Your Gemini API key should **never** be exposed on the frontend. The backend will make all calls to the Gemini API.
-2.  **Managing Database Connections:** Interacting with your chosen databases.
-3.  **Authentication:** Handling user sign-up, login, and session management.
-4.  **Business Logic:** Processing file uploads, scraping URLs, etc.
+### Key Improvements Over ChatArbor v1
 
-### Step 2: Implement API Endpoints
+| Feature | ChatArbor v1 | ChatArbor v2 |
+|---------|--------------|--------------|
+| **Knowledge Management** | Admin UI only (view/add) | Full CRUD with Admin Panel |
+| **System Prompt** | Limited editing | Complete control |
+| **AI Model** | ChatArbor proprietary | Google Gemini (state-of-art) |
+| **RAG Implementation** | Black-box | Transparent ChromaDB with quality metrics |
+| **Agentic Capabilities** | Static link suggestions | Live job search & inline results |
+| **Testing** | Unknown | 100% test coverage with TDD |
+| **Deployment** | Managed service | Self-hosted, full control |
 
-Your backend should expose REST or GraphQL endpoints that correspond to the functions in `services/apiService.ts`. The frontend will then call these endpoints instead of the mock functions.
+### Current Status
 
-**Required Endpoints:**
+✅ **Completed:**
+- React frontend with chat interface
+- Express backend with API routes
+- ChromaDB integration (development mode)
+- Admin panel with full KB management
+- Persistent storage (JSON files)
+- Test IDs for automation
+- Sticky headers UI improvements
 
-*   **Auth:** `POST /api/auth/signup`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`
-*   **Knowledge Base:** `GET /api/knowledge`, `POST /api/knowledge`, `PUT /api/knowledge/:id`, `DELETE /api/knowledge/:id`, `POST /api/knowledge/re-index`, `POST /api/knowledge/scrape-url`
-*   **Chat:** `POST /api/chat`, `GET /api/chat-history`, `POST /api/chat-history`
-*   **Admin:** `GET /api/admin/logs`, `GET /api/admin/system-prompt`, `POST /api/admin/system-prompt`, `GET /api/admin/greetings`, `POST /api/admin/greetings`, `GET /api/admin/feedback`
-*   **Feedback:** `POST /api/feedback`
+🚧 **In Progress:**
+- Test-driven development setup
+- Production ChromaDB configuration
+- Agentic job search feature
+- Widget deployment strategy
 
-### Step 3: Secure User Authentication
+---
 
-The current Local Storage-based authentication is insecure. Replace it with a standard, secure method.
+## 2. Product Vision
 
-1.  **Password Hashing:** Use a strong hashing algorithm like **bcrypt** to hash user passwords before storing them in the database. **Never store plain-text passwords.**
-2.  **Session Management:** Use **JSON Web Tokens (JWT)** or session cookies to manage user login states.
-    *   **JWT:** Upon successful login, the server generates a signed JWT and sends it to the client. The client stores this token and includes it in the `Authorization` header of subsequent requests.
+### Mission Statement
 
-### Step 4: Choose and Implement Databases
+Build a **replacement for ChatArbor v1** that provides:
+1. **Full control** over chatbot performance and knowledge
+2. **Agentic capabilities** - proactive job search and inline results
+3. **Production-ready** - scalable, secure, maintainable
+4. **Turnkey deployment** - seamless integration with RangamWorks portal
 
-The mock service uses Local Storage, which is not persistent, scalable, or secure. You need to integrate real databases. This application has two distinct data storage needs: **structured application data** and **vector data** for similarity search.
+### Target Use Cases
 
-#### A. Structured Data Storage
+#### Primary: Job Seeker Assistance
+```
+User: "I need help finding nursing jobs in Ohio"
+ChatArbor v2: 
+  1. Searches TalentArbor API for matching jobs
+  2. Presents top results with inline cards
+  3. Offers "Quick Apply" functionality
+  4. Asks follow-up questions to refine search
+```
 
-This database will store user info, chat logs, feedback, greetings, etc.
+#### Secondary: Career Guidance
+- Resume writing tips
+- Interview preparation
+- RangamWorks portal navigation
+- Training resources
 
-*   **Option 1: Relational Database (Recommended for this project)**
-    *   **Examples:** PostgreSQL, MySQL.
-    *   **Implementation:** Define a clear schema with tables for `users`, `knowledge_sources`, `chat_logs`, `messages`, `feedback`, and `greetings`. Use an ORM like **Prisma** or **TypeORM** to simplify database interactions in your Node.js backend.
-    *   **Pros:** ACID compliance ensures data integrity, powerful querying with SQL, mature and reliable. Excellent for structured application data.
-    *   **Cons:** Requires schema migrations if the data model changes.
+---
 
-*   **Option 2: NoSQL Document Database**
-    *   **Examples:** MongoDB, Firestore.
-    *   **Implementation:** Create collections for `users`, `knowledgeSources`, etc. Chat logs could be stored as a single document with an array of nested message objects.
-    *   **Pros:** Flexible schema, scales horizontally, maps naturally to JavaScript objects.
-    *   **Cons:** Can be less consistent than SQL databases; complex queries and aggregations can be more difficult.
+## 3. Architecture Overview
 
-#### B. Vector Data Storage (for RAG)
+### System Architecture
 
-The mock service simulates vector search with a `cosineSimilarity` function. This will be too slow for a production application. A dedicated vector database is essential for fast and accurate RAG performance.
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     RangamWorks Portal                       │
+│                   (ASP.NET / TalentArbor)                   │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+                         │ Widget Integration
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│                  ChatArbor v2 Widget                         │
+│                  (React Bundle)                              │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+          ┌──────────────┼──────────────┐
+          │              │              │
+          ▼              ▼              ▼
+┌─────────────┐  ┌──────────────┐  ┌──────────────┐
+│   Express   │  │   ChromaDB   │  │  Gemini API  │
+│   Backend   │  │  (Vectors)   │  │  (LLM+Embed) │
+└─────────────┘  └──────────────┘  └──────────────┘
+      │
+      ▼
+┌─────────────┐
+│ JSON Files  │
+│ (Settings,  │
+│  KB, Logs)  │
+└─────────────┘
+```
 
-*   **Implementation Path:**
-    1.  When a knowledge source is added/updated via the admin panel, your backend server receives the text.
-    2.  The server calls the Gemini Embedding API (e.g., `text-embedding-004`) to convert the text into a 768-dimension vector.
-    3.  The server "upserts" (inserts/updates) this vector, along with metadata (like the source ID), into your chosen vector database.
-    4.  When a user sends a chat query, the backend embeds the query into a vector and queries the vector database to find the most similar content.
+### Data Flow
 
-*   **Option 1: Use a Relational DB with Vector Capabilities (Excellent Starting Point)**
-    *   **Technology:** **PostgreSQL** with the **`pgvector`** extension.
-    *   **Benefits:** This is a highly practical and cost-effective approach. It keeps all your data—structured and vector—in a single, unified database, simplifying your architecture and operations.
-    *   **Limitations:** For extremely large-scale applications (billions of vectors), a dedicated managed service might offer better performance, but `pgvector` is more than capable for most use cases.
+```
+1. User Message
+   ↓
+2. Widget → Express API (/api/chat)
+   ↓
+3. Backend:
+   - Extract intent (job search, general)
+   - If job search: Call TalentArbor API
+   - Query ChromaDB for context
+   - Build prompt with context
+   - Call Gemini API
+   ↓
+4. Response to Widget
+   - Markdown text
+   - Structured data (jobs, links)
+   ↓
+5. Widget renders rich UI
+```
 
-*   **Option 2: Managed Vector Database Services**
-    *   **Examples:** Pinecone, Weaviate, Google Vertex AI Vector Search.
-    *   **Benefits:** Fully managed, highly optimized for low-latency vector search at massive scale. Easy to integrate with SDKs.
-    *   **Limitations:** Adds another third-party service and associated costs to your stack.
+---
 
-### Step 5: Handle File Uploads
+## 4. Technology Stack
 
-The mock service only simulates file content. Your backend needs to handle actual file uploads.
+### Frontend
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| **React** | UI framework | 18.3+ |
+| **TypeScript** | Type safety | 5.6+ |
+| **Tailwind CSS** | Styling | 3.4+ |
+| **Vite** | Build tool | 6.0+ |
+| **React Markdown** | Message rendering | 9.0+ |
 
-1.  **Storage:** Use a cloud storage service like **AWS S3** or **Google Cloud Storage** to store uploaded files persistently.
-2.  **Parsing:** When a file is uploaded, the backend must parse its content into plain text before it can be embedded. Use libraries like:
-    *   `pdf-parse` for PDFs.
-    *   `mammoth.js` for DOCX files.
-3.  **Workflow:**
-    *   Client uploads file to a secure backend endpoint.
-    *   Backend streams the file to cloud storage.
-    *   Backend uses a parsing library to extract text.
-    *   Backend generates an embedding from the extracted text and stores it in the vector database.
+### Backend
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| **Express** | API server | 4.21+ |
+| **TypeScript** | Type safety | 5.6+ |
+| **Node.js** | Runtime | 20+ |
+
+### AI & Data
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| **Google Gemini** | LLM & embeddings | 1.5 / 2.0 |
+| **ChromaDB** | Vector database | Latest |
+| **JSON Files** | Settings & logs | N/A |
+
+### Testing
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| **Vitest** | Unit tests | 2.1+ |
+| **React Testing Library** | Component tests | 16.1+ |
+| **Playwright** | E2E tests | 1.49+ |
+| **MSW** | API mocking | 2.7+ |
+
+---
+
+## 5. Implementation Guide
+
+### Prerequisites
+
+- Node.js 20+
+- Docker (for ChromaDB)
+- Google Gemini API key
+- VS Code (recommended)
+
+### Quick Start (Development)
+
+```bash
+# 1. Clone repository
+git clone https://github.com/fusbox/ChatArbor_AI_Studio.git
+cd ChatArbor_AI_Studio
+
+# 2. Install dependencies
+npm install
+cd server && npm install && cd ..
+
+# 3. Configure environment
+cp .env.local.example .env.local
+cp server/.env.example server/.env
+
+# 4. Add your Gemini API key to both .env files
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# 5. Start ChromaDB (optional, uses fallback if not running)
+docker run -p 8000:8000 ghcr.io/chroma-core/chroma:latest
+
+# 6. Start dev servers
+npm run dev          # Frontend (port 5173)
+cd server && npm run dev  # Backend (port 3000)
+```
+
+### Project Structure
+
+```
+ChatArbor_AI_Studio/
+├── components/              # React components
+│   ├── admin/              # Admin panel components
+│   ├── auth/               # Authentication
+│   ├── chat/               # Chat interface
+│   └── shared/             # Shared components
+├── server/                  # Backend Express app
+│   ├── routes/             # API endpoints
+│   ├── utils/              # Utilities (storage)
+│   ├── data/               # JSON file storage
+│   └── index.ts            # Server entry
+├── services/                # Frontend services
+│   ├── apiService.ts       # API client
+│   ├── chromaService.ts    # Vector DB client
+│   └── geminiService.ts    # AI service
+├── tests/                   # Test files
+├── docs/                    # Documentation
+└── .env.local              # Environment config
+```
+
+### Development Workflow
+
+```bash
+# Run tests (TDD approach)
+npm test                     # All tests
+npm run test:watch          # Watch mode
+npm run test:ui             # Vitest UI
+
+# Run specific test file
+npm test -- MessageBubble.test.tsx
+
+# Type checking
+npm run type-check
+
+# Linting
+npm run lint
+npm run lint:fix
+
+# Build for production
+npm run build
+cd server && npm run build
+```
+
+---
+
+## 6. Testing Strategy
+
+### Test-Driven Development (TDD)
+
+**All new features follow TDD:**
+
+1. **Write failing test first**
+2. **Implement minimum code to pass**
+3. **Refactor while keeping tests green**
+
+### Test Coverage Requirements
+
+| Category | Target Coverage |
+|----------|----------------|
+| **Components** | 90%+ |
+| **Hooks** | 95%+ |
+| **Services** | 85%+ |
+| **Utils** | 95%+ |
+| **Overall** | 85%+ |
+
+### Test Organization
+
+```
+tests/
+├── unit/                    # Pure functions, utilities
+│   ├── services/
+│   └── utils/
+├── integration/             # Component + hooks
+│   ├── components/
+│   └── hooks/
+├── e2e/                     # Full user flows
+│   ├── chat-flow.spec.ts
+│   ├── admin-panel.spec.ts
+│   └── job-search.spec.ts
+└── __mocks__/               # Mock data
+    ├── handlers.ts          # MSW handlers
+    └── fixtures.ts          # Test data
+```
+
+### Testing Tools
+
+#### Vitest Configuration
+```typescript
+// vitest.config.ts
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./tests/setup.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'lcov'],
+      exclude: ['**/*.test.{ts,tsx}', '**/node_modules/**']
+    }
+  }
+});
+```
+
+#### Example Test Pattern
+
+```typescript
+// MessageBubble.test.tsx
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import MessageBubble from './MessageBubble';
+
+describe('MessageBubble', () => {
+  it('renders user message with correct styling', () => {
+    const message = {
+      id: '1',
+      text: 'Hello',
+      author: MessageAuthor.USER
+    };
+    
+    render(<MessageBubble message={message} onFeedback={vi.fn()} />);
+    
+    expect(screen.getByText('Hello')).toBeInTheDocument();
+    expect(screen.getByText('Hello').closest('div'))
+      .toHaveClass('bg-primary');
+  });
+  
+  it('shows feedback buttons for AI messages', () => {
+    const message = {
+      id: '1',
+      text: 'AI response',
+      author: MessageAuthor.AI
+    };
+    
+    render(<MessageBubble message={message} onFeedback={vi.fn()} />);
+    
+    expect(screen.getByTestId('feedback-good-1')).toBeInTheDocument();
+    expect(screen.getByTestId('feedback-bad-1')).toBeInTheDocument();
+  });
+});
+```
+
+---
+
+## 7. Deployment Guide
+
+### Production ChromaDB Setup
+
+```yaml
+# docker-compose.yml
+version: '3.8'
+
+services:
+  chromadb:
+    image: ghcr.io/chroma-core/chroma:latest
+    container_name: chatarbor-chromadb-prod
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./chromadb-data:/chroma/chroma
+    environment:
+      - ALLOW_RESET=false
+      - ANONYMIZED_TELEMETRY=false
+      - CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER=chromadb.auth.token.TokenConfigServerAuthCredentialsProvider
+      - CHROMA_SERVER_AUTH_CREDENTIALS=${CHROMA_AUTH_TOKEN}
+      - CHROMA_SERVER_AUTH_PROVIDER=chromadb.auth.token.TokenAuthServerProvider
+    restart: always
+    networks:
+      - chatarbor-network
+
+networks:
+  chatarbor-network:
+    driver: bridge
+```
+
+### Widget Deployment
+
+```bash
+# Build widget bundle
+npm run build:widget
+
+# Output: dist/widget.js (single file bundle)
+
+# Deploy to CDN or static hosting
+# Usage in RangamWorks:
+<script src="https://cdn.rangamworks.com/chatarbor/widget.js"></script>
+<script>
+  ChatArborWidget.init({
+    apiUrl: 'https://api-chatarbor.rangamworks.com',
+    position: 'bottom-right'
+  });
+</script>
+```
+
+---
+
+## 8. Technical Analysis
+
+### 8.1 Widget Implementation Analysis
+
+#### Comparison: Widget vs DOM Injection
+
+**ChatArbor v1 Approach (DOM Injection):**
+```javascript
+// Lightweight script injects HTML directly
+(function() {
+  const chatUI = document.createElement('div');
+  chatUI.innerHTML = `<div class="chat-container">...</div>`;
+  document.body.appendChild(chatUI);
+})();
+```
+
+**Pros:**
+- ✅ Tiny bundle size (~50KB)
+- ✅ Instant load time
+- ✅ Shares parent page's CSS
+
+**Cons:**
+- ❌ No component state management
+- ❌ Limited to vanilla JS
+- ❌ CSS conflicts likely
+- ❌ Hard to maintain/test
+
+---
+
+**ChatArbor v2 Approach (React Widget):**
+```javascript
+// Bundled React app
+(function() {
+  const container = document.createElement('div');
+  container.id = 'chatarbor-widget';
+  document.body.appendChild(container);
+  
+  ReactDOM.render(<ChatWidget />, container);
+})();
+```
+
+**Pros:**
+- ✅ Full React ecosystem
+- ✅ Component reusability
+- ✅ TypeScript type safety
+- ✅ Testing infrastructure
+- ✅ Hot module replacement
+- ✅ State management (hooks/context)
+- ✅ Shadow DOM isolation (optional)
+
+**Cons:**
+- ❌ Larger bundle (~500KB minified)
+- ❌ Requires build step
+- ❌ Slower initial load (~300-500ms)
+
+**Mitigation Strategies:**
+```javascript
+// Code splitting
+const ChatWindow = lazy(() => import('./ChatWindow'));
+
+// Preload critical resources
+<link rel="preload" href="widget.js" as="script" />
+
+// Progressive enhancement
+<div id="chatarbor-placeholder">
+  <p>Loading chat...</p>
+</div>
+```
+
+**Verdict:** React widget provides **10x better developer experience** and **future-proof architecture**. Bundle size drawbacks are negligible with modern optimization.
+
+---
+
+### 8.2 ChromaDB vs Supabase Analysis
+
+#### For Standalone Production App
+
+**ChromaDB:**
+- ✅ Best-in-class vector search
+- ✅ Lightweight, purpose-built
+- ✅ Cost-effective
+- ❌ Requires separate DB for user data
+
+**Supabase:**
+- ✅ All-in-one (DB, auth, storage)
+- ✅ Managed service
+- ❌ pgvector less optimized than ChromaDB
+- ❌ Vendor lock-in
+
+**Recommendation:** **ChromaDB** for maximum control and performance.
+
+#### For RangamWorks Integration
+
+**Strongly recommend ChromaDB** because:
+1. RangamWorks already has auth/DB infrastructure
+2. Only need vector search capability
+3. Isolated microservice architecture
+4. Can run alongside existing systems
+
+---
+
+### 8.3 TalentArbor API Integration Strategy
+
+**Agentic Job Search Architecture:**
+
+```typescript
+// Intent detection
+const intent = detectIntent(userMessage);
+
+// If job search intent
+if (intent === 'job_search') {
+  // Extract params
+  const params = extractJobParams(userMessage);
+  // { keywords: "nursing", location: "Ohio" }
+  
+  // Call TalentArbor API
+  const jobs = await searchTalentArborJobs(params);
+  
+  // Format for Gemini
+  const context = formatJobsAsContext(jobs);
+  
+  // Generate response with structured data
+  const response = await callGemini(prompt, context);
+  
+  // Return both text and job data
+  return { text: response, jobs: jobs };
+}
+```
+
+**Benefits:**
+- ✅ Inline job results (no page navigation)
+- ✅ "Quick Apply" functionality
+- ✅ Conversational refinement
+- ✅ Better user experience
+
+---
+
+## 9. Development Roadmap
+
+### Phase 1: Foundation ✅ (Complete)
+- [x] React frontend
+- [x] Express backend
+- [x] ChromaDB integration (dev)
+- [x] Admin panel
+- [x] Persistent storage
+- [x] Test IDs
+
+### Phase 2: TDD Setup 🚧 (In Progress)
+- [ ] Jest/Vitest configuration
+- [ ] React Testing Library setup
+- [ ] MSW for API mocking
+- [ ] Test coverage reports
+- [ ] CI/CD with tests
+
+### Phase 3: Production ChromaDB 📋 (Planned)
+- [ ] Docker Compose with persistence
+- [ ] Backend API for vector operations
+- [ ] Authentication/authorization
+- [ ] Backup/restore scripts
+- [ ] Migration tools
+
+### Phase 4: Agentic Features 📋 (Planned)
+- [ ] Intent detection system
+- [ ] TalentArbor API integration
+- [ ] Job results component
+- [ ] Quick apply functionality
+- [ ] Conversation refinement
+
+### Phase 5: Widget Deployment 📋 (Planned)
+- [ ] Webpack/Vite widget config
+- [ ] CDN deployment
+- [ ] Integration docs
+- [ ] A/B testing framework
+- [ ] Analytics/monitoring
+
+### Phase 6: RangamWorks Integration 📋 (Future)
+- [ ] Session validation
+- [ ] SSO integration
+- [ ] Widget embedding
+- [ ] Gradual rollout
+- [ ] ChatArbor v1 deprecation
+
+---
+
+## 10. Contributing
+
+### Pull Request Process
+
+1. Create feature branch: `feature/your-feature-name`
+2. Write tests FIRST (TDD approach)
+3. Implement feature
+4. Ensure all tests pass: `npm test`
+5. Update documentation
+6. Submit PR with detailed description
+
+### Code Style
+
+- **TypeScript**: Strict mode enabled
+- **Formatting**: Prettier (auto-format on save)
+- **Linting**: ESLint with React rules
+- **Commits**: Conventional commits format
+
+```bash
+feat: add agentic job search
+fix: resolve ChromaDB connection timeout
+docs: update deployment guide
+test: add MessageBubble tests
+```
+
+### Questions or Issues?
+
+Contact: Fu Huang (@fusbox)
+
+---
+
+**Built with ❤️ for RangamWorks** | Powered by Google Gemini & ChromaDB

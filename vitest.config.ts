@@ -1,15 +1,38 @@
-// Fix: The triple-slash directive `/// <reference types="vitest" />` was removed as it is not needed when using `defineConfig` from `vitest/config` and was causing a type resolution issue.
-// Fix: Import defineConfig from 'vitest/config' instead of 'vite' to get the correct types for the test config.
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './tests/setup.ts',
-    // You can specify a glob pattern to find your test files
-    include: ['**/*.test.tsx', '**/*.test.ts'],
+    setupFiles: ['./tests/setup.ts'],
+    include: ['**/*.{test,spec}.{ts,tsx}'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'lcov', 'json'],
+      exclude: [
+        '**/*.test.{ts,tsx}',
+        '**/*.spec.{ts,tsx}',
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/.{idea,git,cache,output,temp}/**',
+        '**/tests/**',
+        '**/*.config.{ts,js}',
+      ],
+      all: true,
+      thresholds: {
+        lines: 85,
+        functions: 85,
+        branches: 80,
+        statements: 85,
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '.'),
+    },
   },
 });
