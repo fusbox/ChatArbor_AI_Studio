@@ -26,6 +26,11 @@ export interface KnowledgeSource {
   embedding?: number[]; // Vector embedding for similarity search
 }
 
+export interface KnowledgeSourceWithSimilarity {
+  source: KnowledgeSource;
+  similarity: number;
+}
+
 export interface ChatLog {
   id: string;
   userId: string;

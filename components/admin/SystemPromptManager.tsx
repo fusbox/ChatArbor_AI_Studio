@@ -54,6 +54,7 @@ const SystemPromptManager: React.FC = () => {
                             onChange={(e) => setPrompt(e.target.value)}
                             placeholder="Enter the system prompt here..."
                             className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition resize-y min-h-[250px] font-mono text-sm"
+                            data-testid="system-prompt-input"
                         />
                         <div className="mt-4 flex justify-end items-center space-x-4">
                             {saveStatus === 'success' && <p className="text-emerald-600 text-sm font-medium">Changes saved successfully!</p>}
@@ -62,6 +63,7 @@ const SystemPromptManager: React.FC = () => {
                                 onClick={handleSave}
                                 disabled={isSaving}
                                 className="bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary-dark transition-colors disabled:bg-neutral-400 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px]"
+                                data-testid="save-system-prompt-button"
                             >
                                 {isSaving ? <Spinner /> : 'Save Changes'}
                             </button>

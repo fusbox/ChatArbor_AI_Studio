@@ -1,0 +1,150 @@
+[
+  {
+    "messageId": "ai_1763824058620",
+    "userMessage": {
+      "id": "user_1763824056655",
+      "text": "What can I do on this site?",
+      "author": "user",
+      "timestamp": 1763824056655
+    },
+    "aiMessage": {
+      "id": "ai_1763824058620",
+      "text": "I can help you find a job! I can also help you build your resume, practice for interviews, and get more training.\n\nAre you currently a Medicaid member residing in Washington, D.C., Florida, Iowa, Kansas, Missouri, Nevada, or Ohio?\n",
+      "author": "ai",
+      "timestamp": 1763824058620
+    },
+    "initialRating": "good",
+    "scores": [
+      {
+        "dimension": "Correctness / Accuracy",
+        "weight": 20,
+        "score": 3
+      },
+      {
+        "dimension": "Relevance / On-topic",
+        "weight": 15,
+        "score": 3
+      },
+      {
+        "dimension": "Completeness",
+        "weight": 15,
+        "score": 3
+      },
+      {
+        "dimension": "Clarity / Understandability",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Tone / Empathy / Voice Fit",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Efficiency / Brevity",
+        "weight": 5,
+        "score": 3
+      },
+      {
+        "dimension": "Compliance / Scope Adherence",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Context / Memory Handling",
+        "weight": 5,
+        "score": "N/A"
+      },
+      {
+        "dimension": "Actionability / Next Steps Provided",
+        "weight": 5,
+        "score": 1
+      },
+      {
+        "dimension": "Escalation Appropriateness",
+        "weight": 5,
+        "score": "N/A"
+      }
+    ],
+    "totalWeightedScore": 86.66666666666667,
+    "maxPossibleScore": 90,
+    "comment": "",
+    "chatId": "chat_guest",
+    "id": "1763824138018",
+    "submittedAt": 1763824138018
+  },
+  {
+    "messageId": "ai_1763825459185",
+    "userMessage": {
+      "id": "user_1763825456870",
+      "text": "I might be looking for a career change. Can the site help with that?",
+      "author": "user",
+      "timestamp": 1763825456870
+    },
+    "aiMessage": {
+      "id": "ai_1763825459185",
+      "text": "I can definitely help you explore career options! The Job Interest Survey on your Dashboard can help match you with roles you might not have considered. The Training Hub has courses to help you upskill. Completing your profile increases the chance of discovering new opportunities!\n",
+      "author": "ai",
+      "timestamp": 1763825459185
+    },
+    "initialRating": "good",
+    "scores": [
+      {
+        "dimension": "Correctness / Accuracy",
+        "weight": 20,
+        "score": 3
+      },
+      {
+        "dimension": "Relevance / On-topic",
+        "weight": 15,
+        "score": 3
+      },
+      {
+        "dimension": "Completeness",
+        "weight": 15,
+        "score": 2
+      },
+      {
+        "dimension": "Clarity / Understandability",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Tone / Empathy / Voice Fit",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Efficiency / Brevity",
+        "weight": 5,
+        "score": 3
+      },
+      {
+        "dimension": "Compliance / Scope Adherence",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Context / Memory Handling",
+        "weight": 5,
+        "score": "N/A"
+      },
+      {
+        "dimension": "Actionability / Next Steps Provided",
+        "weight": 5,
+        "score": 0
+      },
+      {
+        "dimension": "Escalation Appropriateness",
+        "weight": 5,
+        "score": "N/A"
+      }
+    ],
+    "totalWeightedScore": 80,
+    "maxPossibleScore": 90,
+    "comment": "Should provide links and prompt follow-up action.",
+    "chatId": "chat_guest",
+    "id": "1763825593887",
+    "submittedAt": 1763825593888
+  }
+]

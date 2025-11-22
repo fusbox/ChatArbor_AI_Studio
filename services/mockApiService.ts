@@ -1,12 +1,8 @@
-import { KnowledgeSource, Message, ChatLog, UserFeedback, Greeting, User, KnowledgeSourceType } from '../types.js';
+import { KnowledgeSource, KnowledgeSourceWithSimilarity, Message, ChatLog, UserFeedback, Greeting, User, KnowledgeSourceType } from '../types.js';
 import { generateEmbedding } from './geminiService.js';
-import { GoogleGenAI } from "@google/genai";
 
 // --- SIMULATED BACKEND SERVER ---
 // This file now acts as a mock backend. The functions in apiService.ts will call these.
-
-// --- Gemini API Setup (SERVER-SIDE) ---
-const ai = process.env.API_KEY ? new GoogleGenAI({ apiKey: process.env.API_KEY }) : null;
 
 const generateMockResponse = async (prompt: string): Promise<string> => {
   await new Promise(resolve => setTimeout(resolve, 1000));
@@ -152,6 +148,22 @@ export const handleSearchKnowledgeBase = async (query: string): Promise<Knowledg
   return sourcesWithSimilarity.slice(0, 5).map(item => item.source);
 };
 
+export const handleSearchKnowledgeBaseWithScores = async (query: string): Promise<KnowledgeSourceWithSimilarity[]> => {
+  const sources = getFromStorage<KnowledgeSource[]>(KNOWLEDGE_BASE_KEY, []);
+  if (sources.length === 0) return [];
+
+  const queryEmbedding = await generateEmbedding(query);
+  const sourcesWithSimilarity = sources
+    .map(source => ({
+      source,
+      similarity: cosineSimilarity(queryEmbedding, source.embedding || []),
+    }))
+    .filter(item => item.similarity > 0.5); 
+
+  sourcesWithSimilarity.sort((a, b) => b.similarity - a.similarity);
+  return sourcesWithSimilarity.slice(0, 5);
+};
+
 export const handleReIndexKnowledgeBase = async (): Promise<{ count: number }> => {
     let sources = getFromStorage<KnowledgeSource[]>(KNOWLEDGE_BASE_KEY, []);
     let updatedCount = 0;
@@ -190,37 +202,7 @@ export const handleGetChatResponse = async (
   userQuery: string,
   chatHistory: { role: string; parts: { text: string }[] }[]
 ): Promise<string> => {
-  if (!ai) {
-    return generateMockResponse(userQuery);
-  }
-
-  const model = 'gemini-2.5-flash';
-  const knowledgeContext = await handleSearchKnowledgeBase(userQuery);
-  const contextText = knowledgeContext
-    .map(source => `Source (${source.type}):\n${source.data || source.content}`)
-    .join('\n\n---\n\n');
-
-  const systemInstruction = await handleGetSystemPrompt();
-  
-  try {
-    // Fix: The chatHistory from useChat already contains the latest user message.
-    // To add context, we must replace that last message instead of appending a new one,
-    // which would result in two consecutive user turns.
-    const contentsWithContext = [
-        ...chatHistory.slice(0, -1),
-        { role: 'user', parts: [{text: `Context:\n${contextText}\n\nQuestion: ${userQuery}`}] }
-    ];
-
-    const response = await ai.models.generateContent({
-        model: model,
-        contents: contentsWithContext,
-        config: { systemInstruction }
-    });
-    return response.text;
-  } catch (error) {
-    console.error("Error generating content:", error);
-    return "I'm sorry, I encountered an error while processing your request. Please try again later.";
-  }
+  return generateMockResponse(userQuery);
 };
 
 // --- Chat History (SERVER-SIDE) ---

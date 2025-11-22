@@ -1,4 +1,3 @@
-
 import React, { useState, forwardRef, useRef, useEffect } from 'react';
 
 // Web Speech API type definitions
@@ -49,11 +48,10 @@ declare global {
 
 interface MessageInputProps {
   onSend: (text: string) => void;
-  onClear: () => void;
   disabled: boolean;
 }
 
-const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSend, onClear, disabled }, ref) => {
+const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSend, disabled }, ref) => {
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
@@ -81,7 +79,7 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
             interimTranscript += transcriptPart;
           }
         }
-        
+
         if (newFinalTranscript) {
           const separator = finalTranscriptRef.current.length > 0 && !finalTranscriptRef.current.endsWith(' ') ? ' ' : '';
           finalTranscriptRef.current += separator + newFinalTranscript.trim();
@@ -101,7 +99,7 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
       recognition.onend = () => {
         setIsRecording(false);
       };
-      
+
       recognitionRef.current = recognition;
 
       return () => {
@@ -131,7 +129,7 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
       finalTranscriptRef.current = '';
     }
   };
-  
+
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setText(newText);
@@ -139,7 +137,7 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
       finalTranscriptRef.current = newText;
     }
   };
-  
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -150,15 +148,6 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
   return (
     <div className="p-4 md:p-6 bg-white border-t border-neutral-200">
       <form onSubmit={handleSubmit} className="flex items-center space-x-3">
-        <button 
-          type="button" 
-          onClick={onClear} 
-          disabled={disabled}
-          title="Start New Conversation"
-          className="p-2 rounded-full text-neutral-500 hover:bg-neutral-100 hover:text-primary disabled:opacity-50 transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h5M20 20v-5h-5" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 9a9 9 0 0114.23-5.77M20 15a9 9 0 01-14.23 5.77" /></svg>
-        </button>
         <textarea
           ref={ref}
           value={text}
@@ -169,17 +158,17 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
           rows={1}
           disabled={disabled}
           style={{ maxHeight: '100px' }}
+          data-testid="chat-input"
         />
         {speechSupported && (
           <button
             type="button"
             onClick={handleToggleRecording}
             disabled={disabled}
-            className={`p-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-              isRecording 
-                ? 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-300' 
+            className={`p-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${isRecording
+                ? 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-300'
                 : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200 focus:ring-neutral-300'
-            } disabled:opacity-50 disabled:cursor-not-allowed`}
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
             aria-label={isRecording ? 'Stop dictation' : 'Start dictation'}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -188,12 +177,12 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
             </svg>
           </button>
         )}
-        {/* Fix: Added aria-label to provide an accessible name for this icon button. This fixes the Playwright test which was failing to find the button by its name. */}
         <button
           type="submit"
           disabled={disabled || !text.trim()}
           aria-label="Send message"
           className="bg-primary text-white rounded-full p-3 hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark disabled:bg-neutral-400 disabled:cursor-not-allowed transition-colors"
+          data-testid="send-message-button"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />

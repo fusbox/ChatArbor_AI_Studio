@@ -1,0 +1,64 @@
+[
+  {
+    "id": "1763823985567",
+    "userId": "guest",
+    "messages": [
+      {
+        "id": "ai_1763822465738",
+        "text": "Welcome to Job Connections! Navigating your job search journey is easier with a little help. How can I help?",
+        "author": "ai",
+        "timestamp": 1763822465738
+      },
+      {
+        "id": "user_1763822476744",
+        "text": "Test message for logs",
+        "author": "user",
+        "timestamp": 1763822476744
+      },
+      {
+        "id": "ai_1763822478540",
+        "text": "I'm not sure how to help you with that, but you can visit our [Contact Page](https://rangamworks.com/portal/home/contact) for assistance.\n",
+        "author": "ai",
+        "timestamp": 1763822478540
+      }
+    ],
+    "timestamp": 1763823985567
+  },
+  {
+    "id": "1763825219954",
+    "userId": "guest",
+    "messages": [
+      {
+        "id": "ai_1763823985897",
+        "text": "Welcome to Job Connections! Navigating your job search journey is easier with a little help. How can I help?",
+        "author": "ai",
+        "timestamp": 1763823985897
+      },
+      {
+        "id": "user_1763824056655",
+        "text": "What can I do on this site?",
+        "author": "user",
+        "timestamp": 1763824056655
+      },
+      {
+        "id": "ai_1763824058620",
+        "text": "I can help you find a job! I can also help you build your resume, practice for interviews, and get more training.\n\nAre you currently a Medicaid member residing in Washington, D.C., Florida, Iowa, Kansas, Missouri, Nevada, or Ohio?\n",
+        "author": "ai",
+        "timestamp": 1763824058620
+      },
+      {
+        "id": "user_1763824066399",
+        "text": "Yes",
+        "author": "user",
+        "timestamp": 1763824066399
+      },
+      {
+        "id": "ai_1763824068731",
+        "text": "Great! RangamWorks is here to help you find a job.\n\nHere are some of the things you can do on the site:\n\n*   **Find a Job:** You can start your job search [here](https://rangamworks.com/JobSeeker/DirectorySearchJob?directory=home&utm_source=rangamworks&utm_medium=chatarbor&utm_campaign=job+search+question).\n*   **Build Your Resume:** Log in, go to your Dashboard, Edit Profile, progress to the Review page, and click \"Download Resume.\"\n*   **Take a Job Interest Survey:** Log in, go to your Dashboard, find the \"Surveys\" card, and click the link next to \"Job Interest.\"\n\nHow else can I help you today?\n",
+        "author": "ai",
+        "timestamp": 1763824068731
+      }
+    ],
+    "timestamp": 1763825219954
+  }
+]

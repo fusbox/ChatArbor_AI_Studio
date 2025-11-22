@@ -1,0 +1,2927 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <meta name="author" content="RangamWorks">
+    <title>Dashboard | RangamWorks</title>
+
+
+
+    <!--  START: SEO Meta Tag   -->
+            <link rel="alternate" hreflang="en-us" href="https://rangamworks.com/" />
+            <link rel="canonical" href="https://rangamworks.com/job-seeker/dashboard" />
+            <meta name="title" content="Dashboard | RangamWorks" />
+            <meta name="description" />
+            <meta name="keywords">
+    <!--  END: SEO Meta Tag   -->
+    <!--start favicon icon-->
+    <script type="text/javascript" src="/ruxitagentjs_ICA7NQVfqrux_10325251103172537.js" data-dtconfig="rid=RID_78180344|rpid=426370619|domain=rangamworks.com|reportUrl=/rb_bf94900opo|app=0bee771ab870f947|owasp=1|featureHash=ICA7NQVfqrux|msl=153600|rdnt=1|uxrgce=1|cuc=3vjmjcu6|srms=2,1,0,0%2Ftextarea%2Cinput%2Cselect%2Coption;0%2Fdatalist;0%2Fform%20button;0%2F%5Bdata-dtrum-input%5D;0%2F.data-dtrum-input;1%2F%5Edata%28%28%5C-.%2B%24%29%7C%24%29|mel=100000|expw=1|dpvc=1|lastModification=1763142727607|postfix=3vjmjcu6|tp=500,50,0|srbbv=2|agentUri=/ruxitagentjs_ICA7NQVfqrux_10325251103172537.js"></script><link rel="icon" type="image/ico" href="/Themes/ElevanceHealth/img/fevicon.png" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/lib/fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+    <link rel="stylesheet" href="/admin/css/responsive.css">
+    <link href="/Admin/css/custom.css" rel="stylesheet" />
+    <link href="/css/custom.css" rel="stylesheet" />
+    <link href="/lib/ladda/dist/ladda-themeless.css" rel="stylesheet" />
+    <link href="/css/main.css" rel="stylesheet" />
+    <link rel="stylesheet" id="colorCssLink" href="/Content/accessibility/css/colors/color-default.css" />
+    <link href="/Front/css/style.css" rel="stylesheet" />
+    <link href="/Front/css/responsive.css" rel="stylesheet" />
+    <link href="/Front/css/custom.css" rel="stylesheet" />
+    <link href="/themes/elevancehealth/css/header.css" rel="stylesheet" />
+    <link href="/themes/elevancehealth/css/main-header.css" rel="stylesheet" />
+    <!-- To render partial view script -->
+    
+    <link href="/lib/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/lib/tagify/tagify.min.css" rel="stylesheet" />
+
+
+    <!---Required Script - For Partial Rendering-->
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="/js/custom-validation.js"></script>
+    <script src="/lib/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="/js/site.js"></script>
+
+    <style>
+        .custom-control-label {
+            font-weight: 400 !important;
+        }
+
+        .radiobtn-tiber .form-check-input:checked {
+            background-color: #0d6efd !important;
+            border-color: #0d6efd !important;
+        }
+
+        .checkbox-tiber .form-check-input:checked {
+            background-color: #0d6efd !important;
+            border-color: #0d6efd !important;
+        }
+
+
+        /* Add this CSS to hide the Google Translate top bar */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0 !important;
+        }
+
+        #btnSearchM > .ladda-spinner > div:first-child {
+            margin-top: -10px !important;
+        }
+
+        .menu-border-left {
+            border-left: 1px solid var(--grey);
+        }
+
+        .sign-up {
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1.5px solid var(--white);
+            background: #0c61e7;
+            color: #fff !important;
+            text-align: center;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            padding: 6px 10px !important;
+        }
+
+        .customTooltip {
+            position: absolute;
+        }
+
+            .customTooltip:before {
+                content: "";
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                background: #fff8e1;
+                top: -7px;
+                transform: rotate(45deg);
+                right: 6px;
+                border-top: 1px solid #ffc107;
+                border-left: 1px solid #ffc107;
+            }
+
+        @media (min-width: 1200px) {
+            .navbar-expand-xl .offcanvas.before-login-offcanvas {
+                position: static;
+                z-index: auto;
+                flex-grow: 1;
+                width: auto !important;
+                height: auto !important;
+                visibility: visible !important;
+                background-color: transparent !important;
+                border: 0 !important;
+                transform: none !important;
+                transition: none;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Set the default language of the page
+                includedLanguages: 'en,hi', // Include the languages you want to support
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+
+
+        <meta name="google-site-verification" content="E9Ad-m-hPf43cgYZ0OSuSJ78PXndzSrdEI3zPEitjao" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7NS46B5MR"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-S7NS46B5MR');
+        </script>
+            <!-- Google Tag Manager -->
+            <script>
+  (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+          'gtm.start':
+              new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+              'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-TFKBMQTD');</script>
+            <!-- End Google Tag Manager -->
+            <!-- Google Tag Manager (noscript) -->
+            <noscript>
+                <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TFKBMQTD"
+                        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            </noscript>
+            <!-- End Google Tag Manager (noscript) -->
+</head>
+<body class="d-flex flex-column min-vh-100" id="bodyContent">
+
+    <!-- Skip to main content-->
+    <!---Navigation menu start here-->
+        <header id="navbar_top">
+            <a href="#main-contents" id="skip-to-content-btn" class="skip-to-content show-on-focus active">Skip to Content</a>
+            <div class="navbar navbar-expand-xl navbar-light jobseekermenu" id="navbar_top2">
+                <div class="container-fluid px-0">
+                    <a class="navbar-brand" href="https://rangamworks.com/portal/oh">
+                        <img src="/Themes/ElevanceHealth/img/logo.svg" class="img-fluid img-logo" alt="RangamWorks" width="340">
+                    </a>
+                    <ul class="navbar-nav mx-xxl-4 d-none d-xl-flex justify-content-center w-75">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/job-seeker/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link" href="/job-seeker/jobs">My Jobs</a></li>
+                        <li class="nav-item dropdown">
+                            <a id="dropAboutUs" class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-auto-close="outside" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">About Us</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropAboutUs">
+                                <li><a class="dropdown-item" href="https://rangamworks.com/portal/oh/about">Who We Are</a></li>
+                                <li><a class="dropdown-item" href="https://rangamworks.com/portal/oh/service">What We Offer</a></li>
+                                <li><a class="dropdown-item" href="https://rangamworks.com/portal/oh/partners-employers">Partners &amp; Employers</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle ProviderDropdown-list" href="#indicator" id="ProviderDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Resources</a>
+                            <ul id="indicator" class="dropdown-menu " aria-labelledby="ProviderDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="https://rangamworks.com/oh/moodle-login">Training</a>
+                                </li>
+                                <li><a class="dropdown-item" href="https://rangamworks.com/portal/oh/faqs">FAQ</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="https://rangamworks.com/portal/oh/refertalent">Refer Someone</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link" href="https://rangamworks.com/portal/oh/contact">Contact Us</a></li>
+                    </ul>
+
+                    <ul class="navbar-nav ms-xl-auto mobie-searchbar-menu flex-row">
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-purple fw-bold usericon-white2" href="javascript:void(0)" id="navbarDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="/imgs/user-icon.svg" alt="Profile Photo" class="img-fluid" />
+                                    <span class="d-none">John Doe</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end min-w-330 job-seekerdrop-down" aria-labelledby="navbarDropdown">
+                                <li class="user-profilelist-items">
+                                    <div class="user-profile d-flex align-items-center">
+                                            <img src="/imgs/user-icon.svg" alt="Profile" width="50" class="img-fluid user-icon me-2" />
+                                            <p class="user_name fw-bold mb-0">
+                                                John Doe
+                                                <span class="text-gray text-break">rangamworks&#x2B;johndoe@rangam.com</span>
+                                            </p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a id="showAIModalForReview" class="dropdown-item fw-bold" role="menuitem" tabindex="0" aria-label="Edit Your Profile"  aria-current="page">
+                                        <img src="/imgs/job-seeker/edit-profile.svg" alt="" class="img-fluid me-2" />
+                                        Edit Your Profile
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item fw-bold" aria-current="page" href="/job-seeker/dashboard">
+                                        <img src="/imgs/job-seeker//dashboard.svg" alt="" class="img-fluid me-2" />
+                                        Dashboard
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item fw-bold" aria-current="page" href="/job-seeker/profile/details">
+                                        <img src="/imgs/job-seeker/profile.svg" alt="" class="img-fluid me-2" />
+                                        Profile
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item fw-bold" aria-current="page" href="/JobSeeker/SearchJob">
+                                        <img src="/imgs/job-seeker/search-job.svg" alt="" class="img-fluid me-2" />
+                                        Search Jobs
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item fw-bold" aria-current="page" href="/job-seeker/jobs">
+                                        <img src="/imgs/job-seeker/my-job.svg" alt="" class="img-fluid me-2" />
+                                        My Jobs
+                                    </a>
+                                </li>
+
+
+                                <li>
+                                    <a class="dropdown-item fw-bold" aria-current="page" href="/job-seeker/settings">
+                                        <img src="/imgs/job-seeker/settings.svg" alt="" class="img-fluid me-2" />
+                                        Settings
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item fw-bold" onclick="logoutUser()" href="javascript:void(0)" aria-current="page">
+                                        <img src="/imgs/admin/logout-icon.svg" alt="" class="img-fluid me-2" />Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="navbar-toggler"
+                                    type="button"
+                                    data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight"
+                                    aria-controls="offcanvasRight" aria-label="Open Navigation Menu">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="offcanvas offcanvas-end w-100 jobSeekerMenu" style="overflow: auto;" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                        <div class="d-flex d-xl-none justify-content-between">
+                            <a class="navbar-brand ps-3" aria-current="page">
+                                <img class="navbar-logo img-fluid offcanvas-logo" src="/Themes/ElevanceHealth/img/logo.svg" alt="RangamWorks" width="140">
+                            </a>
+                            <button class="btn" aria-label="Close Navigation Menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                <svg fill="none" viewBox="-1 -1 32 32" height="40" width="40">
+                                    <g id="Line Duotone/Essentional UI/Close Square">
+                                        <path id="Vector" stroke="#737373" d="M2.5 15c0 -5.8925625 0 -8.8388375 1.8305875 -10.6694125C6.1611625000000005 2.5 9.1074375 2.5 15 2.5c5.8925 0 8.838875 0 10.669375 1.8305875C27.5 6.1611625000000005 27.5 9.1074375 27.5 15c0 5.8925 0 8.838875 -1.830625 10.669375C23.838875 27.5 20.8925 27.5 15 27.5c-5.8925625 0 -8.8388375 0 -10.6694125 -1.830625C2.5 23.838875 2.5 20.8925 2.5 15Z" stroke-width="2"></path>
+                                        <path id="Vector_2" stroke="#000000" stroke-linecap="round" d="M18.125 11.875024999999999 11.875024999999999 18.125M11.875 11.875l6.25 6.25" stroke-width="2"></path>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <form id="frmSearchJobs" method="post" action="/JobSeeker/SearchJobPanel">
+                            <input type="hidden" value="1" id="SubmitHeader" name="SubmitHeader" />
+                            <div class="d-flex justify-content-xl-end px-3 pt-2 p-xl-0">
+                                <div class="list-items w-100 px-xl-2 me-2 me-xl-0">
+                                    <div class="search" role="search">
+                                        <span class="fa-search-icon"><img src="/imgs/admin/search-icon.svg" class="img-fluid" alt=""></span>
+                                        <input placeholder="Search jobs by keywords" aria-label="Search jobs by keywords" id="jobKeyword" name="jobKeyword" maxlength="200">
+                                    </div>
+                                </div>
+                                <div class="list-items px-xl-0 w-auto">
+                                    <button type="button" id="btnSearchM" form="frmSearchJobs" value="Submit" class=" w-auto nav-link text-dark btn btn-lightblue py-1 fw-500 px-3">Search</button>
+                                </div>
+                            </div>
+                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8N4k61oopYxBiRicw0VUdPwy_yRoNAyP8tnY1A8mcS7nB92cX2S-Wd0aUfI8wQFIziiuJtEFmhHtBDA10a4Cf4QpCJztYSTG0OdIpRfogzz0JvTzuj5hZT7U3GgqzZlSIq155iB6ehdYnQJsh1g0O56FGA0vOA-QWCMrdpNbKNjbayyXxZJ0mpIiGkMIPv00Hg" /></form>
+                        <nav>
+                            <ul class="navbar-nav mx-xxl-4">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/job-seeker/dashboard">Dashboard</a>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" href="/job-seeker/jobs">My Jobs</a></li>
+                                <li class="nav-item dropdown">
+                                    <a id="dropAboutUs" class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-auto-close="outside" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">About Us</a>
+                                    <ul class="dropdown-menu" aria-labelledby="AboutUs">
+                                        <li><a class="dropdown-item" href="https://rangamworks.com/portal/oh/about">Who We Are</a></li>
+                                        <li><a class="dropdown-item" href="https://rangamworks.com/portal/oh/service">What We Offer</a></li>
+                                        <li><a class="dropdown-item" href="https://rangamworks.com/portal/oh/partners-employers ">Partners &amp; Employers</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle ProviderDropdown-list" href="#indicator" id="ProviderDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Resources</a>
+                                    <ul id="indicator" class="dropdown-menu " aria-labelledby="ProviderDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="https://rangamworks.com/oh/moodle-login">Training</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="https://rangamworks.com/portal/oh/faqs">FAQ</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="https://rangamworks.com/portal/oh/refertalent">Refer Someone</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" href="https://rangamworks.com/portal/oh/contact">Contact Us</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+        </header>
+    
+<link href="/Front/css/cookiestyle.min.css" rel="stylesheet" />
+
+ 
+    <style>
+    #showAIModalForReview {
+        cursor: pointer;
+    }
+
+    #showAIModalForBuildProfile {
+        cursor: pointer;
+    }
+
+    .ai-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ai-modal-content {
+        background-color: #fff;
+        margin: auto;
+        padding: 24px 32px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 900px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        position: relative;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .ai-modal h2 {
+        font-size: 20px;
+        margin-bottom: 12px;
+        font-weight: bold;
+        color: #2c2c2c;
+    }
+
+    .ai-modal p {
+        margin-bottom: 12px;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #444;
+    }
+
+    .ai-modal strong {
+        color: #000;
+    }
+
+    .ai-modal-close {
+        position: absolute;
+        top: 12px;
+        right: 20px;
+        font-size: 24px;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .ai-modal-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .ai-modal-ok {
+        padding: 8px 30px;
+        background-color: #007bff;
+        color: white;
+        font-size: 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .ai-modal-ok:hover {
+           
+            color: white;
+        }
+</style>
+<div id="aiModal" class="ai-modal">
+    <div class="ai-modal-content">
+        <div id="aiBody"></div>
+        <div class="ai-modal-footer">
+            <a id="aiModalOkBtn" class="ai-modal-ok">OK</a>
+        </div>
+    </div>
+</div>
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Define the URL to redirect after consent
+      const url = '/job-seeker/profile/basic';
+      // Configuration object mapping button IDs to their respective redirect URLs
+        const config = {
+
+            showAIModalForEditProfile: {
+                url:url
+            },
+            showAIModalForReview: {
+                url: '/job-seeker/profile/review'
+            },
+            showAIModalForBuildProfile: {
+                url: url
+            },
+        };
+         // DOM element references
+        const modal = document.getElementById('aiModal');
+        const okBtn = document.getElementById('aiModalOkBtn');
+        //const titleEl = document.getElementById('aiTitle');
+        const bodyEl = document.getElementById('aiBody');
+         // API endpoints for consent check and consent logging
+        const logConsentUrl = '/JobSeekerProfile/LogAIConsent';
+        const checkConsentUrl = '/JobSeekerProfile/CheckAIConsent';
+        const modalContent = modal.querySelector(".ai-modal-content");
+
+        Object.entries(config).forEach(([btnId, { url }]) => {
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+
+            btn.addEventListener('click', () => {
+                // First, check if consent already exists
+                fetch(checkConsentUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.consent) {
+                            // Consent exists, redirect directly
+                            window.location.href = url;
+                        } else {
+                           // No consent found - load and show AI Transparency modal
+                            fetch('/ai-transparency.json')
+                                .then(res => res.json())
+                                .then(data => {
+                                    debugger;
+                                    // Remove any old heading if it exists
+                                    const existingTitle = modalContent.querySelector('h2');
+                                    if (existingTitle) {
+                                        existingTitle.remove();
+                                    }
+
+                                    // Only create <h2> if title exists
+                                    if (data.title && data.title.trim() !== '') {
+                                        const h2 = document.createElement('h2');
+                                        h2.id = "aiTitle"
+                                        h2.textContent = data.title;
+                                        modalContent.prepend(h2);
+                                    }
+
+                                    bodyEl.innerHTML = data.content;
+                                    okBtn.setAttribute('data-redirect-url', url); // Store redirect URL
+                                    modal.style.display = 'flex';
+                                })
+                                .catch(err => console.error("Modal fetch error:", err));
+                        }
+                    })
+                    .catch(err => console.error("Consent check error:", err));
+            });
+        });
+         // Handle "OK" button click inside modal
+        okBtn.addEventListener('click', () => {
+            //hide the modal
+            modal.style.display = 'none';
+
+           // Step 2: Log user's AI consent
+            fetch(logConsentUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    timestamp: new Date().toISOString(),
+                })
+            })
+                .then(() => {
+                     // Redirect after consent is successfully logged
+                    const redirectUrl = okBtn.getAttribute('data-redirect-url');
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    }
+                })
+                .catch(err => console.error("Consent save error:", err));
+        });
+    });
+</script>
+
+
+
+    <main id="main-contents">
+        
+
+
+<div class="container sectionpadding dashbaord-content pt-1">
+    <div class="row py-3 existing-page-title">
+        <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 d-lg-flex">
+            <h1 class="f-24 fw-600">Dashboard</h1>
+            <p class="m-2 mt-1">Check recommended jobs and read news</p>
+        </div>
+    </div>
+
+     
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        const closeButton = document.querySelector('.info-block-close');
+        if (closeButton) {
+            closeButton.addEventListener('click', function () {
+                // Find the parent .info-block-ui and hide it
+                const infoBlock = closeButton.closest('.info-block-ui');
+                if (infoBlock) {
+                    infoBlock.style.display = 'none';
+                }
+
+            });
+        }
+    });
+</script>
+
+
+
+    <div class="row mt-lg-3">
+        
+<style>
+    .blackcolor {
+        color: #000 !important;
+    }
+</style>
+<div class="col-xl-3 col-md-12 col-sm-12 col-12">
+    <div class="card p-3">
+        <div id="ContentBasicProfile">
+            <div class="justifycontent-center mx-auto border-0  my-3 card-w-80">
+                <div class="row my-2">
+                    <div class="col-md-12 d-flex align-items-center justify-content-center ">
+                        <div class="profile-edit">
+                                <img src="/imgs/profile-dark.svg" alt="Profile" class="img-fluid mb-2 profileeditimg" style="height: 128px;">
+
+                            <div class="profle-edit-icon proflie_edti__icon">
+                                <a href="javascript:void(0)" onclick="openAvatarModel()">
+                                    <img src="/imgs/proflie_edti__icon.svg" alt="Edit Profile Photo" class="img-fluid">
+                                </a>
+                            </div>
+                        </div>
+
+                        
+<link rel="stylesheet" href="/lib/croppie/croppie.css" />
+
+<style>
+    #avatar-croppie {
+        width: 100%;
+        height: 400px;
+        padding-bottom: 25px;
+    }
+</style>
+
+<form id="frm_Avatar">
+    <div class="modal fade" id="avatarPreviewModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title f-24" id="staticBackdropLabel">Profile Photo</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btnAvatarCancel"></button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="text-black f-22 mb-1">Upload a photo to add your profile</h3>
+                    <p>Upload a photo of yourself and then adjust it to your liking.</p>
+
+                    <div class="col-md-12 d-flex align-items-center justify-content-center ">
+                        <div class="profile-edit my-5">
+                                <img src="/imgs/profile-dark.svg" alt="Profile" id="avatar-img-output" class="img-fluid" tabindex="0">
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <input id="avatar" type="file" class="form-control" accept="image/*" aria-label="upload Photo" />
+                            <input id="PictureTypeID" name="PictureTypeID" type="hidden" data-val="true" data-val-required="The PictureTypeID field is required." value="0" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnAvatarUpload" type="button" class="btn blue_btn px-3 ladda-button d-flex align-items-center systemwhite" data-style="slide-up">
+                        <img src="/imgs/job-seeker/upload-photo-icon.svg" class="me-1" width="15" alt="" />
+                        Upload Photo
+                    </button>
+                    <button id="btnEditAvatar" onclick="editAvatar()"  type="button" class="btn blue_btn px-3 ladda-button d-flex align-items-center systemwhite" data-style="slide-up">
+                        <img src="/imgs/job-seeker/edit-photo-icon.svg" class="me-1" width=" 15" alt="" />
+                        Edit Photo
+                    </button>
+                    <button id="btnDeleteAvatar" onclick="deleteAvatar()"  type="button" class="btn blue_btn px-3 ladda-button systemwhite d-flex align-items-center" data-style="slide-up">
+                        <img src="/imgs/job-seeker/deleteiconimg.svg" class="me-1" width="15" alt="" />
+                        Delete
+                    </button> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade " id="avatarModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="avatarModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="avatarModelLabel">Edit Photo</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-black">
+                    <div id="avatar-croppie" class="center-block"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnFitToWidth" type="button" class="btn btn-primary px-4" role="button">Fit to width</button>
+                    <button id="btnAvatarCrop" type="button" class="btn btn-primary px-5" aria-label="Save">Save</button>
+                    <button id="btnAvatarCropcancle" type="button" class="btn btn-primary px-5" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="slider-instruction" class="sr-only" aria-hidden="true">
+        Select a value to fit the profile photo within the frame.
+    </div>
+
+</form>
+
+
+<script src="/lib/croppie/croppie.js"></script>
+
+                    </div>
+                    <p class="f-30 text-black fw-bold text-center">
+                        John Doe
+                    </p>
+                    <p class="text-light text-center">
+                        North Olmsted, Ohio US
+                    </p>
+                    <div class="border-top"></div>
+                </div>
+
+            </div>
+        </div>
+        <h2 class="text-blacksecondary text-center f-500 f-16">My Jobs</h2>
+        <ul>
+        <li  class="row">
+            <div class="col-xxl-10 col-md-10 col-10">
+                <p id="appliedJobs" class="clsContent text-blacksecondary f-600">
+                    Applied Jobs
+                </p>
+            </div>
+            <div class="col-xxl-2 col-md-2 col-sm-2 col-2">
+                    <a class="f-600 d-flex" aria-labelledby="linkAJ appliedJobs" id="linkAJ" href="/job-seeker/jobs?tabid=2">
+                    9
+                </a>
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-xxl-10 col-md-10 col-10">
+                <p id="savedJobs" class="clsContent text-blacksecondary f-600">
+                    Saved Jobs
+                </p>
+            </div>
+            <div class="col-xxl-2 col-md-2 col-sm-2 col-2">
+                <a class="f-600 d-flex" aria-labelledby="linkSJ savedJobs" id="linkSJ" href="/job-seeker/jobs?tabid=3">
+                    1
+                </a>
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-xxl-10 col-md-10 col-10">
+                <p id="jobAlert" class="clsContent text-blacksecondary f-600">
+                    Job Alerts
+                </p>
+            </div>
+            <div class="col-xxl-2 col-md-2 col-sm-2 col-2">
+                <a class="f-600 d-flex" aria-labelledby="linkJA jobAlert" id="linkJA" href="/job-seeker/jobs?tabid=5">
+                    4
+                </a>
+            </div>
+        </li>
+        </ul>
+        <div class="border-top my-2"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn bg-blue text-white w-100 view-profile" href="/job-seeker/profile/details">View Profile </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="SectionSurveyStatistics">
+    </div>
+
+    <div class="card p-3 my-2 rounded-8">
+        <div class="row">
+            <div class="col-lg-12 col-md-8 col-sm-12 col-12">
+                <h2 class="clsContent text-blacksecondary  f-500 f-16">Summary</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xxl-6 col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
+                <p class="clsContent text-blacksecondary f-600 mb-2 mb-xl-0 mb-xxl-2">Member since</p>
+            </div>
+            <div class="col-xxl-6 col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <p class="float-xxl-end float-xl-start float-sm-end text-blacksecondary f-600 clsContent mb-2 mb-xl-0 mb-xxl-2">
+                        15 Sep 2025
+                    </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/job-seeker/_avatar.js"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    window.loggedInUserId = '2549';
+    window.userType = '2';
+    window.domain = 'rangamworks.com';
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#gotoLmsLink').on('click', function () {
+            var url = $(this).data('url');
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (response) {
+                    if (response.success && response.url) {
+                        window.open(response.url, '_blank');
+                    } else {
+                        notifyError(response.message || "LMS login failed.");                        
+                    }
+                },
+                error: function () {
+                    notifyError('Something went wrong while accessing the LMS.'); 
+                }
+            });
+        });
+    });
+</script>
+        <div class="col-xl-9 col-md-12 col-sm-12 col-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card p-3 shadow border-0 mb-3">
+                        
+
+
+
+<div class="row">
+    <div class="col-md-8">       
+        <p id="profileName" class="score_title mb-3 f-20" >
+            Welcome 🎉<span id="dynamicUserName">John Doe</span>
+        </p>
+        <div class="progress progreesbar progreesbar-91" aria-hidden="true">
+            <div id="JAIProgress" class="progress-bar bg-success" role="progressbar" aria-label="100% completed progress bar"
+                 style="width: 100%;" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="row" aria-hidden="true">
+            <ul class="list-inline low_list-items d-flex">
+                <li class="list-item-group px-2 text-center">
+                    <img src="/imgs/border-line.svg" alt="Boreder Line" class="img-fluid">
+                    <p class="text-dark">10%</p>
+                </li>
+                <li class="list-item-group px-2 text-center">
+                    <img src="/imgs/border-line.svg" alt="Boreder Line" class="img-fluid">
+                    <p class="text-dark">25%</p>
+                </li>
+                <li class="list-item-group px-2 text-center">
+                    <img src="/imgs/border-line.svg" alt="Boreder Line" class="img-fluid">
+                    <p class="text-dark">50%</p>
+                </li>
+                <li class="list-item-group px-2 text-center">
+                    <img src="/imgs/border-line.svg" alt="Boreder Line" class="img-fluid">
+                    <p class="text-dark">75%</p>
+                </li>
+                <li class="list-item-group px-2 text-center">
+                    <img src="/imgs/border-line.svg" alt="Boreder Line" class="img-fluid">
+                    <p class="text-dark">100%</p>
+                </li>
+            </ul>
+        </div>
+        <p>
+            100% of your profile has been completed.
+        </p>
+        <a class="text-blue" href="/job-seeker/profile/basic">
+            Finish filling out your profile to maximize your job search efforts.
+        </a>
+
+    </div>
+    <div class="col-md-3">
+        <div class="badge-img mb-4  float-xxl-end text-center">
+            <img src="/imgs/job-seeker/Badge.svg" alt="" class="img-fluid">
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form id="frmSearchJob" action="/JobSeeker/SearchJobPanel" method="post">
+                        <div class="p-3 bg-lavender rounded-8">
+                            <h2 class="f-26">Search Jobs</h2>
+                            
+
+
+<input type="hidden" data-val="true" data-val-required="The PageNo field is required." id="PageNo" name="PageNo" value="1" />
+<input type="hidden" data-val="true" data-val-required="The PageSize field is required." id="PageSize" name="PageSize" value="10" />
+<input type="hidden" id="LocationJsonData" name="LocationJsonData" value="" />
+
+<div class="row">
+    <div class="col-xxl-4 col-lg-4 col-md-6 mb-2">
+        <div class="form-group">
+            <label for="Keywords">Keyword or Job Title</label>
+            <input type="text" class="form-control input-lg keywordstext" maxlength="200" id="Keywords" name="Keywords" value="" />
+        </div>
+    </div>
+    <div class="col-xxl-3 col-lg-4 col-md-6 mb-2">
+        <label for="CountryID">Country</label>
+            <input type="hidden" data-val="true" data-val-required="The CountryID field is required." id="CountryID" name="CountryID" value="1" />
+            <select id="CountryID" class="form-select py-25 input-lg" disabled="disabled">  <option value="">-- Select --</option>
+<option value="36">Australia</option>
+<option value="4">Austria</option>
+<option value="9">Austria</option>
+<option value="10">Belgium</option>
+<option value="11">Bulgaria</option>
+<option value="6">Canada</option>
+<option value="45">Costa Rica</option>
+<option value="12">Croatia</option>
+<option value="14">Czech Republic</option>
+<option value="15">Denmark</option>
+<option value="16">Estonia</option>
+<option value="17">Finland</option>
+<option value="18">France</option>
+<option value="19">Germany</option>
+<option value="20">Greece</option>
+<option value="21">Hungary</option>
+<option value="2">India</option>
+<option value="3">Ireland</option>
+<option value="22">Italy</option>
+<option value="23">Latvia</option>
+<option value="24">Lithuania</option>
+<option value="25">Luxembourg</option>
+<option value="26">Malta</option>
+<option value="27">Netherlands</option>
+<option value="35">Philippines</option>
+<option value="5">Poland</option>
+<option value="29">Portugal</option>
+<option value="13">Republic of Cyprus</option>
+<option value="30">Romania</option>
+<option value="37">Singapore</option>
+<option value="31">Slovakia</option>
+<option value="32">Slovenia</option>
+<option value="33">Spain</option>
+<option value="34">Sweden</option>
+<option value="46">Switzerland</option>
+<option value="8">United Kingdom</option>
+<option selected="selected" value="1">United States</option>
+</select>
+
+    </div>
+    <div class="col-xxl-5 col-lg-4 col-md-12 mb-2">
+        <div class="form-group input-h">
+            <div class="form-group input-h">
+                <label for="Location" id="LocationLabelVal">Location (City, State, Postal Code)</label>
+
+                <input type="text" maxlength="100" class="form-control input-lg" id="Location" aria-describedby="LocationLabelVal" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-owns="Location-suggestions" aria-haspopup="listbox" name="Location" value="" />
+
+                <div id="location-suggestion-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+                            <div class="row mt-3">
+                                <div class="col-xxl-2 col-md-4  text-center mx-auto" role="search">
+                                    <button type="button" id="btnSearch" onclick="redirectToSearchJob()" class="btn w-100  mb-3 bg-blue text-white btn-hight f-18 f-500 mt-xxl-2 ladda-button search-job">
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8N4k61oopYxBiRicw0VUdPwy_yRoNAyP8tnY1A8mcS7nB92cX2S-Wd0aUfI8wQFIziiuJtEFmhHtBDA10a4Cf4QpCJztYSTG0OdIpRfogzz0JvTzuj5hZT7U3GgqzZlSIq155iB6ehdYnQJsh1g0O56FGA0vOA-QWCMrdpNbKNjbayyXxZJ0mpIiGkMIPv00Hg" /></form>
+                </div>
+            </div>
+            
+
+<div class="row mt-3">
+    <div class="col-md-8">
+        <h2 class="f-26 text-blacksecondary mb-0">Recommended Jobs</h2>
+    </div>
+    <div class="col-md-4 text-end">
+        <a class="text-blue text-decoration-none f-600" aria-label="View All  about  Recommended Jobs" href="/job-seeker/jobs">View all &gt;</a>
+    </div>
+</div>
+<div class="card  bg-lily-white filter-bg-section border-0 shadow-none shadow-none">
+    <div class="row">
+        <div class="col-md-12">
+                <ul class="p-3">
+                        <li class="row job-listing card mb-2 border-0 shadow-lg p-3">
+                            <div class="col-md-12">
+                                <div class="jobs-item">
+                                    <div class="row">
+                                        <div class="col-xl-5 col-lg-4">
+                                                <h3 class="f-16 mb-0" id="Event Planner">
+                                                        <img src="/imgs/joborders/sp-icon.svg" alt="SourcePros Job : " width="20" alt="" class="heart-iconwhite2" />
+
+                                                    <a class="text-blue text-decoration-none f-500" id="req-133573" aria-labelledby="req-133573 ReqDuration_133573" href="/job/details/133573/3/248/event-planner-research-triangle-park-nc-">
+                                                        Event Planner
+                                                    </a>
+
+
+                                                    
+                                                </h3>
+                                        </div>
+                                        <div class="col-xl-7 col-lg-8 mt-2 mt-lg-0 h-28px">
+                                            <div class="row justify-content-end flex-wrap">
+
+                                                    <div class="w-auto pe-3 text-lg-end hearticon-content filled-heart-iconwhite">
+                                                        <button class="btn transparent py-0 px-1 hearticontop" id="btn_133573" aria-label=" Save Job: 133573 - Event Planner"
+                                                                onclick="SaveOrUnsaveJob('3','133573',false)">
+                                                            <img src="/imgs/filled-heart-icon.svg" id="imgfilledheart_133573" alt="" chk="false" class="me-2" />
+                                                        </button>
+                                                        <span>Save</span>
+                                                    </div>
+                                                <div class="w-auto sharebtn pe-0 text-lg-end">
+                                                    <div class="dropdown">
+                                                        <button class="btn bg-transparent share-gray-icon-imgwhite" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                                                id="dropdownMenuButton1_133573" aria-label="Share Job Event Planner">
+                                                            <img src="/imgs/share-gray-icon-img.svg" class="me-1" alt="Share Icon"> Share
+                                                        </button>
+                                                        
+<input type="hidden" id="CurrentURL-133573" value="https://rangamworks.com/job/details/133573/3/248/event-planner-research-triangle-park-nc-" />
+<div id="shareurl-suggestion-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+
+<span id="dropdownMenuButton1" class="sr-only">Share Options</span>
+<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li>
+        <a style="cursor:pointer;" tabindex="0" role="button" aria-label="Copy Link"
+           data-requirementId="133573"
+           class="dropdown-item border-bottom"
+           onclick="copyText('133573')">
+            <i class="bi bi-copy me-2" aria-hidden="true"></i> Copy Link
+        </a>
+
+
+
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="133573" onclick="shareUrl('133573','Email')" href="javascript:void(0)">
+            <i class="bi bi-envelope me-2"></i>  Email
+        </a>
+
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="133573" onclick="shareUrl('133573','LinkedId')" href="javascript:void(0)">
+            <i class="bi bi-linkedin me-2"></i>  Share on Linkedin
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="133573" onclick="shareUrl('133573','Facebook')" href="javascript:void(0)">
+            <i class="bi bi-facebook me-2"></i> Share on Facebook
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="133573" onclick="shareUrl('133573','X')" href="javascript:void(0)">
+            <i class="bi bi-twitter-x me-2"></i> Share on X
+        </a>
+    </li>
+</ul>
+<div id="statusMessage" role="status" aria-live="polite" aria-atomic="true" style="position: absolute; left: -9999px;"> </div>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    window.loggedInUserId = '2549';
+    window.userType = '2';
+    window.domain = 'rangamworks.com';
+</script>
+
+
+<script>
+      function shareUrl(requiremtnId, type) {
+
+        var url = $('#CurrentURL-' + requiremtnId).val();
+
+        const urrl = url;
+        const parts = urrl.split('/').filter(Boolean);
+        const jobId = parts[parts.length - 2];
+        const anchor = event.target.closest('a');
+        const linkText = anchor.textContent.trim();
+        const button = document.getElementById('dropdownMenuButton1_' + requiremtnId);
+
+        dataLayer.push({
+            'event': 'job_share',
+            'click_text':linkText,
+            'job_title': button?.dataset.title || '',
+            'job_id': jobId,
+            'job_location': button?.dataset.location || '',
+            'job_mode_of_work': button?.dataset.mode || '',
+            'job_posted_on': button?.dataset.posted || '',
+            'job_duration': button?.dataset.duration || '',
+            'job_industry': button?.dataset.industry || '',
+            'job_contract_type': button?.dataset.contract || '',
+            'user_id': window.loggedInUserId || 0,
+            'custom_user_id': window.loggedInUserId || 0,
+            'user_Type': window.userType || '',
+            'domain': window.domain || ''
+        });
+
+        var url = document.URL;
+        var logLable = '';
+
+        if (type === "LinkedId") {
+            url = "https://www.linkedin.com/shareArticle?url=https://rangamworks.com/job/details/133573/3/248/event-planner-research-triangle-park-nc-";
+            logLable = 'Job Shared - via LinkedId';
+        } else if (type === "Facebook") {
+            url = "https://www.facebook.com/sharer.php?u=https://rangamworks.com/job/details/133573/3/248/event-planner-research-triangle-park-nc-";
+            logLable = 'Job Shared - Facebook';
+        } else if (type === "X") {
+            url = "https://twitter.com/share?url=https://rangamworks.com/job/details/133573/3/248/event-planner-research-triangle-park-nc-";
+            logLable = 'Job Shared - X';
+        } else if (type === "Email") {
+
+            logLable = 'Job Shared - via Email';
+
+            var emailBody = "Hi,%0D%0A%0D%0A";
+            emailBody += "I hope this message finds you well.%0D%0A%0D%0A";
+            emailBody += "I am reaching out to share an exciting job opportunity that may be of interest to you:%0D%0A%0D%0A";
+            emailBody += "To learn more or to apply, please visit the following link:%0D%0A%0D%0A";
+            emailBody += encodeURIComponent('https://rangamworks.com/job/details/133573/3/248/event-planner-research-triangle-park-nc-') + "%0D%0A";
+
+            url = "mailto:?subject=" + encodeURIComponent("Exciting Job Opportunity") + "&body=" + emailBody;
+        }
+
+        if (typeof auditLogs === 'function') {
+            auditLogs('CandidateMaster', logLable, 'RequirementMaster', 133573, 'Shared URL: ' + url);
+        }
+
+
+          if (type === "Email") {
+              console.log(url);
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
+
+    }
+
+    function copyText(requiremtnId) {
+        const urrl = $('#CurrentURL-' + requiremtnId).val();
+        const parts = urrl.split('/').filter(Boolean);
+        const jobId = parts[parts.length - 2];
+        const anchor = event.target.closest('a');
+        const linkText = anchor.textContent.trim();
+        const button = document.getElementById('dropdownMenuButton1_' + requiremtnId);
+
+        dataLayer.push({
+            'event': 'job_share',
+            'click_text':linkText,
+            'job_title': button?.dataset.title || '',
+            'job_id': jobId,
+            'job_location': button?.dataset.location || '',
+            'job_mode_of_work': button?.dataset.mode || '',
+            'job_posted_on': button?.dataset.posted || '',
+            'job_duration': button?.dataset.duration || '',
+            'job_industry': button?.dataset.industry || '',
+            'job_contract_type': button?.dataset.contract || '',
+            'user_id': window.loggedInUserId || 0,
+            'custom_user_id': window.loggedInUserId || 0,
+            'user_Type': window.userType || 0,
+            'domain': window.domain || 0
+        });
+
+        if (typeof auditLogs === 'function') {
+            auditLogs('CandidateMaster', 'Job Shared - Copy Link', 'RequirementMaster', 133573, '');
+        }
+
+        var text = $('#CurrentURL-' + requiremtnId).val();
+
+        const liveRegion = document.getElementById('shareurl-suggestion-live');
+        if (liveRegion) {
+            // Clear first to force re-announcement
+            liveRegion.textContent = "";
+            setTimeout(() => {
+                liveRegion.textContent = "Webpage URL is copied";
+            }, 100); // small delay so SR picks it up
+        }
+
+        // Check if the Clipboard API is available
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    console.log('Text copied to clipboard successfully');
+                })
+                .catch((err) => {
+                    console.error('Unable to copy text to clipboard', err);
+                });
+        } else {
+            // Fallback for browsers that do not support the Clipboard API
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+
+            // Make the textarea out of view
+            textArea.style.position = 'absolute';
+            textArea.style.left = '-9999px';
+
+            // Append the textarea to the document
+            document.body.appendChild(textArea);
+
+            // Select and copy the text
+            textArea.select();
+            document.execCommand('copy');
+
+            // Remove the temporary textarea
+            document.body.removeChild(textArea);
+
+            console.log('Text copied to clipboard successfully (fallback)');
+        }
+
+
+    }
+
+    function showStatusMessage(message) {
+        var statusElement = document.getElementById('statusMessage');
+        statusElement.textContent = message;
+        // Ensure screen readers announce the message
+        statusElement.style.position = 'static'; // make visible to screen readers
+        setTimeout(function () {
+            statusElement.style.position = 'absolute'; // hide again after a short delay
+            statusElement.textContent = ''; // clear the text
+        }, 1000); // hide after 1 second
+    }
+
+
+</script>  
+                                                    </div>
+                                                </div>
+                                                <div class="w-auto text-end">
+                                                    |&nbsp;&nbsp;Posted On: Oct 27, 2025
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <p class="mb-2 technology-icondepartment"><img src="/imgs/technology-icon.svg" class="me-2" alt="department:" />Sales/Marketing/Retail </p>
+                                            <p class="mb-2 locationimgwhite"><img src="/imgs/map.svg" class="img-fluid me-2" alt="location:">Research Triangle Park, NC 27709 </p>
+                                            <p class="mb-2 hybrid-remotewhite"><img src="/imgs/hybrid-remote-icon.svg" class="me-2" alt="mode of work:" />Hybrid Remote</p>
+                                        </div>
+                                        <div class="col-md-6 float-end text-lg-end">
+                                                <p class="mb-2 text-lg-end application-iconwhite"> <img src="/imgs/application-icon.svg" alt="" class="me-2">Applied</p>
+                                                <p class="mb-2 eye-linewhite"> <img src="/SupportProvider/img/eye-line.svg" class="img-fluid me-2" alt="">Last Viewed: Nov 01, 2025</p>
+                                            <p class="mb-2 systemwhite" id="ReqDuration_133573">
+                                                <img src="/imgs/system.svg" class="img-fluid me-2" alt="duration:">
+                                                         6 Months months,
+                                                Contract
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row divDescription mt-2">
+                                        <div class="col-md-12">
+                                                 HYBRID: in office 3 days/week; remote 2 days/week&#xD;&#xA;Assignment Duration - 6 months to start with the possibility for extensions totaling up to 2 years&#xD;&#xA;Travel up to 25%&#xD;&#xA;&#xD;&#xA;Education:&#xD;&#xA;&#xD;&#xA;Bachelor&amp;rsquo;s Degree and/or events or meeting planner certific ...
+                                        </div>
+                                    </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-12 text-end">
+                                                <a href="https://rangamworks.com/terms-of-use#O*NET" class="text-decoration-none">
+                                                    <img src="/imgs/onet.svg" style="max-width: 80px;" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="<p>This job is recommended in part by O*NET data.</p>" />
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="row job-listing card mb-2 border-0 shadow-lg p-3">
+                            <div class="col-md-12">
+                                <div class="jobs-item">
+                                    <div class="row">
+                                        <div class="col-xl-5 col-lg-4">
+                                                <h3 class="f-16 mb-0" id="Specimen Technician">
+                                                        <img src="/imgs/joborders/sp-icon.svg" alt="SourcePros Job : " width="20" alt="" class="heart-iconwhite2" />
+
+                                                    <a class="text-blue text-decoration-none f-500" id="req-134042" aria-labelledby="req-134042 ReqDuration_134042" href="/job/details/134042/3/278/specimen-technician-cleveland-oh-">
+                                                        Specimen Technician
+                                                    </a>
+
+
+                                                    
+                                                </h3>
+                                        </div>
+                                        <div class="col-xl-7 col-lg-8 mt-2 mt-lg-0 h-28px">
+                                            <div class="row justify-content-end flex-wrap">
+
+                                                    <div class="w-auto pe-3 text-lg-end hearticon-content h-28px heart-iconwhite">
+                                                        <button class="btn transparent py-0 px-1 hearticontop" id="btn_134042" aria-label="Save Job: 134042 - Specimen Technician"
+                                                                onclick="SaveOrUnsaveJob('3','134042',true)">
+                                                            <img id="imgheart_134042" alt="" chk="true" src="/imgs/heart-icon.svg" class="me-1" />
+                                                        </button>
+                                                        <span>Save</span>
+                                                    </div>
+                                                <div class="w-auto sharebtn pe-0 text-lg-end">
+                                                    <div class="dropdown">
+                                                        <button class="btn bg-transparent share-gray-icon-imgwhite" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                                                id="dropdownMenuButton1_134042" aria-label="Share Job Specimen Technician">
+                                                            <img src="/imgs/share-gray-icon-img.svg" class="me-1" alt="Share Icon"> Share
+                                                        </button>
+                                                        
+<input type="hidden" id="CurrentURL-134042" value="https://rangamworks.com/job/details/134042/3/278/specimen-technician-cleveland-oh-" />
+<div id="shareurl-suggestion-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+
+<span id="dropdownMenuButton1" class="sr-only">Share Options</span>
+<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li>
+        <a style="cursor:pointer;" tabindex="0" role="button" aria-label="Copy Link"
+           data-requirementId="134042"
+           class="dropdown-item border-bottom"
+           onclick="copyText('134042')">
+            <i class="bi bi-copy me-2" aria-hidden="true"></i> Copy Link
+        </a>
+
+
+
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134042" onclick="shareUrl('134042','Email')" href="javascript:void(0)">
+            <i class="bi bi-envelope me-2"></i>  Email
+        </a>
+
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134042" onclick="shareUrl('134042','LinkedId')" href="javascript:void(0)">
+            <i class="bi bi-linkedin me-2"></i>  Share on Linkedin
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134042" onclick="shareUrl('134042','Facebook')" href="javascript:void(0)">
+            <i class="bi bi-facebook me-2"></i> Share on Facebook
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134042" onclick="shareUrl('134042','X')" href="javascript:void(0)">
+            <i class="bi bi-twitter-x me-2"></i> Share on X
+        </a>
+    </li>
+</ul>
+<div id="statusMessage" role="status" aria-live="polite" aria-atomic="true" style="position: absolute; left: -9999px;"> </div>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    window.loggedInUserId = '2549';
+    window.userType = '2';
+    window.domain = 'rangamworks.com';
+</script>
+
+
+<script>
+      function shareUrl(requiremtnId, type) {
+
+        var url = $('#CurrentURL-' + requiremtnId).val();
+
+        const urrl = url;
+        const parts = urrl.split('/').filter(Boolean);
+        const jobId = parts[parts.length - 2];
+        const anchor = event.target.closest('a');
+        const linkText = anchor.textContent.trim();
+        const button = document.getElementById('dropdownMenuButton1_' + requiremtnId);
+
+        dataLayer.push({
+            'event': 'job_share',
+            'click_text':linkText,
+            'job_title': button?.dataset.title || '',
+            'job_id': jobId,
+            'job_location': button?.dataset.location || '',
+            'job_mode_of_work': button?.dataset.mode || '',
+            'job_posted_on': button?.dataset.posted || '',
+            'job_duration': button?.dataset.duration || '',
+            'job_industry': button?.dataset.industry || '',
+            'job_contract_type': button?.dataset.contract || '',
+            'user_id': window.loggedInUserId || 0,
+            'custom_user_id': window.loggedInUserId || 0,
+            'user_Type': window.userType || '',
+            'domain': window.domain || ''
+        });
+
+        var url = document.URL;
+        var logLable = '';
+
+        if (type === "LinkedId") {
+            url = "https://www.linkedin.com/shareArticle?url=https://rangamworks.com/job/details/134042/3/278/specimen-technician-cleveland-oh-";
+            logLable = 'Job Shared - via LinkedId';
+        } else if (type === "Facebook") {
+            url = "https://www.facebook.com/sharer.php?u=https://rangamworks.com/job/details/134042/3/278/specimen-technician-cleveland-oh-";
+            logLable = 'Job Shared - Facebook';
+        } else if (type === "X") {
+            url = "https://twitter.com/share?url=https://rangamworks.com/job/details/134042/3/278/specimen-technician-cleveland-oh-";
+            logLable = 'Job Shared - X';
+        } else if (type === "Email") {
+
+            logLable = 'Job Shared - via Email';
+
+            var emailBody = "Hi,%0D%0A%0D%0A";
+            emailBody += "I hope this message finds you well.%0D%0A%0D%0A";
+            emailBody += "I am reaching out to share an exciting job opportunity that may be of interest to you:%0D%0A%0D%0A";
+            emailBody += "To learn more or to apply, please visit the following link:%0D%0A%0D%0A";
+            emailBody += encodeURIComponent('https://rangamworks.com/job/details/134042/3/278/specimen-technician-cleveland-oh-') + "%0D%0A";
+
+            url = "mailto:?subject=" + encodeURIComponent("Exciting Job Opportunity") + "&body=" + emailBody;
+        }
+
+        if (typeof auditLogs === 'function') {
+            auditLogs('CandidateMaster', logLable, 'RequirementMaster', 134042, 'Shared URL: ' + url);
+        }
+
+
+          if (type === "Email") {
+              console.log(url);
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
+
+    }
+
+    function copyText(requiremtnId) {
+        const urrl = $('#CurrentURL-' + requiremtnId).val();
+        const parts = urrl.split('/').filter(Boolean);
+        const jobId = parts[parts.length - 2];
+        const anchor = event.target.closest('a');
+        const linkText = anchor.textContent.trim();
+        const button = document.getElementById('dropdownMenuButton1_' + requiremtnId);
+
+        dataLayer.push({
+            'event': 'job_share',
+            'click_text':linkText,
+            'job_title': button?.dataset.title || '',
+            'job_id': jobId,
+            'job_location': button?.dataset.location || '',
+            'job_mode_of_work': button?.dataset.mode || '',
+            'job_posted_on': button?.dataset.posted || '',
+            'job_duration': button?.dataset.duration || '',
+            'job_industry': button?.dataset.industry || '',
+            'job_contract_type': button?.dataset.contract || '',
+            'user_id': window.loggedInUserId || 0,
+            'custom_user_id': window.loggedInUserId || 0,
+            'user_Type': window.userType || 0,
+            'domain': window.domain || 0
+        });
+
+        if (typeof auditLogs === 'function') {
+            auditLogs('CandidateMaster', 'Job Shared - Copy Link', 'RequirementMaster', 134042, '');
+        }
+
+        var text = $('#CurrentURL-' + requiremtnId).val();
+
+        const liveRegion = document.getElementById('shareurl-suggestion-live');
+        if (liveRegion) {
+            // Clear first to force re-announcement
+            liveRegion.textContent = "";
+            setTimeout(() => {
+                liveRegion.textContent = "Webpage URL is copied";
+            }, 100); // small delay so SR picks it up
+        }
+
+        // Check if the Clipboard API is available
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    console.log('Text copied to clipboard successfully');
+                })
+                .catch((err) => {
+                    console.error('Unable to copy text to clipboard', err);
+                });
+        } else {
+            // Fallback for browsers that do not support the Clipboard API
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+
+            // Make the textarea out of view
+            textArea.style.position = 'absolute';
+            textArea.style.left = '-9999px';
+
+            // Append the textarea to the document
+            document.body.appendChild(textArea);
+
+            // Select and copy the text
+            textArea.select();
+            document.execCommand('copy');
+
+            // Remove the temporary textarea
+            document.body.removeChild(textArea);
+
+            console.log('Text copied to clipboard successfully (fallback)');
+        }
+
+
+    }
+
+    function showStatusMessage(message) {
+        var statusElement = document.getElementById('statusMessage');
+        statusElement.textContent = message;
+        // Ensure screen readers announce the message
+        statusElement.style.position = 'static'; // make visible to screen readers
+        setTimeout(function () {
+            statusElement.style.position = 'absolute'; // hide again after a short delay
+            statusElement.textContent = ''; // clear the text
+        }, 1000); // hide after 1 second
+    }
+
+
+</script>  
+                                                    </div>
+                                                </div>
+                                                <div class="w-auto text-end">
+                                                    |&nbsp;&nbsp;Posted On: Nov 17, 2025
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <p class="mb-2 technology-icondepartment"><img src="/imgs/technology-icon.svg" class="me-2" alt="department:" />Health Care </p>
+                                            <p class="mb-2 locationimgwhite"><img src="/imgs/map.svg" class="img-fluid me-2" alt="location:">Cleveland, OH 44103 </p>
+                                            <p class="mb-2 hybrid-remotewhite"><img src="/imgs/hybrid-remote-icon.svg" class="me-2" alt="mode of work:" />On-site</p>
+                                        </div>
+                                        <div class="col-md-6 float-end text-lg-end">
+                                            <p class="mb-2 systemwhite" id="ReqDuration_134042">
+                                                <img src="/imgs/system.svg" class="img-fluid me-2" alt="duration:">
+                                                         3 Months months,
+                                                Contract
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row divDescription mt-2">
+                                        <div class="col-md-12">
+                                                 Shift/Time Zone: 9am-530pm First shift/ EST&#xD;&#xA;&#xD;&#xA;Job Description:&#xD;&#xA;The SPT I is responsible for general support functions within the Specimen Processing Department. This position requires a data entry background. Functions performed may include but are ...
+                                        </div>
+                                    </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-12 text-end">
+                                                <a href="https://rangamworks.com/terms-of-use#O*NET" class="text-decoration-none">
+                                                    <img src="/imgs/onet.svg" style="max-width: 80px;" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="<p>This job is recommended in part by O*NET data.</p>" />
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="row job-listing card mb-2 border-0 shadow-lg p-3">
+                            <div class="col-md-12">
+                                <div class="jobs-item">
+                                    <div class="row">
+                                        <div class="col-xl-5 col-lg-4">
+                                                <h3 class="f-16 mb-0" id="Software Trainer">
+                                                        <img src="/imgs/joborders/sp-icon.svg" alt="SourcePros Job : " width="20" alt="" class="heart-iconwhite2" />
+
+                                                    <a class="text-blue text-decoration-none f-500" id="req-134028" aria-labelledby="req-134028 ReqDuration_134028" href="/job/details/134028/3/247/software-trainer-bolingbrook-il-">
+                                                        Software Trainer
+                                                    </a>
+
+
+                                                    
+                                                </h3>
+                                        </div>
+                                        <div class="col-xl-7 col-lg-8 mt-2 mt-lg-0 h-28px">
+                                            <div class="row justify-content-end flex-wrap">
+
+                                                    <div class="w-auto pe-3 text-lg-end hearticon-content h-28px heart-iconwhite">
+                                                        <button class="btn transparent py-0 px-1 hearticontop" id="btn_134028" aria-label="Save Job: 134028 - Software Trainer"
+                                                                onclick="SaveOrUnsaveJob('3','134028',true)">
+                                                            <img id="imgheart_134028" alt="" chk="true" src="/imgs/heart-icon.svg" class="me-1" />
+                                                        </button>
+                                                        <span>Save</span>
+                                                    </div>
+                                                <div class="w-auto sharebtn pe-0 text-lg-end">
+                                                    <div class="dropdown">
+                                                        <button class="btn bg-transparent share-gray-icon-imgwhite" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                                                id="dropdownMenuButton1_134028" aria-label="Share Job Software Trainer">
+                                                            <img src="/imgs/share-gray-icon-img.svg" class="me-1" alt="Share Icon"> Share
+                                                        </button>
+                                                        
+<input type="hidden" id="CurrentURL-134028" value="https://rangamworks.com/job/details/134028/3/247/software-trainer-bolingbrook-il-" />
+<div id="shareurl-suggestion-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+
+<span id="dropdownMenuButton1" class="sr-only">Share Options</span>
+<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li>
+        <a style="cursor:pointer;" tabindex="0" role="button" aria-label="Copy Link"
+           data-requirementId="134028"
+           class="dropdown-item border-bottom"
+           onclick="copyText('134028')">
+            <i class="bi bi-copy me-2" aria-hidden="true"></i> Copy Link
+        </a>
+
+
+
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134028" onclick="shareUrl('134028','Email')" href="javascript:void(0)">
+            <i class="bi bi-envelope me-2"></i>  Email
+        </a>
+
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134028" onclick="shareUrl('134028','LinkedId')" href="javascript:void(0)">
+            <i class="bi bi-linkedin me-2"></i>  Share on Linkedin
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134028" onclick="shareUrl('134028','Facebook')" href="javascript:void(0)">
+            <i class="bi bi-facebook me-2"></i> Share on Facebook
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134028" onclick="shareUrl('134028','X')" href="javascript:void(0)">
+            <i class="bi bi-twitter-x me-2"></i> Share on X
+        </a>
+    </li>
+</ul>
+<div id="statusMessage" role="status" aria-live="polite" aria-atomic="true" style="position: absolute; left: -9999px;"> </div>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    window.loggedInUserId = '2549';
+    window.userType = '2';
+    window.domain = 'rangamworks.com';
+</script>
+
+
+<script>
+      function shareUrl(requiremtnId, type) {
+
+        var url = $('#CurrentURL-' + requiremtnId).val();
+
+        const urrl = url;
+        const parts = urrl.split('/').filter(Boolean);
+        const jobId = parts[parts.length - 2];
+        const anchor = event.target.closest('a');
+        const linkText = anchor.textContent.trim();
+        const button = document.getElementById('dropdownMenuButton1_' + requiremtnId);
+
+        dataLayer.push({
+            'event': 'job_share',
+            'click_text':linkText,
+            'job_title': button?.dataset.title || '',
+            'job_id': jobId,
+            'job_location': button?.dataset.location || '',
+            'job_mode_of_work': button?.dataset.mode || '',
+            'job_posted_on': button?.dataset.posted || '',
+            'job_duration': button?.dataset.duration || '',
+            'job_industry': button?.dataset.industry || '',
+            'job_contract_type': button?.dataset.contract || '',
+            'user_id': window.loggedInUserId || 0,
+            'custom_user_id': window.loggedInUserId || 0,
+            'user_Type': window.userType || '',
+            'domain': window.domain || ''
+        });
+
+        var url = document.URL;
+        var logLable = '';
+
+        if (type === "LinkedId") {
+            url = "https://www.linkedin.com/shareArticle?url=https://rangamworks.com/job/details/134028/3/247/software-trainer-bolingbrook-il-";
+            logLable = 'Job Shared - via LinkedId';
+        } else if (type === "Facebook") {
+            url = "https://www.facebook.com/sharer.php?u=https://rangamworks.com/job/details/134028/3/247/software-trainer-bolingbrook-il-";
+            logLable = 'Job Shared - Facebook';
+        } else if (type === "X") {
+            url = "https://twitter.com/share?url=https://rangamworks.com/job/details/134028/3/247/software-trainer-bolingbrook-il-";
+            logLable = 'Job Shared - X';
+        } else if (type === "Email") {
+
+            logLable = 'Job Shared - via Email';
+
+            var emailBody = "Hi,%0D%0A%0D%0A";
+            emailBody += "I hope this message finds you well.%0D%0A%0D%0A";
+            emailBody += "I am reaching out to share an exciting job opportunity that may be of interest to you:%0D%0A%0D%0A";
+            emailBody += "To learn more or to apply, please visit the following link:%0D%0A%0D%0A";
+            emailBody += encodeURIComponent('https://rangamworks.com/job/details/134028/3/247/software-trainer-bolingbrook-il-') + "%0D%0A";
+
+            url = "mailto:?subject=" + encodeURIComponent("Exciting Job Opportunity") + "&body=" + emailBody;
+        }
+
+        if (typeof auditLogs === 'function') {
+            auditLogs('CandidateMaster', logLable, 'RequirementMaster', 134028, 'Shared URL: ' + url);
+        }
+
+
+          if (type === "Email") {
+              console.log(url);
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
+
+    }
+
+    function copyText(requiremtnId) {
+        const urrl = $('#CurrentURL-' + requiremtnId).val();
+        const parts = urrl.split('/').filter(Boolean);
+        const jobId = parts[parts.length - 2];
+        const anchor = event.target.closest('a');
+        const linkText = anchor.textContent.trim();
+        const button = document.getElementById('dropdownMenuButton1_' + requiremtnId);
+
+        dataLayer.push({
+            'event': 'job_share',
+            'click_text':linkText,
+            'job_title': button?.dataset.title || '',
+            'job_id': jobId,
+            'job_location': button?.dataset.location || '',
+            'job_mode_of_work': button?.dataset.mode || '',
+            'job_posted_on': button?.dataset.posted || '',
+            'job_duration': button?.dataset.duration || '',
+            'job_industry': button?.dataset.industry || '',
+            'job_contract_type': button?.dataset.contract || '',
+            'user_id': window.loggedInUserId || 0,
+            'custom_user_id': window.loggedInUserId || 0,
+            'user_Type': window.userType || 0,
+            'domain': window.domain || 0
+        });
+
+        if (typeof auditLogs === 'function') {
+            auditLogs('CandidateMaster', 'Job Shared - Copy Link', 'RequirementMaster', 134028, '');
+        }
+
+        var text = $('#CurrentURL-' + requiremtnId).val();
+
+        const liveRegion = document.getElementById('shareurl-suggestion-live');
+        if (liveRegion) {
+            // Clear first to force re-announcement
+            liveRegion.textContent = "";
+            setTimeout(() => {
+                liveRegion.textContent = "Webpage URL is copied";
+            }, 100); // small delay so SR picks it up
+        }
+
+        // Check if the Clipboard API is available
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    console.log('Text copied to clipboard successfully');
+                })
+                .catch((err) => {
+                    console.error('Unable to copy text to clipboard', err);
+                });
+        } else {
+            // Fallback for browsers that do not support the Clipboard API
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+
+            // Make the textarea out of view
+            textArea.style.position = 'absolute';
+            textArea.style.left = '-9999px';
+
+            // Append the textarea to the document
+            document.body.appendChild(textArea);
+
+            // Select and copy the text
+            textArea.select();
+            document.execCommand('copy');
+
+            // Remove the temporary textarea
+            document.body.removeChild(textArea);
+
+            console.log('Text copied to clipboard successfully (fallback)');
+        }
+
+
+    }
+
+    function showStatusMessage(message) {
+        var statusElement = document.getElementById('statusMessage');
+        statusElement.textContent = message;
+        // Ensure screen readers announce the message
+        statusElement.style.position = 'static'; // make visible to screen readers
+        setTimeout(function () {
+            statusElement.style.position = 'absolute'; // hide again after a short delay
+            statusElement.textContent = ''; // clear the text
+        }, 1000); // hide after 1 second
+    }
+
+
+</script>  
+                                                    </div>
+                                                </div>
+                                                <div class="w-auto text-end">
+                                                    |&nbsp;&nbsp;Posted On: Nov 17, 2025
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <p class="mb-2 technology-icondepartment"><img src="/imgs/technology-icon.svg" class="me-2" alt="department:" />IT </p>
+                                            <p class="mb-2 locationimgwhite"><img src="/imgs/map.svg" class="img-fluid me-2" alt="location:">Bolingbrook, IL 60440 </p>
+                                            <p class="mb-2 hybrid-remotewhite"><img src="/imgs/hybrid-remote-icon.svg" class="me-2" alt="mode of work:" />On-site</p>
+                                        </div>
+                                        <div class="col-md-6 float-end text-lg-end">
+                                            <p class="mb-2 systemwhite" id="ReqDuration_134028">
+                                                <img src="/imgs/system.svg" class="img-fluid me-2" alt="duration:">
+                                                         6 Months months,
+                                                Contract
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row divDescription mt-2">
+                                        <div class="col-md-12">
+                                                 100% onsite position&#xD;&#xA;Summary of position&#xD;&#xA;&#xD;&#xA;The software trainer will be responsible for the delivery of software training programs, creating instructional materials, and providing support to help Operations Support Associates and Customer Service R ...
+                                        </div>
+                                    </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-12 text-end">
+                                                <a href="https://rangamworks.com/terms-of-use#O*NET" class="text-decoration-none">
+                                                    <img src="/imgs/onet.svg" style="max-width: 80px;" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="<p>This job is recommended in part by O*NET data.</p>" />
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="row job-listing card mb-2 border-0 shadow-lg p-3">
+                            <div class="col-md-12">
+                                <div class="jobs-item">
+                                    <div class="row">
+                                        <div class="col-xl-5 col-lg-4">
+                                                <h3 class="f-16 mb-0" id="Software Trainer">
+                                                        <img src="/imgs/joborders/sp-icon.svg" alt="SourcePros Job : " width="20" alt="" class="heart-iconwhite2" />
+
+                                                    <a class="text-blue text-decoration-none f-500" id="req-134027" aria-labelledby="req-134027 ReqDuration_134027" href="/job/details/134027/3/247/software-trainer-tewksbury-ma-">
+                                                        Software Trainer
+                                                    </a>
+
+
+                                                    
+                                                </h3>
+                                        </div>
+                                        <div class="col-xl-7 col-lg-8 mt-2 mt-lg-0 h-28px">
+                                            <div class="row justify-content-end flex-wrap">
+
+                                                    <div class="w-auto pe-3 text-lg-end hearticon-content h-28px heart-iconwhite">
+                                                        <button class="btn transparent py-0 px-1 hearticontop" id="btn_134027" aria-label="Save Job: 134027 - Software Trainer"
+                                                                onclick="SaveOrUnsaveJob('3','134027',true)">
+                                                            <img id="imgheart_134027" alt="" chk="true" src="/imgs/heart-icon.svg" class="me-1" />
+                                                        </button>
+                                                        <span>Save</span>
+                                                    </div>
+                                                <div class="w-auto sharebtn pe-0 text-lg-end">
+                                                    <div class="dropdown">
+                                                        <button class="btn bg-transparent share-gray-icon-imgwhite" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                                                id="dropdownMenuButton1_134027" aria-label="Share Job Software Trainer">
+                                                            <img src="/imgs/share-gray-icon-img.svg" class="me-1" alt="Share Icon"> Share
+                                                        </button>
+                                                        
+<input type="hidden" id="CurrentURL-134027" value="https://rangamworks.com/job/details/134027/3/247/software-trainer-tewksbury-ma-" />
+<div id="shareurl-suggestion-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+
+<span id="dropdownMenuButton1" class="sr-only">Share Options</span>
+<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li>
+        <a style="cursor:pointer;" tabindex="0" role="button" aria-label="Copy Link"
+           data-requirementId="134027"
+           class="dropdown-item border-bottom"
+           onclick="copyText('134027')">
+            <i class="bi bi-copy me-2" aria-hidden="true"></i> Copy Link
+        </a>
+
+
+
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134027" onclick="shareUrl('134027','Email')" href="javascript:void(0)">
+            <i class="bi bi-envelope me-2"></i>  Email
+        </a>
+
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134027" onclick="shareUrl('134027','LinkedId')" href="javascript:void(0)">
+            <i class="bi bi-linkedin me-2"></i>  Share on Linkedin
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134027" onclick="shareUrl('134027','Facebook')" href="javascript:void(0)">
+            <i class="bi bi-facebook me-2"></i> Share on Facebook
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item border-bottom" data-requirementId="134027" onclick="shareUrl('134027','X')" href="javascript:void(0)">
+            <i class="bi bi-twitter-x me-2"></i> Share on X
+        </a>
+    </li>
+</ul>
+<div id="statusMessage" role="status" aria-live="polite" aria-atomic="true" style="position: absolute; left: -9999px;"> </div>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    window.loggedInUserId = '2549';
+    window.userType = '2';
+    window.domain = 'rangamworks.com';
+</script>
+
+
+<script>
+      function shareUrl(requiremtnId, type) {
+
+        var url = $('#CurrentURL-' + requiremtnId).val();
+
+        const urrl = url;
+        const parts = urrl.split('/').filter(Boolean);
+        const jobId = parts[parts.length - 2];
+        const anchor = event.target.closest('a');
+        const linkText = anchor.textContent.trim();
+        const button = document.getElementById('dropdownMenuButton1_' + requiremtnId);
+
+        dataLayer.push({
+            'event': 'job_share',
+            'click_text':linkText,
+            'job_title': button?.dataset.title || '',
+            'job_id': jobId,
+            'job_location': button?.dataset.location || '',
+            'job_mode_of_work': button?.dataset.mode || '',
+            'job_posted_on': button?.dataset.posted || '',
+            'job_duration': button?.dataset.duration || '',
+            'job_industry': button?.dataset.industry || '',
+            'job_contract_type': button?.dataset.contract || '',
+            'user_id': window.loggedInUserId || 0,
+            'custom_user_id': window.loggedInUserId || 0,
+            'user_Type': window.userType || '',
+            'domain': window.domain || ''
+        });
+
+        var url = document.URL;
+        var logLable = '';
+
+        if (type === "LinkedId") {
+            url = "https://www.linkedin.com/shareArticle?url=https://rangamworks.com/job/details/134027/3/247/software-trainer-tewksbury-ma-";
+            logLable = 'Job Shared - via LinkedId';
+        } else if (type === "Facebook") {
+            url = "https://www.facebook.com/sharer.php?u=https://rangamworks.com/job/details/134027/3/247/software-trainer-tewksbury-ma-";
+            logLable = 'Job Shared - Facebook';
+        } else if (type === "X") {
+            url = "https://twitter.com/share?url=https://rangamworks.com/job/details/134027/3/247/software-trainer-tewksbury-ma-";
+            logLable = 'Job Shared - X';
+        } else if (type === "Email") {
+
+            logLable = 'Job Shared - via Email';
+
+            var emailBody = "Hi,%0D%0A%0D%0A";
+            emailBody += "I hope this message finds you well.%0D%0A%0D%0A";
+            emailBody += "I am reaching out to share an exciting job opportunity that may be of interest to you:%0D%0A%0D%0A";
+            emailBody += "To learn more or to apply, please visit the following link:%0D%0A%0D%0A";
+            emailBody += encodeURIComponent('https://rangamworks.com/job/details/134027/3/247/software-trainer-tewksbury-ma-') + "%0D%0A";
+
+            url = "mailto:?subject=" + encodeURIComponent("Exciting Job Opportunity") + "&body=" + emailBody;
+        }
+
+        if (typeof auditLogs === 'function') {
+            auditLogs('CandidateMaster', logLable, 'RequirementMaster', 134027, 'Shared URL: ' + url);
+        }
+
+
+          if (type === "Email") {
+              console.log(url);
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
+
+    }
+
+    function copyText(requiremtnId) {
+        const urrl = $('#CurrentURL-' + requiremtnId).val();
+        const parts = urrl.split('/').filter(Boolean);
+        const jobId = parts[parts.length - 2];
+        const anchor = event.target.closest('a');
+        const linkText = anchor.textContent.trim();
+        const button = document.getElementById('dropdownMenuButton1_' + requiremtnId);
+
+        dataLayer.push({
+            'event': 'job_share',
+            'click_text':linkText,
+            'job_title': button?.dataset.title || '',
+            'job_id': jobId,
+            'job_location': button?.dataset.location || '',
+            'job_mode_of_work': button?.dataset.mode || '',
+            'job_posted_on': button?.dataset.posted || '',
+            'job_duration': button?.dataset.duration || '',
+            'job_industry': button?.dataset.industry || '',
+            'job_contract_type': button?.dataset.contract || '',
+            'user_id': window.loggedInUserId || 0,
+            'custom_user_id': window.loggedInUserId || 0,
+            'user_Type': window.userType || 0,
+            'domain': window.domain || 0
+        });
+
+        if (typeof auditLogs === 'function') {
+            auditLogs('CandidateMaster', 'Job Shared - Copy Link', 'RequirementMaster', 134027, '');
+        }
+
+        var text = $('#CurrentURL-' + requiremtnId).val();
+
+        const liveRegion = document.getElementById('shareurl-suggestion-live');
+        if (liveRegion) {
+            // Clear first to force re-announcement
+            liveRegion.textContent = "";
+            setTimeout(() => {
+                liveRegion.textContent = "Webpage URL is copied";
+            }, 100); // small delay so SR picks it up
+        }
+
+        // Check if the Clipboard API is available
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    console.log('Text copied to clipboard successfully');
+                })
+                .catch((err) => {
+                    console.error('Unable to copy text to clipboard', err);
+                });
+        } else {
+            // Fallback for browsers that do not support the Clipboard API
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+
+            // Make the textarea out of view
+            textArea.style.position = 'absolute';
+            textArea.style.left = '-9999px';
+
+            // Append the textarea to the document
+            document.body.appendChild(textArea);
+
+            // Select and copy the text
+            textArea.select();
+            document.execCommand('copy');
+
+            // Remove the temporary textarea
+            document.body.removeChild(textArea);
+
+            console.log('Text copied to clipboard successfully (fallback)');
+        }
+
+
+    }
+
+    function showStatusMessage(message) {
+        var statusElement = document.getElementById('statusMessage');
+        statusElement.textContent = message;
+        // Ensure screen readers announce the message
+        statusElement.style.position = 'static'; // make visible to screen readers
+        setTimeout(function () {
+            statusElement.style.position = 'absolute'; // hide again after a short delay
+            statusElement.textContent = ''; // clear the text
+        }, 1000); // hide after 1 second
+    }
+
+
+</script>  
+                                                    </div>
+                                                </div>
+                                                <div class="w-auto text-end">
+                                                    |&nbsp;&nbsp;Posted On: Nov 17, 2025
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <p class="mb-2 technology-icondepartment"><img src="/imgs/technology-icon.svg" class="me-2" alt="department:" />IT </p>
+                                            <p class="mb-2 locationimgwhite"><img src="/imgs/map.svg" class="img-fluid me-2" alt="location:">Tewksbury, MA 01876 </p>
+                                            <p class="mb-2 hybrid-remotewhite"><img src="/imgs/hybrid-remote-icon.svg" class="me-2" alt="mode of work:" />On-site</p>
+                                        </div>
+                                        <div class="col-md-6 float-end text-lg-end">
+                                            <p class="mb-2 systemwhite" id="ReqDuration_134027">
+                                                <img src="/imgs/system.svg" class="img-fluid me-2" alt="duration:">
+                                                         6 Months months,
+                                                Contract
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row divDescription mt-2">
+                                        <div class="col-md-12">
+                                                 100% onsite positionJob title: TRAINER&#xD;&#xA;Summary of position&#xD;&#xA;&#xD;&#xA;The software trainer will be responsible for the delivery of software training programs, creating instructional materials, and providing support to help Operations Support Associates and  ...
+                                        </div>
+                                    </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-12 text-end">
+                                                <a href="https://rangamworks.com/terms-of-use#O*NET" class="text-decoration-none">
+                                                    <img src="/imgs/onet.svg" style="max-width: 80px;" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="<p>This job is recommended in part by O*NET data.</p>" />
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </li>
+                </ul>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+
+
+<link href="/css/shared/jobseeker-data-consent.css" rel="stylesheet" />
+
+<!-- Modal start -->
+<div class="modal fade global-modal-popup" id="ModalJoinToRTN" tabindex="-1" aria-labelledby="ModalJoinToRTN"
+     data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body pt-5">
+                <button type="button" class="btn-close modal-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-title">Congratulations!</div>
+                <div class="modal-desc mt-3">
+                    <p class="color-grey">You are now part of the <b>Rangam Talent Network!</b></p>
+                    <p class="mb-0 color-grey">Rangam Talent Network gives you more options to find a great job.</p>
+                    <ul class="mb-0 color-grey">
+                        <li>Search more job openings</li>
+                        <li>Save jobs you may want to apply for later</li>
+                        <li>Match your skills to open jobs</li>
+                        <li>Get new job match alerts sent to your email or text</li>
+                    </ul>
+                    <p class="color-grey">... and more, all <b>FREE</b> since you are now part of the Rangam Talent Network!</p>
+                    <div class="text-center">
+                        <button onclick="submitOptOutAccessToRTN()" id="btnOptOutAccessToRTN" type="button" class="btn btn-primary btn-get-started mb-3 ladda-button" data-style="slide-up" data-spinner-color="#ffffff">
+                            Get Started
+                        </button>
+                    </div>
+                    <p class="small-text mb-0">In the unlikely event you do not want these <b>FREE</b> amazing options that will help you find a great job...</p>
+                </div>
+                <div class="row">
+                    <div class="col-12 my-3">
+                        <div class="form-check checkbox">
+                            <input class="form-check-input" type="checkbox" name="OptOutAccessToRTN" id="OptOutAccessToRTN">
+                            <label class="form-check-label small-text" for="OptOutAccessToRTN">
+                                You can click here to opt out of the Rangam Talent Network. <br />
+                                Please be aware that by opting out, you understand and agree that you will not get access to any of the above features and may not be able to apply to many of the jobs listed on this site. If you opt out and want to apply for a job that requires being part of Rangam Talent Network, you will be given the option to rejoin at that time. <br /><br /><br />
+                                Rangam Talent Network is Rangam's general staffing service that gives you job alerts and access to apply to jobs at Fortune 500 and local companies in your area and across the USA. <b>This is a free service.</b><br />
+                                Click here to read the Rangam Talent Network <a target="_blank" aria-label="Terms of Use (opens in a new tab)" href="https://rangamworks.com/terms-of-use">Terms of Use</a>.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal end --> 
+<div class="modal fade global-modal-popup" id="ModalAccessToRTN" tabindex="-1" aria-labelledby="ModalAccessToRTN"
+     data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body pt-5">
+                <button type="button" class="btn-close modal-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-title">Access to Rangam Talent Network</div>
+                <div class="alert-warning mt-3"><img class="alert-img-icon" src="/imgs/exclamation-blue-icon.svg" alt="" width="24" /> This is reserved for the members of Rangam Talent Network!</div>
+                <div class="modal-desc mt-3">
+                    <p class="mb-0"><b>Rangam</b> can help you meet your employment goals through one of our other FREE employment programs. By joining the Rangam Talent Network, you can gain access to many types of jobs, <b>save jobs</b> you're interested in, <b>job matching</b> to open positions, <b>apply</b> for jobs that you like and <b>new job alerts</b> that match your job interests.</p>
+                </div>
+                <div class="row">
+                    <div class="col-12 my-3">
+                        <div class="form-check checkbox">
+                            <input class="form-check-input" type="checkbox" value="" id="AccessToRTN" name="AccessToRTN">
+                            <label class="form-check-label text-black" for="AccessToRTN" style="padding-top: 7px;">I want to join the Rangam Talent Network</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-desc">
+                    <p class="mb-5">
+                        Rangam's general staffing service allows you to apply for full-time and contract jobs at Fortune 500 companies in your area and across the USA. This is a <b>free service</b>. By checking this box, you agree to the
+                        <a href="https://rangamworks.com/terms-of-use">Terms of Use</a>, will be registered for the Rangam Talent Network, and will receive job information emails from Rangam.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button onclick="submitAccessToRTN()" id="btnConfirmAccessToRTN" type="button" class="btn btn-primary ladda-button" data-style="slide-up" data-spinner-color="#ffffff">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/shared/jobseeker-data-consent.js?v=f-U2sX7C_F-R2A5d0VNUzcuMpoDcNJgIqSMseO4lVgc"></script>
+
+
+
+    </main>
+
+    <!-- Copyright -->
+    <footer class="mt-auto">
+        <div class="bg-secondary text-white text-center pt-3 pb-2">
+            <ul class="list-inline mt-2">
+                <li class="list-item">© 2025 Driven by Rangam's TalentArbor Technology |</li>
+                <li class="list-item footer-link-item"><a class="text-white text-decoration-none" hreflang="en-us" href="/terms-of-use">Terms of Use</a> |</li>
+                <li class="list-item footer-link-item"><a class="text-white text-decoration-none" hreflang="en-us" href="/privacy-policy">Privacy Policy</a> |</li>
+                <li class="list-item footer-link-item"><a class="text-white text-decoration-none" hreflang="en-us" href="/cookie-policy">Cookie Policy</a> |</li>
+                <li class="list-item footer-link-item"><a class="text-white text-decoration-none" hreflang="en-us" href="/accessibility-statement">Accessibility Statement</a></li>
+            </ul>
+        </div>
+    </footer>
+    <!-- Copyright -->
+    <!-- bottom-to-top button  -->
+    <a id="back-to-top" aria-label="back to top" href="javascript:void(0)" class="btn back-to-top text-white tab-effect" style="display: block;"><i class="fas fa-chevron-up"></i></a>
+
+
+    <div class="offcanvas offcanvas-end w-50" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header-help p-3 pb-0">
+            <div class="d-flex">
+                <div class="p-2 flex-grow-1">
+                    <h2 class="f-24 f-600" id="offcanvasRightLabel">How can we help?</h2>
+                </div>
+                <div class="p-2">
+                    <p class="text-purple">Training Modules <img src="/imgs/share.svg" alt="" class="img-fluid heart-iconwhite"> </p>
+                </div>
+                <div class="p-2 bd-highlight">
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas-body pt-0">
+            <div class="row py-3">
+                <nav class="tabs-program">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active show f-18" id="Help-info-tab" data-bs-toggle="tab" data-bs-target="#Help-info" type="button" role="tab" aria-controls="Help-info" aria-selected="true"><img src="/imgs/Help-information-icon.svg" alt="Help Icon" class="img-fluid"> Help Information</button>
+                        <button class="nav-link f-18" id="support-tickets-tab" data-bs-toggle="tab" data-bs-target="#support-tickets" type="button" role="tab" aria-controls="support-tickets" aria-selected="false"><img src="/imgs/support-tickets.svg" alt="Support Tickets Icon" class="img-fluid"> Support Tickets</button>
+                        <button class="nav-link f-18" id="community-tickets-tab" data-bs-toggle="tab" data-bs-target="#community-tickets" type="button" role="tab" aria-controls="community-tickets" aria-selected="false"><img src="/imgs/community.svg" alt="Community Icon" class="img-fluid"> Community</button>
+
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="Help-info" role="tabpanel" aria-labelledby="Help-info-tab">
+                        
+                    </div>
+                    <div class="tab-pane fade" id="support-tickets" role="tabpanel" aria-labelledby="support-tickets-tab">
+                        <div class="col-md-12 text-center my-3">
+                            <p><img src="/imgs/supoort-ticket-img.png" alt="supoort-ticket-img" class="img-fluid my-2" width="350" /></p>
+                            <h2 class="my-3">Coming Soon</h2>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="community-tickets" role="tabpanel" aria-labelledby="community-tickets-tab">
+                        <div class="col-md-12 text-center my-3">
+                            <p><img src="/imgs/Community-coming-soon-img.png" alt="Community-coming-soon-img" class="img-fluid my-2" width="350" /></p>
+                            <h2 class="my-3">Coming Soon</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var userId = '2549';
+    </script>
+
+    <!---Script start here-->
+    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="/lib/fontawesome/js/all.js"></script>
+    <script src="/lib/ladda/dist/spin.min.js"></script>
+    <script src="/lib/ladda/dist/ladda.min.js"></script>
+    <script src="/lib/loader/loadingoverlay.min.js"></script>
+    <script src="/lib/Scroll/InfinitiyScroll.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.1/signalr.js"></script>
+    <script src="/js/job-seeker/notification.js"></script>
+    <script src="/js/shared/jobseeker-data-consent.js"></script>
+
+    
+<link href="/lib/toastr/toastr.min.css" rel="stylesheet" />
+<script src="/lib/toastr/toastr.min.js"></script>
+
+<input type="hidden" id="msgSuccess" />
+<input type="hidden" id="msgSuccessTitle" />
+<input type="hidden" id="msgError" />
+<input type="hidden" id="msgWarning" />
+
+
+<script>
+    function notifySucces(msg, title) {
+        window.toastr.success(msg, {
+            "role": "alert",
+            "aria-live": "polite",
+
+        });
+    }
+
+    function notifyError(msg) {
+        window.toastr.error(msg, {
+            "role": "alert",
+            "aria-live": "polite"
+        });
+    }
+
+    function notifyWarning(msg) {
+        //window.toastr.clear(); // Clear any existing toasts
+        window.toastr.warning(msg, {
+            "role": "alert",
+            "aria-live": "polite"
+        });
+    }
+
+    $(document).ready(function () {
+
+        window.toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-center",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",            
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        var msgSuccess = $('#msgSuccess').val();
+        var msgSuccessTitle = $('#msgSuccessTitle').val();
+
+        var msgError = $('#msgError').val();
+        var msgWarning = $('#msgWarning').val();
+
+        if (msgSuccess !== "" && msgSuccess !== null) {
+            notifySucces(msgSuccess, msgSuccessTitle);
+            $('#msgSuccess').val('');
+            $('#msgSuccessTitle').val('');
+        }
+        if (msgError !== "" && msgError !== null) {
+            notifyError(msgError);
+            $('#msgError').val('');
+        }
+        if (msgWarning !== "" && msgWarning !== null) {
+            notifyWarning(msgWarning);
+            $('#msgWarning').val('');
+        }
+    });
+</script>
+    
+
+
+<input id="tokenCBValue" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwiZG9tYWluIjoicmFuZ2Ftd29ya3MuY29tIiwiZW1haWwiOiJyYW5nYW13b3Jrcytqb2huZG9lQHJhbmdhbS5jb20iLCJ0b2tlbl9pZCI6ImY1ZGQ2NWM1LTQ5NTMtNDJjOC04MmFmLTE5MzgyOTY3N2QzZiIsImV4cCI6MTc2NDEwOTI3OH0.T3fSnZlJhH2_7I1NVTR8r3vjMHtxD_TbLGKFEVXwQco" type="hidden" />
+
+<link href="/css/chatarbor.css" rel="stylesheet" />
+
+<div id="chatbot-artie"></div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/lib/marked/marked.min.js"></script>
+
+<script>
+
+      function setChatCookie(name, value, days) {
+          $.cookie(name, value, { expires: days, path: '/' });
+
+  }
+
+ function getChatCookie(name) {
+           return $.cookie(name);
+       }
+
+ function removeChatCookie(name) {
+           $.removeCookie(name, { path: '/' });
+       }
+
+ function checkChatCookie(cookieName) {
+           var cookieValue = $.cookie(cookieName);
+
+           return cookieValue !== undefined;
+       }
+
+ function updateChatCookie(name, value, days) {
+           removeChatCookie(name);
+           setChatCookie(name, value, days);
+       }
+
+    $(function () {
+
+           console.log('BE Token: Generated!');
+
+        setChatCookie('ATS', 'false', 30);
+
+           updateChatCookie('_gatokenCB', $('#tokenCBValue').val(), 30);
+
+           if (!checkChatCookie('chat_id')) {
+
+               $.ajax({
+                   url: 'https://chatarboradmin.rangamworks.com/api/chatbot/initialize/',
+                   type: 'GET',
+                   headers: {
+                       'Authorization': "Bearer " + $('#tokenCBValue').val(),
+                       'Content-Type': 'application/json'
+                   },
+                   async: false, // Ensures the request completes before proceeding
+                   success: function (data) {
+                       console.log('ChatId generated from BE');
+                       setChatCookie('chat_id', data.data.chat_id, 30);
+                    $("#content").append($("<div>").load('/Base/ChatPlugin'));
+                   },
+                   error: function (xhr, status, error) {
+                       console.error('Error:', error);
+                    $("#content").append($("<div>").load('/Base/ChatPlugin'));
+                   }
+               });
+           } else {
+               console.log('ChatId already exists from BE');
+            $("#content").append($("<div>").load('/Base/ChatPlugin'));
+           }
+       });
+
+</script>
+
+<script>
+
+    console.log("Next JavaScript execution after fetching Chat ID");
+
+    // Make an AJAX request to fetch the chatbot HTML
+    $.ajax({
+        url: 'https://chatarbor.rangamworks.com/indexrw.html',
+        type: "GET",
+        header: { "Access-Control-Allow-Origin": "*" },
+        crossDomain: true,
+        success: function (data) {
+            // Inject the fetched HTML into the container
+            $('#chatbot-artie').html(data);
+        },
+        error: function (xhr, status, error) {
+            // Handle errors here
+            console.log("Error loading chatbot HTML:", error);
+        }
+    }).done(() => {
+        $("#loader").hide();
+    });
+
+</script>
+
+
+
+
+<div class="modal fade" id="sessionWarningModal" tabindex="-1" role="alertdialog" aria-describedby="alertTextModal" aria-labelledby="sessionWarningModalLabel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="sessionWarningModalLabel">Session Expiring</h2>
+            </div>
+            <div class="modal-body" id="alertTextModal">
+                Your session will expire soon due to inactivity.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-lightblue" onclick="sessionIdleManager.logoutNow()">Logout</button>
+                <button class="btn btn-blue" onclick="sessionIdleManager.stayLoggedIn()">Stay Logged In</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="ActiveDirectory" value="oh" />
+<input type="hidden" id="SessionTimeOutMinute" value="30" />
+<input type="hidden" id="ExtendSessionTimeOutMinute" value="5" />
+<script src="/js/auto-logout.js"></script>
+<script>
+    let SessionTimeOutSeconds = (parseInt($('#SessionTimeOutMinute').val()) * 60);
+    let ExtendSessionTimeOutSeconds = (parseInt($('#ExtendSessionTimeOutMinute').val()) * 60);
+</script>
+    
+
+<input type="hidden" id="TenantServer" value="HealthWorks" />
+
+<script>
+    function getTenantServer() {
+        return document.getElementById("TenantServer").value;
+    }
+
+    function isHealthWorkServer() {
+        if (document.getElementById("TenantServer").value == "HealthWorks") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8N4k61oopYxBiRicw0VUdPwy_yRoNAyP8tnY1A8mcS7nB92cX2S-Wd0aUfI8wQFIziiuJtEFmhHtBDA10a4Cf4QpCJztYSTG0OdIpRfogzz0JvTzuj5hZT7U3GgqzZlSIq155iB6ehdYnQJsh1g0O56FGA0vOA-QWCMrdpNbKNjbayyXxZJ0mpIiGkMIPv00Hg" />
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        window.loggedInUserId = '2549';
+        window.userType = '2';
+        window.domain = 'rangamworks.com';
+    </script>
+
+    <script>
+        showLoader()
+        function laddaStart(id) {
+            var l = Ladda.create(document.getElementById(id));
+            l.start();
+            return l;
+        }
+
+        function laddaStop(l) {
+            l.stop();
+        }
+
+        function showLoader() {
+
+            $("body").LoadingOverlay("show", {
+                background: "rgba(56, 56, 56, 0.3)",
+                imageColor: '#542453'
+            });
+        }
+
+        function hideLoader() {
+            $("body").LoadingOverlay("hide", true);
+        }
+
+        function scrollcontactform() {
+            console.log(window.location.href.toLowerCase());
+            console.log(window.location.href.toLowerCase().indexOf("home"));
+            if (window.location.href.toLowerCase().indexOf("home") > -1) {
+                $('html, body').animate({
+                    scrollTop: ($("#contactform").offset().top - 95)
+                }, 10);
+            }
+            else {
+                window.location.href = "../Home/Index#contactform";
+            }
+
+        }
+
+        $(function () {
+            hideLoader();
+            //Handle tooltip behaviour (It will init in all controls)
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+            var e = $('input[name="__RequestVerificationToken"]').val();
+            $(document)
+                .ajaxSend(function (t, a, i) {
+                    a && i && ("POST" === i.type || "PUT" === i.type || "DELETE" === i.type) && a.setRequestHeader("__RequestVerificationToken", e);
+                });
+
+        });
+    </script>
+    <script>
+        function getCookie(cname) {
+            var name = cname + "="; var decodedCookie = decodeURIComponent(document.cookie); var ca = decodedCookie.split(';'); for (var i = 0; i < ca.length; i++) {
+                var c = ca[i]; while (c.charAt(0) == ' ') { c = c.substring(1) }
+                if (c.indexOf(name) == 0) { return c.substring(name.length, c.length) }
+            }
+            return ""
+        }
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        var ColorSwitcher = (function () {
+            function initColorSwitcher(colorSheets) {
+                var tempCon, colorSwitcher, controlBtn, colorSwitchs, linkHolderHtml, linkHolder;
+                if (Object.prototype.toString.call(colorSheets) !== "[object Array]") {
+                    return;
+                }
+                tempCon = document.createDocumentFragment();
+                linkHolderHtml = document.createElement("link");
+                linkHolderHtml.rel = "stylesheet";
+                linkHolderHtml.id = "ColorSwitcherLinkHolder";
+                document.head.appendChild(linkHolderHtml);
+                linkHolder = document.getElementById("ColorSwitcherLinkHolder");
+                colorSheets.forEach(function (colorSheet, index) {
+                    var colorSwitch;
+                    if (colorSheet.color && colorSheet.title && colorSheet.href) {
+                        colorSwitch = document.createElement("a");
+                        colorSwitch.classList.add("ColorSwitcher__switch");
+                        colorSwitch.title = colorSheet.title;
+                        colorSwitch.dataset.index = index;
+                        colorSwitch.style.backgroundColor = colorSheet.color;
+                        if (colorSheet.title === "Switch to White") {
+                            colorSwitch.style.border = "1px solid #313131";
+                        }
+                    }
+                });
+                $("a.ColorSwitcher__switch").click(function (event) {
+                    var index;
+                    index = event.target.dataset.index;
+                    linkHolder.href = event.target.dataset.href;
+                    setCookie('colorcss', linkHolder.href, 1); $('#colorCssLink').remove(); $('head').append('<link href="' + getCookie("colorcss") + '" rel="stylesheet" id="colorCssLink" />');
+                    return false;
+                });
+            }
+            return {
+                init: initColorSwitcher
+            };
+        })();
+    </script>
+    <script>
+        var colorSheets = [
+            {
+                color: "#c75000",
+                title: "Switch to Default",
+                index: 0,
+                href: "../../Content/accessibility/css/colors/color-default.css"
+            },
+            {
+                color: "#ff0",
+                title: "Switch to Black",
+                index: 1,
+                href: "../../Content/accessibility/css/colors/color-black.css",
+            }
+        ];
+        ColorSwitcher.init(colorSheets);
+    </script>
+
+    <script>
+        var colorcss = getCookie("colorcss");
+        if (colorcss != "" && colorcss != null) {
+            $('#colorCssLink').remove();
+            $('head').append('<link href="' + colorcss + '" rel="stylesheet" id="colorCssLink" />');
+        }
+
+
+        $(function () {
+            $('a').each(function () {
+                if ($(this).prop('href') == window.location.href) {
+                    $(this).addClass('active'); $(this).parents('li').addClass('active');
+                }
+            });
+        });
+    </script>
+    
+    <script src="/lib/datepicker/moment.min.js"></script>
+    <script src="/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/lib/tagify/tagify.min.js"></script>
+    <script src="/js/job-seeker/_save-job.js"></script>
+    <script src="/js/job-seeker/_search-job-panel.js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        window.loggedInUserId = '2549';
+        window.userType = '2';
+        window.domain = 'rangamworks.com';
+    </script>
+
+    <script>
+
+
+
+        function redirectToSearchJob() {
+            var l = laddaStart('btnSearch');
+            $('#frmSearchJob').submit();
+        }
+
+        $(function () {
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+                'event': 'login',
+                'user_id': window.loggedInUserId || 0,
+                'custom_user_id': window.loggedInUserId || 0,
+                'user_Type': window.userType || '',
+                'domain': window.domain || ''
+            });
+
+            $.ajax({
+                url: "/member/survey/statistics",
+                type: "GET",
+                success: function (data) {
+                    $('#SectionSurveyStatistics').html(data);
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const locationInput = document.querySelector("#Location");
+            if (locationInput) {
+                // Wait for Tagify to render
+                setTimeout(() => {
+                    const tagifyInputSpan = document.querySelector(".tagify__input");
+                    if (tagifyInputSpan) {
+                        tagifyInputSpan.setAttribute(
+                            "aria-label",
+                            "Enter Location (City, State, Postal Code)"
+                        );
+                    }
+                }, 100);
+            }
+        });                                                                                     
+    </script>
+
+
+    <script>
+        var _hsq = window._hsq = window._hsq || [];
+        _hsq.push(['setContentType', 'Dashboard | RangamWorks']);
+    </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7NS46B5MR"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-S7NS46B5MR');
+        </script>
+            <!-- Google Tag Manager -->
+            <script>
+  (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+          'gtm.start':
+              new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+              'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-TFKBMQTD');</script>
+            <!-- End Google Tag Manager -->
+            <!-- Google Tag Manager (noscript) -->
+            <noscript>
+                <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TFKBMQTD"
+                        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            </noscript>
+            <!-- End Google Tag Manager (noscript) -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <!-- Default is a fallback if a more precise theme isn't called
+                out below -->
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="BrandedPageBackgroundBrush" Color="#E6E6E6" />
+                </ResourceDictionary>
+
+                <!-- Optional, Light is used in light theme.
+                If included, Default will be used for Dark theme -->
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="BrandedPageBackgroundBrush" Color="#E6E6E6" />
+                </ResourceDictionary>
+
+                <!-- HighContrast is used in all high contrast themes -->
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="BrandedPageBackgroundBrush" Color="{ThemeResource SystemColorWindowColor}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+    <script>
+        // JavaScript source code
+        document.addEventListener("DOMContentLoaded", function () {
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    if (document.getElementById('navbar_top')) {
+                        document.getElementById('navbar_top').classList.add('fixed-top');
+                        // add padding top to show content behind navbar
+                        navbar_height = document.querySelector('.navbar').offsetHeight;
+                        document.body.style.paddingTop = navbar_height + 'px';
+                    }
+                } else {
+                    if (document.getElementById('navbar_top')) {
+                        document.getElementById('navbar_top').classList.remove('fixed-top');
+                        // remove padding top from body
+                        document.body.style.paddingTop = '0';
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfVdwYqAAAAAMVzEeis6vpneE7YUi0T53n7l3To"></script>
+    <script>
+        /*start skip to main content*/
+
+        $(document).ready(function ($) {
+            const observer = new MutationObserver(function (mutations, obs) {
+                const recaptchaResponse = document.querySelector('#g-recaptcha-response-100000');
+                if (recaptchaResponse) {
+                    recaptchaResponse.setAttribute('aria-hidden', 'true');
+                    recaptchaResponse.setAttribute('tabindex', '-1');
+                    obs.disconnect(); // stop watching once found
+                }
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+
+            $('#btnSearchM').on('click', function (e) {
+                var l = laddaStart('btnSearchM');
+
+                grecaptcha.enterprise.ready(function () {
+                    grecaptcha.enterprise.execute('6LfVdwYqAAAAAMVzEeis6vpneE7YUi0T53n7l3To', { action: $('#googleCaptchaAction').val() }).then(function (token) {
+                        $('#googleCaptcha').val(token);
+                        $('#frmSearchJobs').submit();
+                    });
+                });
+            });
+            /**
+            * Add skiplink to page.
+            */
+            function skipTo(target) {
+                const skiplink = '<a href="' + target + '" class="skip-link skiptomaincontentstyle">Skip to Content</a>';
+                $(target).attr('tabindex', -1);
+                $('.navskip').prepend(skiplink);
+            }
+            skipTo('#main-content');
+            /**
+            * Use js to focus for internal links.
+            */
+            $('a[href^="#"]').click(function () {
+                const content = $('#' + $(this).attr('href').slice(1));
+                content.focus();
+            });
+            var colorcss = getCookie("colorcss");
+            if (colorcss != "" && colorcss != null) {
+                $('#colorCssLink').remove();
+                $('head').append('<link href="' + colorcss + '" rel="stylesheet" id="colorCssLink" />');
+            }
+            var minZoom = 0.9;
+            var zoomLevel = 1.0;
+            var maxZoom = 1.1;
+
+            $('#decreaseZoomLevel').on('click', function () {
+                if (zoomLevel > minZoom) {
+                    zoomLevel -= 0.05;
+                    $('body').css('zoom', zoomLevel);
+                }
+            });
+            $('#regularZoomLevel').on('click', function () {
+                zoomLevel = 1;
+                $('body').css('zoom', '1');
+            });
+            $('#increaseZoomLevel').on('click', function () {
+                if (zoomLevel < maxZoom) {
+                    zoomLevel += 0.05;
+                    $('body').css('zoom', zoomLevel);
+                }
+            });
+        });
+
+        /*end skip to main content*/
+    </script>
+
+    <script>
+        (function () {
+
+            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+            if (button != null) {
+                var isConsentRead = false;
+                var navigationDiv = document.querySelector('.sa-topnav .skip-link');
+
+                function handleAcceptButtonClick(event) {
+                    var cookieConsentBanner = document.getElementById("cookieConsent");
+
+                    if (cookieConsentBanner && !isConsentRead) {
+                        cookieConsentBanner.removeAttribute("tabindex");
+                        isConsentRead = true;
+                    }
+
+                    document.cookie = button.dataset.cookieString;
+                    $("#cookieConsent").hide();
+
+                    if (navigationDiv) {
+                        navigationDiv.focus();
+                    }
+
+                    if (button != null) {
+                        button.removeEventListener("click", handleAcceptButtonClick);
+                    }
+                }
+            }
+
+            if (button != null) {
+                button.addEventListener("click", handleAcceptButtonClick, false);
+            }
+
+            function handleKeyDown(event) {
+                if (event.key === "Tab" && event.target === button && !isConsentRead) {
+                    if (navigationDiv) {
+                        navigationDiv.focus();
+                    }
+                }
+            }
+
+            document.addEventListener("keydown", handleKeyDown);
+        })();
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentLocation = window.location.href;
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            navLinks.forEach(link => {
+                if (link.href === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+
+        const notifButton = document.getElementById('notif-count');
+        const mainNotifDiv = document.getElementById('mainNotif');
+
+        function toggleNotification() {
+            if (notifButton != undefined && notifButton != null) {
+                const isExpanded = notifButton.getAttribute('aria-expanded') === 'true';
+                notifButton.setAttribute('aria-expanded', !isExpanded);
+                mainNotifDiv.style.display = isExpanded ? 'none' : 'block';
+            }
+        }
+
+
+        if (notifButton != undefined && notifButton != null) {
+            notifButton.addEventListener('click', toggleNotification);
+
+            notifButton.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleNotification();
+                }
+            });
+            document.addEventListener('click', (event) => {
+                if (!notifButton.contains(event.target) && !mainNotifDiv.contains(event.target)) {
+                    mainNotifDiv.style.display = 'none';
+                    notifButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+    </script>
+
+
+
+    <script>
+        var UrlLogout = '/Auth/Logout';
+
+        function logoutUser() {
+            console.log('clear chat cookie');
+            removeChatCookie('_gatokenCB');
+            removeChatCookie('chat_id');
+            sessionStorage.clear();
+            window.location.href = UrlLogout;
+        }
+    </script>
+
+    <script>
+        /* Add current page in navigation code starts */
+        // Get the current URL path
+        let path = window.location.pathname;
+
+        // Select the navigation link that matches the current path
+        let link = document.querySelector(`.navbar-nav a[href="${path}"]`);
+
+        // Add aria-current="page" to the selected link
+        if (link) {
+            link.setAttribute("aria-current", "page");
+        }
+        /* Add current page in navigation code ends */
+    </script>
+
+</body>
+</html>
+
+

@@ -48,8 +48,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 transition-opacity duration-300" onClick={onClose}>
       <div className="relative bg-white rounded-xl shadow-2xl p-8 w-full max-w-md m-4" onClick={(e) => e.stopPropagation()}>
-        <button 
-          onClick={onClose} 
+        <button
+          onClick={onClose}
           className="absolute top-3 right-3 text-neutral-400 hover:text-neutral-700 p-1 rounded-full transition-colors"
           aria-label="Close authentication modal"
         >
@@ -64,10 +64,10 @@ const AuthPage: React.FC<AuthPageProps> = ({ onClose }) => {
         </div>
 
         <div className="flex mb-6 border-b">
-          <button onClick={() => switchMode('signin')} aria-label="Switch to Sign In" className={`flex-1 pb-2 text-center text-sm font-medium ${mode === 'signin' ? 'border-b-2 border-primary text-primary' : 'text-neutral-500'}`}>
+          <button onClick={() => switchMode('signin')} aria-label="Switch to Sign In" className={`flex-1 pb-2 text-center text-sm font-medium ${mode === 'signin' ? 'border-b-2 border-primary text-primary' : 'text-neutral-500'}`} data-testid="auth-toggle-signin">
             Sign In
           </button>
-          <button onClick={() => switchMode('signup')} aria-label="Switch to Sign Up" className={`flex-1 pb-2 text-center text-sm font-medium ${mode === 'signup' ? 'border-b-2 border-primary text-primary' : 'text-neutral-500'}`}>
+          <button onClick={() => switchMode('signup')} aria-label="Switch to Sign Up" className={`flex-1 pb-2 text-center text-sm font-medium ${mode === 'signup' ? 'border-b-2 border-primary text-primary' : 'text-neutral-500'}`} data-testid="auth-toggle-signup">
             Sign Up
           </button>
         </div>
@@ -78,18 +78,18 @@ const AuthPage: React.FC<AuthPageProps> = ({ onClose }) => {
           {mode === 'signup' && (
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-neutral-700">Name</label>
-              <input type="text" id="name" value={name} onChange={e => setName(e.target.value)} required className="mt-1 w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" />
+              <input type="text" id="name" value={name} onChange={e => setName(e.target.value)} required className="mt-1 w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" data-testid="auth-name-input" />
             </div>
           )}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-neutral-700">Email Address</label>
-            <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} required className="mt-1 w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" />
+            <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} required className="mt-1 w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" data-testid="auth-email-input" />
           </div>
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-neutral-700">Password</label>
-            <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-1 w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" />
+            <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-1 w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" data-testid="auth-password-input" />
           </div>
-          <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3 rounded-md font-semibold hover:bg-primary-dark transition-colors disabled:bg-neutral-400 flex items-center justify-center">
+          <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3 rounded-md font-semibold hover:bg-primary-dark transition-colors disabled:bg-neutral-400 flex items-center justify-center" data-testid="auth-submit-button">
             {isSubmitting && <Spinner />}
             <span className="ml-2">{mode === 'signin' ? 'Sign In' : 'Create Account'}</span>
           </button>
