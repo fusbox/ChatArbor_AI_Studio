@@ -7,6 +7,7 @@ import { knowledgeRouter } from './routes/knowledge.js';
 import { adminRouter } from './routes/admin.js';
 import { feedbackRouter } from './routes/feedback.js';
 import { historyRouter } from './routes/history.js';
+import vectorRouter from './routes/vectors.js';
 
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/chat/history', historyRouter); // Mount history under /api/chat/hi
 app.use('/api/knowledge', knowledgeRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/feedback', feedbackRouter);
+app.use('/api/vectors', vectorRouter);
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });

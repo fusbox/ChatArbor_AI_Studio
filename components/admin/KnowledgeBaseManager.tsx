@@ -155,7 +155,7 @@ const KnowledgeBaseManager: React.FC = () => {
         const USE_CHROMA = ((import.meta as any).env?.VITE_USE_CHROMA === 'true');
         if (USE_CHROMA) {
           try {
-            const { upsertSources } = await import('../../services/chromaService');
+            const { upsertSources } = await import('../../services/vectorService');
             await upsertSources(sources);
           } catch (chromaErr) {
             console.warn('Failed to sync with ChromaDB after re-index:', chromaErr);

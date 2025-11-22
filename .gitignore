@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ChromaDB persistent data
+chromadb-data/
+
+# Backup files
+backups/
+

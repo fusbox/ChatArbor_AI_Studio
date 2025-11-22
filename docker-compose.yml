@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  chromadb:
+    image: ghcr.io/chroma-core/chroma:latest
+    container_name: chatarbor-chromadb
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persistent storage - survives container restarts
+      - ./chromadb-data:/chroma/chroma
+    environment:
+      - ALLOW_RESET=false
+      - ANONYMIZED_TELEMETRY=false
+      # Authentication configuration
+      - CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER=chromadb.auth.token.TokenConfigServerAuthCredentialsProvider
+      - CHROMA_SERVER_AUTH_CREDENTIALS=${CHROMA_AUTH_TOKEN:-dev_token_12345}
+      - CHROMA_SERVER_AUTH_PROVIDER=chromadb.auth.token.TokenAuthServerProvider
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v2/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - chatarbor-network
+
+networks:
+  chatarbor-network:
+    driver: bridge
