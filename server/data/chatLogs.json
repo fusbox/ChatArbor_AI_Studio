@@ -60,5 +60,91 @@
       }
     ],
     "timestamp": 1763825219954
+  },
+  {
+    "id": "1763836861829",
+    "userId": "guest",
+    "messages": [
+      {
+        "id": "ai_1763835438249",
+        "text": "Welcome to Job Connections! Navigating your job search journey is easier with a little help. How can I help?",
+        "author": "ai",
+        "timestamp": 1763835438249
+      },
+      {
+        "id": "ai_1763835438260",
+        "text": "Welcome to Job Connections! Navigating your job search journey is easier with a little help. How can I help?",
+        "author": "ai",
+        "timestamp": 1763835438260
+      },
+      {
+        "id": "user_1763835458885",
+        "text": "How can you help me find a job?",
+        "author": "user",
+        "timestamp": 1763835458885
+      },
+      {
+        "id": "ai_1763835461303",
+        "text": "I can help you find a job on our site! Our platform specializes in connecting Medicaid members in Washington, D.C., Florida, Iowa, Kansas, Missouri, Nevada, and Ohio with meaningful employment opportunities.\n\nTo start your job search, you can visit our [Job Search page](https://rangamworks.com/JobSeeker/DirectorySearchJob?directory=home&utm_source=rangamworks&utm_medium=chatarbor&utm_campaign=job+search+question). You can also create a profile to help match you with jobs that fit your skills and interests!\n\nAre you a Medicaid member in one of the listed states?\n",
+        "author": "ai",
+        "timestamp": 1763835461303
+      },
+      {
+        "id": "user_1763835478723",
+        "text": "Yep",
+        "author": "user",
+        "timestamp": 1763835478723
+      },
+      {
+        "id": "ai_1763835481233",
+        "text": "Great! I can point out some features to help you find a job!\n\n*   **Job Search:** You can start your job search [here](https://rangamworks.com/JobSeeker/DirectorySearchJob?directory=home&utm_source=rangamworks&utm_medium=chatarbor&utm_campaign=job+search+question).\n*   **Edit Profile:** To enter your job preferences, skills, and work history, log in, go to your Dashboard, and click \"Finish filling out your profile...\"\n*   **Job Interest Survey:** After you log in, find the \"Surveys\" card on your Dashboard and click the link next to \"Job Interest\".\n\nWould you like me to explain any of these in more detail?\n",
+        "author": "ai",
+        "timestamp": 1763835481233
+      },
+      {
+        "id": "user_1763835504297",
+        "text": "The survey",
+        "author": "user",
+        "timestamp": 1763835504297
+      },
+      {
+        "id": "ai_1763835505907",
+        "text": "The Job Interest survey helps us match you with the right jobs. To find it, log in, go to your Dashboard, find the \"Surveys\" card, and click the link next to \"Job Interest.\" Completing this survey will improve your job recommendations.\n\nWould you like me to walk you through any other features?\n",
+        "author": "ai",
+        "timestamp": 1763835505907
+      }
+    ],
+    "timestamp": 1763836861829
+  },
+  {
+    "id": "1763901674280",
+    "userId": "guest",
+    "messages": [
+      {
+        "id": "ai_1763901565088",
+        "text": "Welcome to Job Connections! Navigating your job search journey is easier with a little help. How can I help?",
+        "author": "ai",
+        "timestamp": 1763901565088
+      },
+      {
+        "id": "ai_1763901565095",
+        "text": "Welcome to Job Connections! Navigating your job search journey is easier with a little help. How can I help?",
+        "author": "ai",
+        "timestamp": 1763901565095
+      },
+      {
+        "id": "user_1763901571087",
+        "text": "How does RangamWorks help job seekers?",
+        "author": "user",
+        "timestamp": 1763901571087
+      },
+      {
+        "id": "ai_1763901573220",
+        "text": "RangamWorks helps you find jobs and gives you tools to succeed.\n\nHere's how we help:\n*   We help you find many types of jobs.\n*   We match you with jobs based on your skills and interests.\n*   We offer training to help you learn new skills.\n\nReady to explore? You can start your job search [here](https://rangamworks.com/JobSeeker/DirectorySearchJob?directory=home&utm_source=rangamworks&utm_medium=chatarbor&utm_campaign=job+search+question)!\n",
+        "author": "ai",
+        "timestamp": 1763901573220
+      }
+    ],
+    "timestamp": 1763901674280
   }
 ]

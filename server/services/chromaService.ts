@@ -105,7 +105,7 @@ const buildCollectionPath = async (suffix: string) => {
 // Generate embedding using Gemini
 const generateEmbedding = async (text: string): Promise<number[]> => {
     // Import Gemini service from root services directory
-    const { generateEmbedding: geminiEmbed } = await import('../../services/geminiService.js');
+    const { generateEmbedding: geminiEmbed } = await import('./geminiService.js');
     return geminiEmbed(text);
 };
 
@@ -120,8 +120,8 @@ const buildEmbeddings = async (sources: KnowledgeSource[], documents: string[]) 
     );
 };
 
-export const upsertSources = async (sources: KnowledgeSource[]): Promise<void> => {
-    if (!sources || sources.length === 0) return;
+export const upsertSources = async (sources: KnowledgeSource[]): Promise<number[][]> => {
+    if (!sources || sources.length === 0) return [];
 
     const documents = sources.map(s => s.data || s.content || '');
     const metadatas = sources.map(s => ({ type: s.type, createdAt: s.createdAt }));
@@ -137,6 +137,8 @@ export const upsertSources = async (sources: KnowledgeSource[]): Promise<void> =
             embeddings,
         }),
     });
+
+    return embeddings;
 };
 
 export const deleteSource = async (id: string): Promise<void> => {

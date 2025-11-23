@@ -146,5 +146,79 @@
     "chatId": "chat_guest",
     "id": "1763825593887",
     "submittedAt": 1763825593888
+  },
+  {
+    "messageId": "ai_1763901573220",
+    "userMessage": {
+      "id": "user_1763901571087",
+      "text": "How does RangamWorks help job seekers?",
+      "author": "user",
+      "timestamp": 1763901571087
+    },
+    "aiMessage": {
+      "id": "ai_1763901573220",
+      "text": "RangamWorks helps you find jobs and gives you tools to succeed.\n\nHere's how we help:\n*   We help you find many types of jobs.\n*   We match you with jobs based on your skills and interests.\n*   We offer training to help you learn new skills.\n\nReady to explore? You can start your job search [here](https://rangamworks.com/JobSeeker/DirectorySearchJob?directory=home&utm_source=rangamworks&utm_medium=chatarbor&utm_campaign=job+search+question)!\n",
+      "author": "ai",
+      "timestamp": 1763901573220
+    },
+    "initialRating": "good",
+    "scores": [
+      {
+        "dimension": "Correctness / Accuracy",
+        "weight": 20,
+        "score": 3
+      },
+      {
+        "dimension": "Relevance / On-topic",
+        "weight": 15,
+        "score": 3
+      },
+      {
+        "dimension": "Completeness",
+        "weight": 15,
+        "score": 3
+      },
+      {
+        "dimension": "Clarity / Understandability",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Tone / Empathy / Voice Fit",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Efficiency / Brevity",
+        "weight": 5,
+        "score": 3
+      },
+      {
+        "dimension": "Compliance / Scope Adherence",
+        "weight": 10,
+        "score": 3
+      },
+      {
+        "dimension": "Context / Memory Handling",
+        "weight": 5,
+        "score": "N/A"
+      },
+      {
+        "dimension": "Actionability / Next Steps Provided",
+        "weight": 5,
+        "score": 3
+      },
+      {
+        "dimension": "Escalation Appropriateness",
+        "weight": 5,
+        "score": "N/A"
+      }
+    ],
+    "totalWeightedScore": 90,
+    "maxPossibleScore": 90,
+    "comment": "",
+    "chatId": "chat_guest",
+    "id": "1763901669773",
+    "submittedAt": 1763901669773
   }
 ]

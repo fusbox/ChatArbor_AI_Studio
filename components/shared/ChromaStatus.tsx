@@ -18,16 +18,22 @@ const ChromaStatus: React.FC<ChromaStatusProps> = ({ className = '' }) => {
     const checkHealth = async () => {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
-        const res = await fetch(`${CHROMA_URL}/api/v2/heartbeat`, { 
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        // Use backend health check instead of direct Chroma access
+        const res = await fetch('/api/vectors/health', {
           signal: controller.signal,
           method: 'GET'
         });
         clearTimeout(timeoutId);
-        console.log('[ChromaStatus] Heartbeat response:', res.status, res.ok);
-        setStatus(res.ok ? 'connected' : 'disconnected');
+
+        if (res.ok) {
+          const data = await res.json();
+          setStatus(data.status === 'connected' ? 'connected' : 'disconnected');
+        } else {
+          setStatus('disconnected');
+        }
       } catch (error) {
-        console.error('[ChromaStatus] Heartbeat failed:', error);
+        console.error('[ChromaStatus] Health check failed:', error);
         setStatus('disconnected');
       }
     };
@@ -35,7 +41,7 @@ const ChromaStatus: React.FC<ChromaStatusProps> = ({ className = '' }) => {
     checkHealth();
     const interval = setInterval(checkHealth, 30000); // Check every 30s
     return () => clearInterval(interval);
-  }, [USE_CHROMA, CHROMA_URL]);
+  }, [USE_CHROMA]);
 
   if (status === 'disabled') return null;
 
@@ -48,7 +54,7 @@ const ChromaStatus: React.FC<ChromaStatusProps> = ({ className = '' }) => {
   const config = statusConfig[status];
 
   return (
-    <div 
+    <div
       className={`flex items-center space-x-2 px-3 py-1.5 bg-neutral-700/50 rounded-md ${className}`}
       title={config.title}
     >
