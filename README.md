@@ -203,6 +203,11 @@ cp server/.env.example server/.env
 VITE_GEMINI_API_KEY=your_gemini_api_key_here
 GEMINI_API_KEY=your_gemini_api_key_here
 
+# Avoid using revoked or leaked keys
+- If you see `Your API key was reported as leaked` in the dev server logs when generating embeddings, the key has been revoked by Google. Create a fresh key in Google AI Studio and update both `.env.local` and `server/.env`.
+- The `scripts/test_api_key.js` helper now reads `GEMINI_API_KEY` from `.env.local`; it will refuse to run without a valid key so a revoked sample key is never sent to the API.
+- The backend will also warn when Gemini rejects a key as leaked or revoked; rotate the key and restart both frontend and backend dev servers after updating your environment files.
+
 # 5. Start ChromaDB (optional, uses fallback if not running)
 docker run -p 8000:8000 ghcr.io/chroma-core/chroma:latest
 

@@ -111,7 +111,18 @@ export const generateEmbedding = async (text: string): Promise<number[]> => {
         }
         return embedding;
     } catch (error: any) {
-        console.warn('Failed to generate real embedding, falling back to simulation:', error?.message || error);
+        const status = (error as any)?.status || (error as any)?.code;
+        const message = (error as any)?.message || error;
+        const details = status ? `${status}: ${message}` : message;
+
+        console.warn('Failed to generate real embedding, falling back to simulation:', details);
+
+        if (typeof message === 'string' && message.includes('reported as leaked')) {
+            console.warn(
+                'Your Gemini API key was rejected as leaked or revoked. Generate a fresh key in Google AI Studio and update both .env.local and server/.env before retrying.',
+            );
+        }
+
         // Fallback to simulation if API fails or isn't configured
         return simulateEmbedding(text);
     }
