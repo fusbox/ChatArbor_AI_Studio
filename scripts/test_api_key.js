@@ -1,5 +1,14 @@
+import dotenv from 'dotenv';
+
+dotenv.config({ path: new URL('../.env.local', import.meta.url).pathname });
+
 async function testEmbedding() {
-    const apiKey = 'AIzaSyBd8WFyO2n5Uhwe0sUASyzYHp-JVaJqrPU';
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        console.error('Missing GEMINI_API_KEY. Add a valid key to your .env.local file to run this test.');
+        return;
+    }
+
     const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${apiKey}`;
 
     try {
