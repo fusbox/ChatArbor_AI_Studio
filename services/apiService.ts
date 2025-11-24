@@ -181,6 +181,76 @@ export const getChatResponse = async (
     }
 };
 
+/**
+ * Stream chat response using Server-Sent Events
+ * @param message - User message
+ * @param history - Chat history
+ * @param onChunk - Callback for each text chunk
+ * @param onComplete - Callback when stream completes with usage metadata
+ */
+export const streamChatResponse = async (
+    message: string,
+    history: any[], // Accept any format for flexibility
+    onChunk: (text: string) => void,
+    onComplete: (usageMetadata: any) => void
+): Promise<void> => {
+    const token = getToken();
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(`${API_BASE}/chat/stream`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ message, history })
+    });
+
+    if (!response.ok) {
+        throw new Error(`Stream request failed: ${response.status}`);
+    }
+
+    const reader = response.body!.getReader();
+    const decoder = new TextDecoder();
+
+    try {
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split('\n');
+
+            for (const line of lines) {
+                if (line.startsWith('data: ')) {
+                    const data = line.slice(6);
+                    try {
+                        const parsed = JSON.parse(data);
+
+                        if (parsed.error) {
+                            throw new Error(parsed.error);
+                        }
+
+                        if (parsed.chunk) {
+                            onChunk(parsed.chunk);
+                        }
+
+                        if (parsed.done && parsed.usageMetadata) {
+                            onComplete(parsed.usageMetadata);
+                        }
+                    } catch (e) {
+                        // Ignore JSON parse errors for incomplete chunks
+                    }
+                }
+            }
+        }
+    } finally {
+        reader.releaseLock();
+    }
+};
+
+
 
 // --- Chat History ---
 // --- Chat History ---

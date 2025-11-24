@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { authRouter } from './routes/auth.js';
 import { chatRouter } from './routes/chat.js';
+import { chatStreamRouter } from './routes/chatStream.js';
 import { knowledgeRouter } from './routes/knowledge.js';
 import { adminRouter } from './routes/admin.js';
 import { feedbackRouter } from './routes/feedback.js';
@@ -18,6 +19,7 @@ app.use(express.json({ limit: '50mb' }));
 
 // Routes
 app.use('/api/auth', authRouter);
+app.use('/api/chat/stream', chatStreamRouter); // Streaming endpoint first for specificity
 app.use('/api/chat', chatRouter);
 app.use('/api/chat/history', historyRouter); // Mount history under /api/chat/history
 app.use('/api/knowledge', knowledgeRouter);

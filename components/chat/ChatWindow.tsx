@@ -3,6 +3,7 @@ import { useChat } from '../../hooks/useChat';
 import MessageBubble from './MessageBubble';
 import MessageInput from './MessageInput';
 import Spinner from '../shared/Spinner';
+import StreamingBubble from './StreamingBubble';
 import FeedbackModal from './FeedbackModal';
 import { Message, MessageAuthor, UserFeedback } from '../../types';
 import * as apiService from '../../services/apiService';
@@ -17,7 +18,7 @@ interface FeedbackState {
 }
 
 const ChatWindow: React.FC = () => {
-  const { messages, isLoading, sendMessage, clearChat } = useChat();
+  const { messages, isLoading, sendMessage, clearChat, streamingMessage } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { currentUser } = useAuth();
@@ -33,7 +34,7 @@ const ChatWindow: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(scrollToBottom, [messages, streamingMessage]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -115,7 +116,7 @@ const ChatWindow: React.FC = () => {
             <MessageBubble key={msg.id} message={msg} onFeedback={handleOpenFeedback} />
           ))
         )}
-        {isLoading && (
+        {isLoading && !streamingMessage && (
           <div className="flex justify-start">
             <div className="flex items-center space-x-2 bg-neutral-200 rounded-lg p-3 max-w-lg">
               <Spinner />
@@ -123,6 +124,7 @@ const ChatWindow: React.FC = () => {
             </div>
           </div>
         )}
+        <StreamingBubble text={streamingMessage || ''} />
         <div ref={messagesEndRef} />
       </div>
       <MessageInput ref={inputRef} onSend={sendMessage} disabled={isLoading} />

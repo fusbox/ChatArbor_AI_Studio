@@ -160,3 +160,22 @@ export const generateEmbedding = async (text: string): Promise<number[]> => {
         throw error;
     }
 };
+
+/**
+ * Generate streaming chat response using Gemini API
+ * @param contents - Array of chat messages
+ * @param systemInstruction - System prompt/instruction
+ * @returns Async iterable stream of response chunks
+ */
+export const generateChatResponseStream = async (contents: GeminiChatMessage[], systemInstruction: string) => {
+    const client = getGeminiClient();
+    if (!client) {
+        throw new Error('Gemini API not configured');
+    }
+
+    return client.models.generateContentStream({
+        model: DEFAULT_CHAT_MODEL,
+        contents,
+        config: { systemInstruction }
+    });
+};
