@@ -1,32 +1,32 @@
 import { Router } from 'express';
+import * as userService from '../services/userService.js';
 
 export const authRouter = Router();
 
-// Mock user database
-const users = new Map();
-
-authRouter.post('/signup', (req, res) => {
+authRouter.post('/signup', async (req, res) => {
     const { name, email, password } = req.body;
     if (!email || !password) {
         return res.status(400).json({ error: 'Email and password required' });
     }
 
-    const newUser = { id: Date.now().toString(), name, email };
-    users.set(email, { ...newUser, password }); // In real app, hash password!
-
-    res.json(newUser);
+    try {
+        const result = await userService.createUser(name, email, password);
+        res.json(result); // { user, token }
+    } catch (error: any) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
-authRouter.post('/login', (req, res) => {
+authRouter.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    const user = users.get(email);
 
-    if (!user || user.password !== password) {
+    const result = await userService.validateCredentials(email, password);
+
+    if (!result) {
         return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const { password: _, ...safeUser } = user;
-    res.json(safeUser);
+    res.json(result); // { user, token }
 });
 
 authRouter.get('/me', (req, res) => {

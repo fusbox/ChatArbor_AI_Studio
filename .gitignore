@@ -30,9 +30,14 @@ server/.env.local
 *.sln
 *.sw?
 
+# Chat assistant configuration data
+server/data/
+
 # ChromaDB persistent data
 chromadb-data/
 
 # Backup files
 backups/
 
+# KB files
+/new

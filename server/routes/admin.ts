@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { storage } from '../utils/storage.js';
+import { authMiddleware } from '../middleware/authMiddleware.js';
 
 export const adminRouter = Router();
 
-// In-memory storage removed
-
-
+// Apply auth middleware to ALL admin routes
+adminRouter.use(authMiddleware);
 
 // System Prompt
 adminRouter.get('/system-prompt', async (req, res) => {
@@ -54,4 +54,3 @@ adminRouter.get('/feedback', async (req, res) => {
     const feedback = await storage.getFeedback();
     res.json(feedback);
 });
-

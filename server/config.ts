@@ -1,24 +1,44 @@
 import dotenv from 'dotenv';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import * as userService from './services/userService.js';
 
-// Load .env from server directory
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Load .env.local from parent directory
-dotenv.config({ path: path.resolve(process.cwd(), '../.env.local') });
+// Load environment variables
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
 
 console.log('Environment loaded.');
 
-// Log which env var is being used
-const geminiKey = process.env.GEMINI_API_KEY;
-const viteKey = process.env.VITE_GEMINI_API_KEY;
-const activeKey = geminiKey || viteKey;
-
-if (activeKey) {
-    const source = geminiKey ? 'GEMINI_API_KEY' : 'VITE_GEMINI_API_KEY';
+if (process.env.GEMINI_API_KEY) {
+    const preview = process.env.GEMINI_API_KEY.substring(0, 9) + '...' + process.env.GEMINI_API_KEY.slice(-5);
     console.log('KEY_STATUS: PRESENT');
-    console.log(`API Key Source: ${source}`);
-    console.log(`API Key Preview: ${activeKey.substring(0, 7)}...${activeKey.substring(activeKey.length - 4)}`);
+    console.log(`API Key Preview: ${preview}`);
 } else {
-    console.log('KEY_STATUS: MISSING');
+    console.log('KEY_STATUS: MISSING - Gemini features will not work.');
 }
+
+// ============================================================================
+// DEV ONLY - REMOVE BEFORE PRODUCTION MIGRATION
+// Create test user for development authentication flow validation
+// ============================================================================
+const isDev = process.env.NODE_ENV !== 'production';
+if (isDev) {
+    (async () => {
+        try {
+            await userService.createUser('Fu', 'fu@dev.local', 'dev123');
+            console.log('✅ Dev user created: fu@dev.local / dev123');
+        } catch (error: any) {
+            if (error.message === 'User already exists') {
+                console.log('ℹ️ Dev user already exists');
+            } else {
+                console.error('Failed to create dev user:', error);
+            }
+        }
+    })();
+}
+// ============================================================================
+// END DEV ONLY
+// ============================================================================

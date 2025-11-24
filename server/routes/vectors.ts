@@ -61,7 +61,7 @@ router.get('/health', async (req, res) => {
         // Simple health check - just verify ChromaDB is reachable
         // Don't query or generate embeddings - just ping the heartbeat
         const chromaUrl = process.env.CHROMA_URL || 'http://localhost:8000';
-        const response = await fetch(`${chromaUrl}/api/v1/heartbeat`);
+        const response = await fetch(`${chromaUrl}/api/v2/heartbeat`);
 
         if (response.ok) {
             res.json({ status: 'connected' });

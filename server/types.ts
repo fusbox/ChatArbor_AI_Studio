@@ -16,3 +16,26 @@ export interface KnowledgeSource {
     createdAt: number;
     embedding?: number[];
 }
+
+export interface ChatLog {
+    id: string;
+    userId: string;
+    messages: any[]; // Stored as JSON string in DB, parsed in storage
+    timestamp: number;
+}
+
+export interface UserFeedback {
+    id: string;
+    chatId: string;
+    userMessageId: string;
+    aiMessageId: string;
+    rating: string;
+    comment?: string;
+    submittedAt: number;
+}
+
+export interface Greeting {
+    id: string;
+    text: string;
+    isActive: boolean;
+}

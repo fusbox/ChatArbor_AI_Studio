@@ -5,8 +5,35 @@ const DEFAULT_CHAT_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
 type Part = { text: string };
 export type GeminiChatMessage = { role: string; parts: Part[] };
 
+// Define interfaces for Gemini API responses to avoid 'any'
+interface GeminiCandidate {
+    content: {
+        parts: Part[];
+        role?: string;
+    };
+    finishReason?: string;
+    citationMetadata?: any;
+}
+
+interface GeminiGenerateResponse {
+    response?: {
+        text: () => string;
+        candidates?: GeminiCandidate[];
+    };
+    text?: string; // Some versions might return text directly
+}
+
+interface GeminiEmbedResponse {
+    embedding?: {
+        values: number[];
+    };
+    embeddings?: Array<{
+        values: number[];
+    }>;
+}
+
 const resolveApiKey = (): string | undefined => {
-    return process.env.API_KEY || process.env.GEMINI_API_KEY;
+    return process.env.GEMINI_API_KEY;
 };
 
 let cachedClient: GoogleGenAI | null | undefined = undefined;
@@ -62,13 +89,29 @@ export const generateChatResponse = async ({
         model: DEFAULT_CHAT_MODEL,
         contents,
         config: trimmedPrompt ? { systemInstruction: trimmedPrompt } : undefined,
-    });
+    }) as unknown as GeminiGenerateResponse; // Cast to our defined interface
 
-    const responseText =
-        (typeof (result as any)?.response?.text === 'function' && (result as any).response.text()) ||
-        (result as any)?.text ||
-        (result as any)?.response?.candidates?.[0]?.content?.parts?.map((part: Part & { text?: string }) => part.text || '').join('\n') ||
-        '';
+    let responseText = '';
+
+    // Handle various response structures safely
+    if (result.response && typeof result.response.text === 'function') {
+        try {
+            responseText = result.response.text();
+        } catch (e) {
+            // text() might throw if blocked
+            console.warn('Gemini response.text() failed, checking candidates');
+        }
+    }
+
+    if (!responseText && result.text) {
+        responseText = result.text;
+    }
+
+    if (!responseText && result.response?.candidates?.[0]?.content?.parts) {
+        responseText = result.response.candidates[0].content.parts
+            .map((part) => part.text || '')
+            .join('\n');
+    }
 
     const finalText = responseText.trim();
     if (!finalText) {
@@ -78,17 +121,14 @@ export const generateChatResponse = async ({
 };
 
 /**
- * Simulates generating a vector embedding for a given text.
- * In a real application, this would call an embedding model like 'text-embedding-004' on the server.
- * This function remains here to be called by the mock backend service.
+ * Generates a vector embedding for a given text using the Gemini API.
  * @param text The text to embed.
  * @returns A promise that resolves to a 768-dimension numerical vector.
  */
 export const generateEmbedding = async (text: string): Promise<number[]> => {
     const client = getGeminiClient();
     if (!client) {
-        console.warn("Gemini client not configured. Returning simulated embedding.");
-        return simulateEmbedding(text);
+        throw new Error("Gemini client not configured. Cannot generate embedding.");
     }
 
     try {
@@ -103,53 +143,20 @@ export const generateEmbedding = async (text: string): Promise<number[]> => {
                     ],
                 },
             ],
-        });
+        }) as unknown as GeminiEmbedResponse;
 
-        const embedding = (result as any).embedding?.values || (result as any).embeddings?.[0]?.values;
+        const embedding = result.embedding?.values || result.embeddings?.[0]?.values;
+
         if (!embedding) {
             throw new Error('Gemini returned no embedding');
         }
         return embedding;
     } catch (error: any) {
-        const status = (error as any)?.status || (error as any)?.code;
-        const message = (error as any)?.message || error;
+        const status = error?.status || error?.code;
+        const message = error?.message || error;
         const details = status ? `${status}: ${message}` : message;
 
-        console.warn('Failed to generate real embedding, falling back to simulation:', details);
-
-        if (typeof message === 'string' && message.includes('reported as leaked')) {
-            console.warn(
-                'Your Gemini API key was rejected as leaked or revoked. Generate a fresh key in Google AI Studio and update both .env.local and server/.env before retrying.',
-            );
-        }
-
-        // Fallback to simulation if API fails or isn't configured
-        return simulateEmbedding(text);
+        console.error('Failed to generate embedding:', details);
+        throw error;
     }
-};
-
-const simulateEmbedding = (text: string): number[] => {
-    // This simulates the behavior of an embedding model, producing a deterministic vector.
-    // The text-embedding-004 model creates 768-dimension vectors.
-    console.warn("Simulating embedding generation.");
-
-    // Create a pseudo-random but deterministic vector based on the text.
-    // This provides consistency for the same input text.
-    let seed = 0;
-    for (let i = 0; i < text.length; i++) {
-        seed = (seed + text.charCodeAt(i) * (i + 1)) % 1000000;
-    }
-
-    let a = seed;
-    const random = () => {
-        a = (a * 9301 + 49297) % 233280;
-        return a / 233280;
-    };
-
-    const vector = Array(768).fill(0).map(() => random() * 2 - 1);
-
-    // Normalize the vector
-    const magnitude = Math.sqrt(vector.reduce((sum, val) => sum + val * val, 0));
-    if (magnitude === 0) return vector;
-    return vector.map(v => v / magnitude);
 };

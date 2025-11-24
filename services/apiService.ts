@@ -16,10 +16,32 @@ const PER_SOURCE_CHAR_LIMIT = 1200;
 
 const API_BASE = '/api';
 
+// Token management
+const TOKEN_KEY = 'auth_token';
+
+const getToken = (): string | null => {
+    return localStorage.getItem(TOKEN_KEY);
+};
+
+const setToken = (token: string): void => {
+    localStorage.setItem(TOKEN_KEY, token);
+};
+
+const clearToken = (): void => {
+    localStorage.removeItem(TOKEN_KEY);
+};
+
 const request = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
     try {
+        const token = getToken();
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const res = await fetch(`${API_BASE}${endpoint}`, {
-            headers: { 'Content-Type': 'application/json', ...options.headers },
+            headers: { ...headers, ...(options.headers as Record<string, string> || {}) },
             ...options,
         });
         if (!res.ok) {
@@ -60,14 +82,18 @@ const formatKnowledgeContext = (items: KnowledgeSourceWithSimilarity[]): string 
 export const getGuestUserId = (): string => mockApi.handleGetGuestUserId(); // Keep local for now
 export const clearGuestUserId = (): void => localStorage.removeItem('guestUserId');
 
-export const signUp = (name: string, email: string, password: string): Promise<User> => {
-    return request<User>('/auth/signup', { method: 'POST', body: JSON.stringify({ name, email, password }) });
+export const signUp = async (name: string, email: string, password: string): Promise<User> => {
+    const result = await request<{ user: User; token: string }>('/auth/signup', { method: 'POST', body: JSON.stringify({ name, email, password }) });
+    setToken(result.token);
+    return result.user;
 };
-export const login = (email: string, password: string): Promise<User> => {
-    return request<User>('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+export const login = async (email: string, password: string): Promise<User> => {
+    const result = await request<{ user: User; token: string }>('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+    setToken(result.token);
+    return result.user;
 };
 export const logout = (): Promise<void> => {
-    // Client-side cleanup only for now, or call backend if needed
+    clearToken();
     return Promise.resolve();
 };
 export const getCurrentUser = (): Promise<User | null> => {
@@ -137,7 +163,7 @@ export const getChatResponse = async (
             console.warn('Failed to fetch context for chat:', e);
         }
 
-        const systemPrompt = await getSystemPrompt().catch(() => '');
+        // const systemPrompt = await getSystemPrompt().catch(() => ''); // REMOVED: Secure server-side prompt
 
         const data = await request<{ response: string }>('/chat', {
             method: 'POST',
@@ -145,7 +171,7 @@ export const getChatResponse = async (
                 userQuery,
                 chatHistory,
                 context,
-                systemPrompt
+                // systemPrompt // REMOVED
             })
         });
         return data.response;
