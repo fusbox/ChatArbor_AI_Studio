@@ -66,18 +66,14 @@ export const generateChatResponse = async ({
         config: trimmedPrompt ? { systemInstruction: trimmedPrompt } : undefined,
     });
 
-    const responseText =
-        (typeof result?.response?.text === 'function' && result.response.text()) ||
-        (result as any)?.text ||
-        result?.response?.candidates?.[0]?.content?.parts?.map((part: Part & { text?: string }) => part.text || '').join('\n') ||
-        '';
-
+    // Extract the generated text from the Gemini response
+    const responseText = result?.candidates?.[0]?.content?.parts?.map((part: Part) => part.text ?? '').join('\n') ?? '';
     const finalText = responseText.trim();
     if (!finalText) {
         throw new Error('Gemini returned an empty response');
     }
     return finalText;
-};
+}
 
 /**
  * Simulates generating a vector embedding for a given text.
@@ -87,27 +83,27 @@ export const generateChatResponse = async ({
  * @returns A promise that resolves to a 768-dimension numerical vector.
  */
 export const generateEmbedding = async (text: string): Promise<number[]> => {
-        // This simulates the behavior of an embedding model, producing a deterministic vector.
-        // The text-embedding-004 model creates 768-dimension vectors.
-        console.warn("Simulating embedding generation. This would happen on a server in production.");
-    
-        // Create a pseudo-random but deterministic vector based on the text.
-        // This provides consistency for the same input text.
-        let seed = 0;
-        for (let i = 0; i < text.length; i++) {
-                seed = (seed + text.charCodeAt(i) * (i + 1)) % 1000000;
-        }
-    
-        let a = seed;
-        const random = () => {
-                a = (a * 9301 + 49297) % 233280;
-                return a / 233280;
-        };
+    // This simulates the behavior of an embedding model, producing a deterministic vector.
+    // The text-embedding-004 model creates 768-dimension vectors.
+    console.warn("Simulating embedding generation. This would happen on a server in production.");
 
-        const vector = Array(768).fill(0).map(() => random() * 2 - 1);
-    
-        // Normalize the vector
-        const magnitude = Math.sqrt(vector.reduce((sum, val) => sum + val * val, 0));
-        if (magnitude === 0) return vector;
-        return vector.map(v => v / magnitude);
+    // Create a pseudo-random but deterministic vector based on the text.
+    // This provides consistency for the same input text.
+    let seed = 0;
+    for (let i = 0; i < text.length; i++) {
+        seed = (seed + text.charCodeAt(i) * (i + 1)) % 1000000;
+    }
+
+    let a = seed;
+    const random = () => {
+        a = (a * 9301 + 49297) % 233280;
+        return a / 233280;
+    };
+
+    const vector = Array(768).fill(0).map(() => random() * 2 - 1);
+
+    // Normalize the vector
+    const magnitude = Math.sqrt(vector.reduce((sum, val) => sum + val * val, 0));
+    if (magnitude === 0) return vector;
+    return vector.map(v => v / magnitude);
 };

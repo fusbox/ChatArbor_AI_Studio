@@ -45,9 +45,12 @@
 - Persistent storage (JSON files)
 - Test IDs for automation
 - Sticky headers UI improvements
+- **Streaming Chat Responses (SSE)**
+- **Real-time Token Usage Tracking**
+- **Bulk Knowledge Base Import**
+- **Test-Driven Development (TDD) Setup**
 
 🚧 **In Progress:**
-- Test-driven development setup
 - Production ChromaDB configuration
 - Agentic job search feature
 - Widget deployment strategy
@@ -199,8 +202,8 @@ cd server && npm install && cd ..
 cp .env.local.example .env.local
 cp server/.env.example server/.env
 
-# 4. Add your Gemini API key to both .env files
-VITE_GEMINI_API_KEY=your_gemini_api_key_here
+# 4. Add your Gemini API key to server/.env
+# The backend handles all Gemini API calls
 GEMINI_API_KEY=your_gemini_api_key_here
 
 # Avoid using revoked or leaked keys
@@ -286,21 +289,24 @@ cd server && npm run build
 
 ### Test Organization
 
+We follow a **co-located testing strategy** where unit tests live next to the components they test.
+
 ```
-tests/
-├── unit/                    # Pure functions, utilities
-│   ├── services/
-│   └── utils/
-├── integration/             # Component + hooks
-│   ├── components/
-│   └── hooks/
-├── e2e/                     # Full user flows
-│   ├── chat-flow.spec.ts
-│   ├── admin-panel.spec.ts
-│   └── job-search.spec.ts
-└── __mocks__/               # Mock data
-    ├── handlers.ts          # MSW handlers
-    └── fixtures.ts          # Test data
+ChatArbor_AI_Studio/
+├── components/
+│   ├── chat/
+│   │   ├── MessageBubble.tsx
+│   │   └── MessageBubble.test.tsx  # Co-located test
+│   └── ...
+├── hooks/
+│   ├── useChat.ts
+│   └── useChat.test.ts             # Co-located test
+├── tests/
+│   ├── setup.ts                    # Test setup
+│   ├── mocks.ts                    # Global mocks
+│   └── e2e/                        # End-to-end tests
+│       ├── chat.spec.ts
+│       └── admin.spec.ts
 ```
 
 ### Testing Tools
@@ -561,12 +567,13 @@ if (intent === 'job_search') {
 - [x] Persistent storage
 - [x] Test IDs
 
-### Phase 2: TDD Setup 🚧 (In Progress)
-- [ ] Jest/Vitest configuration
-- [ ] React Testing Library setup
-- [ ] MSW for API mocking
-- [ ] Test coverage reports
-- [ ] CI/CD with tests
+### Phase 2: TDD Setup ✅ (Complete)
+- [x] Jest/Vitest configuration
+- [x] React Testing Library setup
+- [x] MSW for API mocking
+- [x] Test coverage reports
+- [x] Co-located test organization
+- [x] Streaming & KB test coverage
 
 ### Phase 3: Production ChromaDB 📋 (Planned)
 - [ ] Docker Compose with persistence

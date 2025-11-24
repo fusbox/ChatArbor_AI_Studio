@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import MessageBubble from '../../../components/chat/MessageBubble';
-import { Message, MessageAuthor } from '../../../types';
+import MessageBubble from './MessageBubble';
+import { Message, MessageAuthor } from '../../types';
 
 describe('MessageBubble', () => {
     const mockOnFeedback = vi.fn();
@@ -25,9 +25,13 @@ describe('MessageBubble', () => {
             const messageText = screen.getByText('Hello, I need help!');
             expect(messageText).toBeInTheDocument();
 
-            // User messages should have primary background
-            const messageContainer = messageText.closest('div');
-            expect(messageContainer).toHaveClass('bg-primary');
+            // Find the bubble container (parent of the prose div)
+            // The text is inside ReactMarkdown -> p -> div(prose) -> div(bubble)
+            // closest('div') gets the prose div. We need its parent.
+            const proseDiv = messageText.closest('div');
+            const bubbleContainer = proseDiv?.parentElement;
+
+            expect(bubbleContainer).toHaveClass('bg-primary');
         });
 
         it('does not show feedback buttons for user messages', () => {
@@ -60,9 +64,11 @@ describe('MessageBubble', () => {
             expect(messageText).toBeInTheDocument();
 
             // AI messages should have white background
-            const messageContainer = messageText.closest('div');
-            expect(messageContainer).not.toHaveClass('bg-primary');
-            expect(messageContainer).toHaveClass('bg-white');
+            const proseDiv = messageText.closest('div');
+            const bubbleContainer = proseDiv?.parentElement;
+
+            expect(bubbleContainer).not.toHaveClass('bg-primary');
+            expect(bubbleContainer).toHaveClass('bg-white');
         });
 
         it('shows feedback buttons for AI messages', () => {
