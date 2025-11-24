@@ -41,3 +41,6 @@ backups/
 
 # KB files
 /kbfiles
+
+# Dev login helper
+/loginHelper.js
