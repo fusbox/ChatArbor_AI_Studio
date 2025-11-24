@@ -58,9 +58,16 @@ router.post('/delete', async (req, res) => {
 // Health check for ChromaDB connection
 router.get('/health', async (req, res) => {
     try {
-        // Simple health check - try to query with empty string
-        await chromaService.querySimilar('test', 1);
-        res.json({ status: 'connected' });
+        // Simple health check - just verify ChromaDB is reachable
+        // Don't query or generate embeddings - just ping the heartbeat
+        const chromaUrl = process.env.CHROMA_URL || 'http://localhost:8000';
+        const response = await fetch(`${chromaUrl}/api/v1/heartbeat`);
+
+        if (response.ok) {
+            res.json({ status: 'connected' });
+        } else {
+            res.status(503).json({ status: 'disconnected', error: `ChromaDB returned ${response.status}` });
+        }
     } catch (error) {
         res.status(503).json({ status: 'disconnected', error: String(error) });
     }
