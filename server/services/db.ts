@@ -68,7 +68,13 @@ const initSchema = () => {
             chatId TEXT NOT NULL,
             userMessageId TEXT NOT NULL,
             aiMessageId TEXT NOT NULL,
-            rating TEXT NOT NULL,
+            messageId TEXT NOT NULL,
+            userMessage TEXT NOT NULL,
+            aiMessage TEXT NOT NULL,
+            initialRating TEXT NOT NULL,
+            scores TEXT NOT NULL,
+            totalWeightedScore REAL NOT NULL,
+            maxPossibleScore REAL NOT NULL,
             comment TEXT,
             submittedAt INTEGER NOT NULL
         )

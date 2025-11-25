@@ -5,8 +5,6 @@ export const feedbackRouter = Router();
 
 feedbackRouter.post('/', async (req, res) => {
     const feedbackItem = { ...req.body, id: Date.now().toString(), submittedAt: Date.now() };
-    const feedback = await storage.getFeedback();
-    feedback.push(feedbackItem);
-    await storage.saveFeedback(feedback);
+    await storage.addFeedback(feedbackItem);
     res.json({ success: true });
 });

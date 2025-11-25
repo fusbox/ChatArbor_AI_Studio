@@ -29,7 +29,13 @@ export interface UserFeedback {
     chatId: string;
     userMessageId: string;
     aiMessageId: string;
-    rating: string;
+    messageId: string;
+    userMessage: any; // Stored as JSON string in DB
+    aiMessage: any; // Stored as JSON string in DB
+    initialRating: string;
+    scores: any; // Stored as JSON string in DB
+    totalWeightedScore: number;
+    maxPossibleScore: number;
     comment?: string;
     submittedAt: number;
 }

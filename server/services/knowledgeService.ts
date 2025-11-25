@@ -7,7 +7,6 @@ export const getAll = async () => {
 };
 
 export const add = async (data: any) => {
-    const kb = await storage.getKnowledgeBase();
     const source = { ...data, id: Date.now().toString(), createdAt: Date.now() };
 
     try {
@@ -22,14 +21,12 @@ export const add = async (data: any) => {
         // Continue without embedding - user can re-index later
     }
 
-    kb.push(source);
-    await storage.saveKnowledgeBase(kb);
+    await storage.addKnowledgeSource(source);
 
     return source;
 };
 
 export const addBulk = async (items: any[]) => {
-    const kb = await storage.getKnowledgeBase();
     const newItems = items.map((item, index) => ({
         ...item,
         id: item.id || `${Date.now()}-${index}`,
@@ -46,23 +43,19 @@ export const addBulk = async (items: any[]) => {
             embedding: embeddings[index]
         }));
 
-        const finalKb = [...kb, ...itemsWithEmbeddings];
-        await storage.saveKnowledgeBase(finalKb);
+        await storage.addKnowledgeSources(itemsWithEmbeddings);
 
     } catch (error) {
         console.error('Failed to bulk upsert to Chroma:', error);
         // If upsert fails, we should still save the items without embeddings
-        const finalKb = [...kb, ...newItems];
-        await storage.saveKnowledgeBase(finalKb);
+        await storage.addKnowledgeSources(newItems);
     }
 
     return newItems.length;
 };
 
 export const remove = async (id: string) => {
-    let kb = await storage.getKnowledgeBase();
-    kb = kb.filter((k: any) => k.id !== id);
-    await storage.saveKnowledgeBase(kb);
+    await storage.deleteKnowledgeSource(id);
 
     try {
         await chromaService.deleteSource(id);

@@ -44,3 +44,6 @@ backups/
 
 # Dev login helper
 /loginHelper.js
+
+# Misc
+system_prompt.md

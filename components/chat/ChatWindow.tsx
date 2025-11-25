@@ -75,6 +75,8 @@ const ChatWindow: React.FC = () => {
     const fullFeedback = {
       ...feedbackData,
       chatId: `chat_${activeUserId}`,
+      userMessageId: feedbackState.userMessage?.id || '',
+      aiMessageId: feedbackState.aiMessage?.id || '',
     };
     await apiService.saveFeedback(fullFeedback);
     handleCloseFeedback();

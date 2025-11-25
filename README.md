@@ -49,9 +49,12 @@
 - **Real-time Token Usage Tracking**
 - **Bulk Knowledge Base Import**
 - **Test-Driven Development (TDD) Setup**
+- **Secure URL Scraping** (SSRF protection, robots.txt compliance)
+- **Production ChromaDB configuration** (Docker Compose with persistence & auth)
 
 🚧 **In Progress:**
-- Production ChromaDB configuration
+- Agentic job search feature
+- Widget deployment strategy
 - Agentic job search feature
 - Widget deployment strategy
 
@@ -160,6 +163,8 @@ ChatArbor v2:
 | **Express** | API server | 4.21+ |
 | **TypeScript** | Type safety | 5.6+ |
 | **Node.js** | Runtime | 20+ |
+| **robots-parser** | Robots.txt compliance | 3.0+ |
+| **@mozilla/readability** | Content extraction | 0.5+ |
 
 ### AI & Data
 | Technology | Purpose | Version |

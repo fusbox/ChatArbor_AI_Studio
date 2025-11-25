@@ -43,9 +43,7 @@ adminRouter.get('/logs', async (req, res) => {
 
 adminRouter.post('/logs', async (req, res) => {
     const { userId, messages } = req.body;
-    const logs = await storage.getChatLogs();
-    logs.push({ id: Date.now().toString(), userId, messages, timestamp: Date.now() });
-    await storage.saveChatLogs(logs);
+    await storage.addChatLog({ id: Date.now().toString(), userId, messages, timestamp: Date.now() });
     res.json({ success: true });
 });
 

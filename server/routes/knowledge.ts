@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as knowledgeService from '../services/knowledgeService.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
+import * as urlScraperService from '../services/urlScraperService.js';
 
 export const knowledgeRouter = Router();
 
@@ -72,6 +73,36 @@ knowledgeRouter.post('/search', async (req, res) => {
     } catch (error: any) {
         console.error('❌ FAILED: Search error -', error.message);
         res.status(500).json({ error: 'Search failed' });
+    }
+});
+
+knowledgeRouter.post('/scrape', authMiddleware, async (req, res) => {
+    try {
+        const { url } = req.body;
+
+        if (!url || typeof url !== 'string') {
+            return res.status(400).json({
+                success: false,
+                message: 'URL is required'
+            });
+        }
+
+        console.log(`🕷️ Scraping URL: ${url}`);
+        const result = await urlScraperService.scrapeUrl(url);
+
+        if (result.success) {
+            console.log(`✅ Scrape success: ${result.content?.length} chars`);
+        } else {
+            console.warn(`⚠️ Scrape failed: ${result.message}`);
+        }
+
+        res.json(result);
+    } catch (error: any) {
+        console.error('❌ Scrape error:', error.message);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to scrape URL'
+        });
     }
 });
 
