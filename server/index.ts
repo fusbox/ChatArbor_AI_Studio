@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+app.disable('x-powered-by');
 
 // Routes
 app.use('/api/auth', authRouter);

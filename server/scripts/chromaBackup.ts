@@ -8,6 +8,18 @@ const BACKUP_DIR = path.join(process.cwd(), 'backups');
 const CHROMA_URL = process.env.CHROMA_URL || 'http://localhost:8000';
 const COLLECTION_NAME = 'knowledge_sources';
 
+const ensureWithinDir = (baseDir: string, targetPath: string) => {
+    const resolvedBase = path.resolve(baseDir);
+    const resolvedTarget = path.resolve(targetPath);
+    const relative = path.relative(resolvedBase, resolvedTarget);
+
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+        throw new Error(`Path escapes backup directory: ${targetPath}`);
+    }
+
+    return resolvedTarget;
+};
+
 interface BackupData {
     timestamp: string;
     collection: string;
@@ -67,7 +79,7 @@ async function backup() {
         };
 
         const filename = `chromadb-backup-${timestamp}.json`;
-        const filepath = path.join(BACKUP_DIR, filename);
+        const filepath = ensureWithinDir(BACKUP_DIR, path.join(BACKUP_DIR, filename));
 
         await fs.writeFile(filepath, JSON.stringify(backupData, null, 2));
 
@@ -86,9 +98,10 @@ async function restore(backupFile: string) {
     try {
         console.log(`🔄 Restoring from backup: ${backupFile}...`);
 
-        const filepath = path.isAbsolute(backupFile)
-            ? backupFile
-            : path.join(BACKUP_DIR, backupFile);
+        const filepath = ensureWithinDir(
+            BACKUP_DIR,
+            path.isAbsolute(backupFile) ? backupFile : path.join(BACKUP_DIR, backupFile)
+        );
 
         const content = await fs.readFile(filepath, 'utf-8');
         const backupData: BackupData = JSON.parse(content);

@@ -3,18 +3,32 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useChat } from './useChat';
 import * as apiService from '../services/apiService';
 import { useAuth } from '../contexts/AuthContext';
-import { Message, MessageAuthor } from '../types';
+import { Message, MessageAuthor, User } from '../types';
 
 vi.mock('../services/apiService');
 vi.mock('../contexts/AuthContext');
 
-const mockApiService = apiService as vi.Mocked<typeof apiService>;
-const mockUseAuth = useAuth as vi.Mock;
+const mockApiService = vi.mocked(apiService, true);
+const mockUseAuth = vi.mocked(useAuth);
+const createAuthValue = (overrides: Partial<ReturnType<typeof useAuth>> = {}) => ({
+  currentUser: null,
+  isLoading: false,
+  login: vi.fn(),
+  signUp: vi.fn(),
+  logout: vi.fn(),
+  ...overrides,
+});
 
 const MOCK_USER_ID = 'user_123';
 const MOCK_GUEST_ID = 'guest_456';
 const GREETING_MESSAGE = 'Hello! How can I help?';
 const AI_RESPONSE = 'This is a helpful AI response.';
+const MOCK_USER: User = {
+  id: MOCK_USER_ID,
+  name: 'Test User',
+  email: 'test@example.com',
+  password: 'password',
+};
 
 describe('useChat', () => {
   beforeEach(() => {
@@ -27,7 +41,7 @@ describe('useChat', () => {
   });
 
   it('should initialize with a greeting message if history is empty', async () => {
-    mockUseAuth.mockReturnValue({ currentUser: { id: MOCK_USER_ID } });
+    mockUseAuth.mockReturnValue(createAuthValue({ currentUser: MOCK_USER }));
     mockApiService.getChatHistory.mockResolvedValue([]);
 
     const { result } = renderHook(() => useChat());
@@ -48,7 +62,7 @@ describe('useChat', () => {
       { id: '1', text: 'Hello', author: MessageAuthor.USER, timestamp: Date.now() },
       { id: '2', text: 'Hi there', author: MessageAuthor.AI, timestamp: Date.now() },
     ];
-    mockUseAuth.mockReturnValue({ currentUser: { id: MOCK_USER_ID } });
+    mockUseAuth.mockReturnValue(createAuthValue({ currentUser: MOCK_USER }));
     mockApiService.getChatHistory.mockResolvedValue(mockHistory);
 
     const { result } = renderHook(() => useChat());
@@ -59,7 +73,7 @@ describe('useChat', () => {
   });
 
   it('should handle sending a message and receiving a streaming response', async () => {
-    mockUseAuth.mockReturnValue({ currentUser: { id: MOCK_USER_ID } });
+    mockUseAuth.mockReturnValue(createAuthValue({ currentUser: MOCK_USER }));
     mockApiService.getChatHistory.mockResolvedValue([]);
 
     // Mock streaming response
@@ -96,7 +110,7 @@ describe('useChat', () => {
   });
 
   it('should use guest user ID when no user is logged in', async () => {
-    mockUseAuth.mockReturnValue({ currentUser: null });
+    mockUseAuth.mockReturnValue(createAuthValue({ currentUser: null }));
     mockApiService.getGuestUserId.mockReturnValue(MOCK_GUEST_ID);
     mockApiService.getChatHistory.mockResolvedValue([]);
 
@@ -118,7 +132,7 @@ describe('useChat', () => {
       { id: '1', text: 'Hello', author: MessageAuthor.USER, timestamp: Date.now() },
       { id: '2', text: 'Hi there', author: MessageAuthor.AI, timestamp: Date.now() },
     ];
-    mockUseAuth.mockReturnValue({ currentUser: { id: MOCK_USER_ID } });
+    mockUseAuth.mockReturnValue(createAuthValue({ currentUser: MOCK_USER }));
     mockApiService.getChatHistory.mockResolvedValue(mockHistory);
 
     const { result } = renderHook(() => useChat());

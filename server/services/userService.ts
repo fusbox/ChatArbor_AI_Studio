@@ -1,12 +1,25 @@
 import jwt from 'jsonwebtoken';
+import crypto from 'node:crypto';
 
 // Mock user database
 const users = new Map();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+let _jwtSecret: string | null = null;
+
+const getJwtSecret = () => {
+    if (_jwtSecret) return _jwtSecret;
+
+    if (process.env.JWT_SECRET && process.env.JWT_SECRET.trim().length > 0) {
+        _jwtSecret = process.env.JWT_SECRET;
+    } else {
+        console.warn('[userService] JWT_SECRET not set. Using ephemeral in-memory secret. Sessions will reset on restart.');
+        _jwtSecret = crypto.randomBytes(64).toString('hex');
+    }
+    return _jwtSecret;
+};
 
 const generateToken = (userId: string, email: string): string => {
-    return jwt.sign({ userId, email }, JWT_SECRET, { expiresIn: '7d' });
+    return jwt.sign({ userId, email }, getJwtSecret(), { expiresIn: '7d' });
 };
 
 export const createUser = async (name: string, email: string, password: string) => {

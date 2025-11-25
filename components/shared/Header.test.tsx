@@ -7,7 +7,15 @@ import { User } from '../../types';
 // Mock the useAuth hook
 vi.mock('../../contexts/AuthContext');
 
-const mockUseAuth = useAuth as vi.Mock;
+const mockUseAuth = vi.mocked(useAuth);
+const createAuthValue = (overrides: Partial<ReturnType<typeof useAuth>> = {}) => ({
+    currentUser: null,
+    isLoading: false,
+    login: vi.fn(),
+    signUp: vi.fn(),
+    logout: vi.fn(),
+    ...overrides,
+});
 
 const mockUser: User = {
     id: '1',
@@ -26,7 +34,7 @@ describe('Header', () => {
     });
 
     it('renders correctly for a guest user', () => {
-        mockUseAuth.mockReturnValue({ currentUser: null });
+        mockUseAuth.mockReturnValue(createAuthValue({ currentUser: null }));
         render(<Header title="Test App" currentView="chat" onViewChange={onViewChange} onAuthClick={onAuthClick} />);
         
         expect(screen.getByText('Test App')).toBeInTheDocument();
@@ -39,7 +47,7 @@ describe('Header', () => {
     });
 
     it('renders correctly for a logged-in user', () => {
-        mockUseAuth.mockReturnValue({ currentUser: mockUser, logout: vi.fn() });
+        mockUseAuth.mockReturnValue(createAuthValue({ currentUser: mockUser }));
         render(<Header title="Test App" currentView="chat" onViewChange={onViewChange} onAuthClick={onAuthClick} />);
 
         expect(screen.getByText('Test App')).toBeInTheDocument();
@@ -55,7 +63,7 @@ describe('Header', () => {
     });
 
     it('calls onViewChange when navigation buttons are clicked', () => {
-        mockUseAuth.mockReturnValue({ currentUser: mockUser });
+        mockUseAuth.mockReturnValue(createAuthValue({ currentUser: mockUser }));
         render(<Header title="Test App" currentView="chat" onViewChange={onViewChange} onAuthClick={onAuthClick} />);
 
         fireEvent.click(screen.getByText('Admin Panel'));
@@ -66,7 +74,7 @@ describe('Header', () => {
     });
 
     it('calls onAuthClick when "Sign In" button is clicked for guest user', () => {
-        mockUseAuth.mockReturnValue({ currentUser: null });
+        mockUseAuth.mockReturnValue(createAuthValue({ currentUser: null }));
         render(<Header title="Test App" currentView="chat" onViewChange={onViewChange} onAuthClick={onAuthClick} />);
 
         fireEvent.click(screen.getByText('Sign In / Sign Up'));
@@ -75,7 +83,7 @@ describe('Header', () => {
 
     it('calls logout function when "Logout" button is clicked', () => {
         const mockLogout = vi.fn();
-        mockUseAuth.mockReturnValue({ currentUser: mockUser, logout: mockLogout });
+        mockUseAuth.mockReturnValue(createAuthValue({ currentUser: mockUser, logout: mockLogout }));
         render(<Header title="Test App" currentView="chat" onViewChange={onViewChange} onAuthClick={onAuthClick} />);
         
         fireEvent.click(screen.getByText('Logout'));

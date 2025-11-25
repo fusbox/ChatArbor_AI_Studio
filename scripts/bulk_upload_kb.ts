@@ -5,10 +5,47 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const API_URL = 'http://localhost:3000/api/knowledge/bulk';
-const DEFAULT_KB_DIR = path.join(__dirname, '../kb_content');
+const REPO_ROOT = path.resolve(__dirname, '..');
+const DEFAULT_KB_DIR_CANDIDATES = ['kb_content', 'kbfiles'];
+
+const assertPathWithinRepo = (targetPath: string) => {
+    const resolved = path.resolve(targetPath);
+    const relative = path.relative(REPO_ROOT, resolved);
+
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+        throw new Error(`Refusing to read outside repo root: ${targetPath}`);
+    }
+
+    return resolved;
+};
+
+const resolveTargetDirectory = async (input?: string) => {
+    if (input) {
+        return assertPathWithinRepo(input);
+    }
+
+    for (const candidate of DEFAULT_KB_DIR_CANDIDATES) {
+        const candidatePath = path.join(REPO_ROOT, candidate);
+        try {
+            await fs.access(candidatePath);
+            return assertPathWithinRepo(candidatePath);
+        } catch {
+            // Continue searching
+        }
+    }
+
+    throw new Error('Unable to locate a default knowledge base directory. Provide a path explicitly.');
+};
 
 async function main() {
-    const targetDir = process.argv[2] ? path.resolve(process.argv[2]) : DEFAULT_KB_DIR;
+    let targetDir: string;
+
+    try {
+        targetDir = await resolveTargetDirectory(process.argv[2]);
+    } catch (error) {
+        console.error((error as Error).message);
+        process.exit(1);
+    }
 
     console.log(`Scanning directory: ${targetDir}`);
 

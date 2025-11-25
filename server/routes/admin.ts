@@ -4,7 +4,14 @@ import { authMiddleware } from '../middleware/authMiddleware.js';
 
 export const adminRouter = Router();
 
-// Apply auth middleware to ALL admin routes
+// Public endpoint for greeting shown on chat landing
+adminRouter.get('/greetings/active', async (req, res) => {
+    const settings = await storage.getSettings();
+    const active = settings.greetings.find((g: any) => g.isActive);
+    res.json({ greeting: active ? active.text : 'Hello!' });
+});
+
+// Apply auth middleware to remaining admin routes
 adminRouter.use(authMiddleware);
 
 // System Prompt
@@ -27,12 +34,6 @@ adminRouter.get('/greetings', async (req, res) => {
 adminRouter.post('/greetings', async (req, res) => {
     await storage.saveSettings({ greetings: req.body.greetings });
     res.json({ success: true });
-});
-
-adminRouter.get('/greetings/active', async (req, res) => {
-    const settings = await storage.getSettings();
-    const active = settings.greetings.find((g: any) => g.isActive);
-    res.json({ greeting: active ? active.text : 'Hello!' });
 });
 
 // Logs

@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import * as userService from './services/userService.js';
+// userService imported dynamically to ensure env vars are loaded first
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,6 +28,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 if (isDev) {
     (async () => {
         try {
+            const userService = await import('./services/userService.js');
             await userService.createUser('Fu', 'fu@dev.local', 'dev123');
             console.log('✅ Dev user created: fu@dev.local / dev123');
         } catch (error: any) {

@@ -6,19 +6,24 @@ import { useAuth } from '../../contexts/AuthContext';
 import { APP_NAME } from '../../constants';
 
 vi.mock('../../contexts/AuthContext');
-const mockUseAuth = useAuth as vi.Mock;
+const mockUseAuth = vi.mocked(useAuth);
 
 describe('AuthPage', () => {
     const mockLogin = vi.fn();
     const mockSignUp = vi.fn();
     const mockOnClose = vi.fn();
+    const createAuthValue = (overrides: Partial<ReturnType<typeof useAuth>> = {}) => ({
+        currentUser: null,
+        isLoading: false,
+        login: mockLogin,
+        signUp: mockSignUp,
+        logout: vi.fn(),
+        ...overrides,
+    });
 
     beforeEach(() => {
         vi.clearAllMocks();
-        mockUseAuth.mockReturnValue({
-            login: mockLogin,
-            signUp: mockSignUp,
-        });
+        mockUseAuth.mockReturnValue(createAuthValue());
     });
 
     it('renders the Sign In form by default', () => {
