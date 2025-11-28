@@ -97,6 +97,23 @@ const getCollectionContext = async (): Promise<CollectionContext> => {
     return collectionContextPromise;
 };
 
+const deleteCollection = async (tenant: string, database: string, name: string) => {
+    return request(`/api/v2/tenants/${encode(tenant)}/databases/${encode(database)}/collections/${name}`, {
+        method: 'DELETE',
+    });
+};
+
+export const resetCollection = async (): Promise<void> => {
+    const { tenant, database } = await resolveTenantAndDatabase();
+    try {
+        await deleteCollection(tenant, database, COLLECTION_NAME);
+        collectionContextPromise = null; // Clear cache
+    } catch (error) {
+        console.warn('Failed to delete collection (might not exist):', error);
+    }
+    await getCollectionContext(); // Re-create
+};
+
 const buildCollectionPath = async (suffix: string) => {
     const { tenant, database, id } = await getCollectionContext();
     return `/api/v2/tenants/${encode(tenant)}/databases/${encode(database)}/collections/${id}${suffix}`;
@@ -152,18 +169,30 @@ export const deleteSource = async (id: string): Promise<void> => {
 export const querySimilar = async (
     query: string,
     topK: number = 5
-): Promise<{ id: string; distance?: number }[]> => {
+): Promise<{ id: string; distance?: number; document?: string; metadata?: any }[]> => {
     const path = await buildCollectionPath('/query');
     const queryEmbedding = await generateEmbedding(query);
 
     const resp = await request(path, {
         method: 'POST',
-        body: JSON.stringify({ query_embeddings: [queryEmbedding], n_results: topK }),
+        body: JSON.stringify({
+            query_embeddings: [queryEmbedding],
+            n_results: topK,
+            include: ['documents', 'distances', 'metadatas']
+        }),
     });
 
     const ids: string[] = Array.isArray(resp?.ids?.[0]) ? resp.ids[0] : [];
     const distances: number[] = Array.isArray(resp?.distances?.[0]) ? resp.distances[0] : [];
-    return ids.map((id, idx) => ({ id, distance: distances[idx] }));
+    const documents: string[] = Array.isArray(resp?.documents?.[0]) ? resp.documents[0] : [];
+    const metadatas: any[] = Array.isArray(resp?.metadatas?.[0]) ? resp.metadatas[0] : [];
+
+    return ids.map((id, idx) => ({
+        id,
+        distance: distances[idx],
+        document: documents[idx],
+        metadata: metadatas[idx]
+    }));
 };
 
 export const distanceToCosineSimilarity = (distance?: number): number => {

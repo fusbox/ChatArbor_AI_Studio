@@ -1,1 +1,1 @@
-export const APP_NAME = "Job Connections AI Assistant";
+export const APP_NAME = "Job Connections Virtual Assistant";

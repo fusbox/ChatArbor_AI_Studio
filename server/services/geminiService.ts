@@ -76,7 +76,14 @@ export const generateChatResponse = async ({
         role: 'user',
         parts: [
             {
-                text: `Context:\n${context?.trim() || 'No additional context provided.'}\n\nQuestion: ${userQuery}`,
+                text: `Use the following pieces of context to answer the user's question.
+If the context contains specific instructions or "Pro Tips", you MUST follow them.
+If the answer is not in the context, say you don't know, but do not ignore the context if it is relevant.
+
+Context:
+${context?.trim() || 'No additional context provided.'}
+
+Question: ${userQuery}`,
             },
         ],
     };
@@ -133,7 +140,7 @@ export const generateEmbedding = async (text: string): Promise<number[]> => {
 
     try {
         const result = await client.models.embedContent({
-            model: 'text-embedding-004',
+            model: 'gemini-embedding-001',
             contents: [
                 {
                     parts: [
@@ -143,6 +150,9 @@ export const generateEmbedding = async (text: string): Promise<number[]> => {
                     ],
                 },
             ],
+            config: {
+                outputDimensionality: 768,
+            },
         }) as unknown as GeminiEmbedResponse;
 
         const embedding = result.embedding?.values || result.embeddings?.[0]?.values;

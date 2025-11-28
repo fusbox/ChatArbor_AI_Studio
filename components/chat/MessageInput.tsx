@@ -146,48 +146,62 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
   };
 
   return (
-    <div className="p-4 md:p-6 bg-white border-t border-neutral-200">
-      <form onSubmit={handleSubmit} className="flex items-center space-x-3">
+    <div className="p-4 md:p-6 bg-transparent">
+      {/* 
+        Gemini-Style Input Container:
+        - Unified rounded border around everything.
+        - Input field is transparent with no border.
+        - Icons live inside the container.
+      */}
+      <form
+        onSubmit={handleSubmit}
+        className="flex items-end gap-2 p-2 border border-brand-purple/50 bg-brand-purple/10 rounded-3xl shadow-inner focus-within:ring-2 focus-within:ring-brand-blue focus-within:border-brand-blue transition-all"
+      >
         <textarea
           ref={ref}
           value={text}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="Ask about job resources, resume tips, and more..."
-          className="flex-1 p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition resize-none"
+          className="flex-1 p-3 bg-transparent border-none outline-none text-brand-pale placeholder-brand-grey focus:ring-0 resize-none max-h-[150px] min-h-[44px]"
           rows={1}
           disabled={disabled}
-          style={{ maxHeight: '100px' }}
           data-testid="chat-input"
         />
-        {speechSupported && (
+
+        <div className="flex items-center gap-1 pb-1 pr-1">
+          {speechSupported && (
+            <button
+              type="button"
+              onClick={handleToggleRecording}
+              disabled={disabled}
+              className={`p-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 ${isRecording
+                ? 'bg-red-500/80 text-white hover:bg-red-600 shadow-[0_0_10px_rgba(239,68,68,0.5)]'
+                : 'text-brand-blue hover:text-brand-pale hover:bg-brand-purple/30'
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
+              aria-label={isRecording ? 'Stop dictation' : 'Start dictation'}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+              </svg>
+            </button>
+          )}
           <button
-            type="button"
-            onClick={handleToggleRecording}
-            disabled={disabled}
-            className={`p-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${isRecording
-                ? 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-300'
-                : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200 focus:ring-neutral-300'
-              } disabled:opacity-50 disabled:cursor-not-allowed`}
-            aria-label={isRecording ? 'Stop dictation' : 'Start dictation'}
+            type="submit"
+            disabled={disabled || !text.trim()}
+            aria-label="Send message"
+            className={`p-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 ${text.trim() && !disabled
+              ? 'bg-brand-blue text-brand-dark hover:bg-brand-blue/90 shadow-[0_0_10px_rgba(138,198,208,0.4)]'
+              : 'text-brand-grey hover:bg-brand-purple/30 cursor-not-allowed opacity-50'
+              }`}
+            data-testid="send-message-button"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14a3 3 0 003-3V7a3 3 0 10-6 0v4a3 3 0 003 3z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-14 0M12 19v3" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
           </button>
-        )}
-        <button
-          type="submit"
-          disabled={disabled || !text.trim()}
-          aria-label="Send message"
-          className="bg-primary text-white rounded-full p-3 hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark disabled:bg-neutral-400 disabled:cursor-not-allowed transition-colors"
-          data-testid="send-message-button"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-          </svg>
-        </button>
+        </div>
       </form>
     </div>
   );

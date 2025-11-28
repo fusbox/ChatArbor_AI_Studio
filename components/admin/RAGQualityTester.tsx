@@ -5,7 +5,9 @@ import Spinner from '../shared/Spinner';
 
 const RAGQualityTester: React.FC = () => {
   const [testQuery, setTestQuery] = useState('');
+  const [lastQuery, setLastQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const [results, setResults] = useState<KnowledgeSourceWithSimilarity[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [searchHistory, setSearchHistory] = useState<Array<{ query: string; count: number; timestamp: number }>>([]);
@@ -16,20 +18,25 @@ const RAGQualityTester: React.FC = () => {
 
     setIsSearching(true);
     setError(null);
-    
+    setHasSearched(false);
+
     try {
       // Get the retrieved sources with similarity scores
       const resultsWithScores = await apiService.searchKnowledgeBaseWithScores(testQuery);
-      
+
       setResults(resultsWithScores);
-      
+      setLastQuery(testQuery);
+      setHasSearched(true);
+
       // Add to search history
       setSearchHistory(prev => [{
         query: testQuery,
         count: resultsWithScores.length,
         timestamp: Date.now()
       }, ...prev.slice(0, 9)]); // Keep last 10 searches
-      
+
+      setTestQuery(''); // Clear input after search
+
     } catch (err) {
       setError('Failed to test query. Please try again.');
       setResults([]);
@@ -82,7 +89,7 @@ const RAGQualityTester: React.FC = () => {
               disabled={isSearching}
             />
           </div>
-          
+
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
               {error}
@@ -108,7 +115,7 @@ const RAGQualityTester: React.FC = () => {
               Retrieved Sources ({results.length})
             </h3>
             <div className="text-sm text-neutral-600">
-              Query: <span className="font-medium text-neutral-800">"{testQuery}"</span>
+              Query: <span className="font-medium text-neutral-800">"{lastQuery}"</span>
             </div>
           </div>
 
@@ -131,7 +138,7 @@ const RAGQualityTester: React.FC = () => {
                       title={result.source.embedding ? 'Indexed' : 'Not Indexed'}
                     />
                   </div>
-                  
+
                   {/* Similarity Score */}
                   <div className="flex items-center gap-2">
                     <div className="text-right">
@@ -153,8 +160,8 @@ const RAGQualityTester: React.FC = () => {
                 <div className="bg-neutral-50 rounded p-3 mt-2">
                   <div className="text-xs text-neutral-500 mb-1 font-medium">Content Preview:</div>
                   <div className="text-sm text-neutral-700 line-clamp-3">
-                    {result.source.type === 'text' 
-                      ? result.source.content 
+                    {result.source.type === 'text'
+                      ? result.source.content
                       : result.source.data || result.source.content}
                   </div>
                 </div>
@@ -196,7 +203,7 @@ const RAGQualityTester: React.FC = () => {
       )}
 
       {/* No Results Message */}
-      {!isSearching && results.length === 0 && testQuery && (
+      {!isSearching && hasSearched && results.length === 0 && (
         <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-6 py-4 rounded-lg text-center">
           <p className="font-medium">No sources retrieved for this query</p>
           <p className="text-sm mt-1">

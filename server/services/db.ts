@@ -96,7 +96,7 @@ const initSchema = () => {
         const defaultSettings = {
             systemPrompt: "You are a helpful and knowledgeable AI assistant for Job Connections, powered by Rangam. Your goal is to assist job seekers with career advice, resume tips, and interview preparation. Be professional, encouraging, and concise.",
             greetings: [
-                { id: '1', text: "Hi! I'm your Job Connections AI assistant. How can I help you today?", isActive: true },
+                { id: '1', text: "Hi! I'm your Job Connections Virtual Assistant. How can I help you today?", isActive: true },
                 { id: '2', text: "Hello! Ready to work on your career goals? Ask me anything!", isActive: false }
             ]
         };

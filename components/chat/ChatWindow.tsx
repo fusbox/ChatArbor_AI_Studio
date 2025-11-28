@@ -80,67 +80,67 @@ const ChatWindow: React.FC = () => {
     };
     await apiService.saveFeedback(fullFeedback);
     handleCloseFeedback();
-    // Maybe show a "Thank you for your feedback!" toast message here
   };
 
 
   return (
-    <div className="flex flex-col h-full bg-neutral-50 max-w-4xl mx-auto border-x border-neutral-200">
-      {/* Sticky Header - positioned below main header */}
-      <div className="sticky top-[72px] z-10 bg-white border-b border-neutral-200 p-4 flex justify-between items-center shadow-sm">
-        <div className="flex items-center space-x-3">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-          <div>
-            <h1 className="font-semibold text-neutral-800">Job Connections AI</h1>
-            <p className="text-xs text-neutral-500">Powered by Rangam</p>
-          </div>
+    <>
+      <div className="flex flex-col h-full w-full max-w-4xl mx-auto overflow-hidden relative">
+        {/* Messages Area */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar" data-testid="message-list">
+          {messages.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-brand-grey space-y-6 opacity-70">
+              <div className="relative">
+                <div className="absolute inset-0 bg-brand-blue/20 blur-xl rounded-full"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 relative z-10 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                </svg>
+              </div>
+              <p className="text-lg font-light tracking-wide">Initialize conversation sequence...</p>
+            </div>
+          ) : (
+            messages.map((msg) => (
+              <MessageBubble key={msg.id} message={msg} onFeedback={handleOpenFeedback} />
+            ))
+          )}
+          {isLoading && !streamingMessage && (
+            <div className="flex justify-start">
+              <div className="flex items-center space-x-3 bg-brand-purple/20 backdrop-blur-sm border border-brand-purple/30 rounded-lg p-4 max-w-lg">
+                <Spinner />
+                <span className="text-brand-blue italic text-sm tracking-wide">Processing input...</span>
+              </div>
+            </div>
+          )}
+          <StreamingBubble text={streamingMessage || ''} />
+          <div ref={messagesEndRef} />
         </div>
-        <button
-          onClick={clearChat}
-          className="px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors"
-          data-testid="new-chat-button"
-        >
-          New Chat
-        </button>
+
+        {/* Input Area - Fixed at bottom via flex layout */}
+        <div className="flex-none p-4 bg-transparent">
+          <MessageInput ref={inputRef} onSend={sendMessage} disabled={isLoading} />
+        </div>
+
+        {feedbackState.isOpen && feedbackState.userMessage && feedbackState.aiMessage && (
+          <FeedbackModal
+            isOpen={feedbackState.isOpen}
+            onClose={handleCloseFeedback}
+            onSubmit={handleSubmitFeedback}
+            userMessage={feedbackState.userMessage}
+            aiMessage={feedbackState.aiMessage}
+            initialRating={feedbackState.initialRating}
+          />
+        )}
       </div>
 
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-6" data-testid="message-list">
-        {messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-neutral-400 space-y-4 opacity-50">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            <p>Start a conversation to get help with your job search</p>
-          </div>
-        ) : (
-          messages.map((msg) => (
-            <MessageBubble key={msg.id} message={msg} onFeedback={handleOpenFeedback} />
-          ))
-        )}
-        {isLoading && !streamingMessage && (
-          <div className="flex justify-start">
-            <div className="flex items-center space-x-2 bg-neutral-200 rounded-lg p-3 max-w-lg">
-              <Spinner />
-              <span className="text-neutral-600 italic text-sm">Job Connections AI is thinking...</span>
-            </div>
-          </div>
-        )}
-        <StreamingBubble text={streamingMessage || ''} />
-        <div ref={messagesEndRef} />
-      </div>
-      <MessageInput ref={inputRef} onSend={sendMessage} disabled={isLoading} />
-      {feedbackState.isOpen && feedbackState.userMessage && feedbackState.aiMessage && (
-        <FeedbackModal
-          isOpen={feedbackState.isOpen}
-          onClose={handleCloseFeedback}
-          onSubmit={handleSubmitFeedback}
-          userMessage={feedbackState.userMessage}
-          aiMessage={feedbackState.aiMessage}
-          initialRating={feedbackState.initialRating}
-        />
-      )}
-    </div>
+      {/* New Session Button - Fixed at bottom left */}
+      <button
+        onClick={clearChat}
+        className="fixed bottom-8 left-8 px-4 py-2 bg-brand-purple/20 hover:bg-brand-purple/40 text-brand-pale border border-brand-purple/30 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm text-sm z-50 shadow-lg"
+        data-testid="new-chat-button"
+      >
+        New Session
+      </button>
+    </>
   );
 };
 

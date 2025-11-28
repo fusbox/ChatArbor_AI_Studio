@@ -33,16 +33,16 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col bg-neutral-100">
-      <nav className="bg-white border-b border-neutral-200 px-4 flex-shrink-0">
+    <div className="flex flex-col bg-brand-bg-light h-full">
+      <nav className="bg-brand-surface border-b border-brand-grey/20 px-4 flex-shrink-0 shadow-sm">
         <div className="flex items-center space-x-2">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center px-4 py-3 text-sm font-medium border-b-2 transition-colors duration-200 ${activeTab === tab.id
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-neutral-600 hover:text-primary hover:bg-neutral-100'
+                ? 'border-brand-purple text-brand-purple'
+                : 'border-transparent text-brand-grey hover:text-brand-purple hover:bg-brand-purple/5'
                 }`}
               data-testid={`tab-${tab.id}`}
             >
@@ -52,7 +52,7 @@ const AdminDashboard: React.FC = () => {
           ))}
         </div>
       </nav>
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-6 overflow-y-auto">
         {renderContent()}
       </div>
     </div>

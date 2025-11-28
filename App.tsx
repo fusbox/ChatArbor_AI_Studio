@@ -29,14 +29,14 @@ const App: React.FC = () => {
   // ============================================================================
 
   return (
-    <div className="flex flex-col min-h-screen font-sans text-neutral-800">
+    <div className={`flex flex-col h-screen overflow-hidden font-sans transition-colors duration-300 ${view === 'chat' ? 'bg-brand-dark text-white' : 'bg-brand-bg-light text-brand-dark'}`}>
       <Header
         title={APP_NAME}
         currentView={view}
         onViewChange={setView}
         onAuthClick={() => setAuthModalOpen(true)}
       />
-      <main className="flex-1">
+      <main className="flex-1 flex flex-col min-h-0">
         {view === 'chat' ? <ChatWindow /> : <AdminDashboard />}
       </main>
       {isAuthModalOpen && (

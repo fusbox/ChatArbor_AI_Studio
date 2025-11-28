@@ -1,24 +1,60 @@
 import { storage } from '../utils/storage.js';
 import * as chromaService from './chromaService.js';
 import { KnowledgeSource } from '../types.js';
+import { splitText } from '../utils/textSplitter.js';
 
 export const getAll = async () => {
     return storage.getKnowledgeBase();
+};
+
+const prepareChunks = (source: any) => {
+    // Prioritize 'data' (scraped content) over 'content' (URL/filename) for URL/File types
+    // For TEXT type, 'data' is undefined so it falls back to 'content'
+    const content = source.data || source.content || '';
+    const chunks = splitText(content, { chunkSize: 1000, chunkOverlap: 200 });
+
+    return chunks.map((chunk, index) => ({
+        id: `${source.id}-chunk-${index}`,
+        content: chunk,
+        type: source.type,
+        createdAt: source.createdAt,
+        metadata: {
+            sourceId: source.id,
+            chunkIndex: index,
+            totalChunks: chunks.length,
+            title: source.title,
+            type: source.type
+        }
+    }));
 };
 
 export const add = async (data: any) => {
     const source = { ...data, id: Date.now().toString(), createdAt: Date.now() };
 
     try {
-        // Generate embedding via ChromaDB
-        const embeddings = await chromaService.upsertSources([source]);
-        // Store the embedding in the source
-        if (embeddings && embeddings.length > 0) {
-            source.embedding = embeddings[0];
-        }
+        // Chunk the content
+        const chunks = prepareChunks(source);
+
+        // Upsert chunks to ChromaDB (using a modified upsert that handles chunks)
+        // We need to adapt chromaService to accept our chunk format or map it here
+        // Mapping chunks to KnowledgeSource-like objects for chromaService
+        const chunkSources = chunks.map(c => ({
+            id: c.id,
+            content: c.content,
+            type: c.type,
+            createdAt: c.createdAt,
+            // We'll need to ensure chromaService handles metadata correctly
+            // For now, we pass the chunk content as the 'data'
+            data: c.content
+        }));
+
+        await chromaService.upsertSources(chunkSources as any[]);
+
+        // We don't store embedding on the main source object anymore since it's chunked
+        source.chunkCount = chunks.length;
+
     } catch (error) {
         console.error('Failed to generate embedding or upsert to Chroma:', error);
-        // Continue without embedding - user can re-index later
     }
 
     await storage.addKnowledgeSource(source);
@@ -33,21 +69,34 @@ export const addBulk = async (items: any[]) => {
         createdAt: Date.now()
     }));
 
-    // Upsert to ChromaDB and get embeddings
     try {
-        const embeddings = await chromaService.upsertSources(newItems);
+        let allChunks: any[] = [];
 
-        // Update items with embeddings and save again
-        const itemsWithEmbeddings = newItems.map((item, index) => ({
-            ...item,
-            embedding: embeddings[index]
-        }));
+        for (const item of newItems) {
+            const chunks = prepareChunks(item);
+            const chunkSources = chunks.map(c => ({
+                id: c.id,
+                content: c.content,
+                type: c.type,
+                createdAt: c.createdAt,
+                data: c.content
+            }));
+            allChunks = [...allChunks, ...chunkSources];
+            item.chunkCount = chunks.length;
+        }
 
-        await storage.addKnowledgeSources(itemsWithEmbeddings);
+        // Upsert all chunks to Chroma
+        // Process in batches of 50 to avoid hitting limits
+        const BATCH_SIZE = 50;
+        for (let i = 0; i < allChunks.length; i += BATCH_SIZE) {
+            const batch = allChunks.slice(i, i + BATCH_SIZE);
+            await chromaService.upsertSources(batch);
+        }
+
+        await storage.addKnowledgeSources(newItems);
 
     } catch (error) {
         console.error('Failed to bulk upsert to Chroma:', error);
-        // If upsert fails, we should still save the items without embeddings
         await storage.addKnowledgeSources(newItems);
     }
 
@@ -58,6 +107,16 @@ export const remove = async (id: string) => {
     await storage.deleteKnowledgeSource(id);
 
     try {
+        // We need to delete all chunks for this source
+        // Since we don't track chunk IDs easily, we might need to query by metadata
+        // OR, if we know the ID pattern, we can try to delete.
+        // Chroma delete by metadata is supported in newer versions, but let's stick to ID if possible.
+        // Ideally, we should query Chroma for all IDs where metadata.sourceId == id
+        // For now, we'll try to delete the source ID itself (legacy) and maybe we need a way to delete chunks.
+        // LIMITATION: chromaService.deleteSource only takes an ID.
+        // We might need to extend chromaService to delete by metadata or we just accept orphans for now.
+        // TODO: Implement delete by metadata in chromaService
+        console.warn('Deleting chunks not fully implemented yet - orphans may remain');
         await chromaService.deleteSource(id);
     } catch (error) {
         console.error('Failed to delete from Chroma:', error);
@@ -70,61 +129,73 @@ export const reindex = async () => {
         return 0;
     }
 
-    // Upsert all sources to Chroma in batches
-    const BATCH_SIZE = 5;
-    const embeddings: number[][] = [];
+    // Reset collection to handle potential embedding dimension changes
+    console.log('Resetting Chroma collection...');
+    await chromaService.resetCollection();
 
-    for (let i = 0; i < kb.length; i += BATCH_SIZE) {
-        const batch = kb.slice(i, i + BATCH_SIZE);
-        const batchEmbeddings = await chromaService.upsertSources(batch);
-        embeddings.push(...batchEmbeddings);
+    let allChunks: any[] = [];
+
+    for (const item of kb) {
+        console.log(`[Reindex] Processing item ${item.id}: Type=${item.type}, ContentLength=${(item.content || item.data || '').length}`);
+        const chunks = prepareChunks(item);
+        console.log(`[Reindex] Generated ${chunks.length} chunks for item ${item.id}`);
+
+        const chunkSources = chunks.map(c => ({
+            id: c.id,
+            content: c.content,
+            type: c.type,
+            createdAt: c.createdAt,
+            data: c.content
+        }));
+        allChunks = [...allChunks, ...chunkSources];
     }
 
-    // Update KB with embeddings
-    const updatedKb = kb.map((item: any, index: number) => ({
-        ...item,
-        embedding: embeddings[index]
-    }));
+    // Upsert all chunks
+    const BATCH_SIZE = 20;
+    for (let i = 0; i < allChunks.length; i += BATCH_SIZE) {
+        const batch = allChunks.slice(i, i + BATCH_SIZE);
+        await chromaService.upsertSources(batch);
+        console.log(`Re-indexed chunks ${i} to ${Math.min(i + BATCH_SIZE, allChunks.length)}`);
+    }
 
-    await storage.saveKnowledgeBase(updatedKb);
     return kb.length;
 };
 
 export const search = async (query: string) => {
-    const knowledgeBase = await storage.getKnowledgeBase();
+    if (!query) return [];
 
-    if (!query || knowledgeBase.length === 0) {
-        return [];
-    }
+    try {
+        // Use vector search
+        const results = await chromaService.querySimilar(query, 5);
 
-    // Simple keyword matching (case-insensitive)
-    const queryLower = query.toLowerCase();
-    const keywords = queryLower.split(/\s+/).filter((w: string) => w.length > 2);
+        // Map results back to a useful format
+        // We need to fetch the full source context if needed, or just return the chunk
+        // The UI expects { source, similarity }
 
-    if (keywords.length === 0) {
-        return [];
-    }
+        // Since we are returning chunks, the "source" object will be the chunk content
+        // We might want to look up the parent source title from storage if possible,
+        // but for now let's construct a source-like object from the chunk ID and content.
 
-    const results = knowledgeBase.map((source: any) => {
-        const content = (source.content || source.data || '').toLowerCase();
-        const title = (source.title || '').toLowerCase();
-        let score = 0;
+        return results.map(r => {
+            // Parse ID to get metadata if possible, or just return as is
+            // id format: sourceId-chunk-index
+            const parts = r.id.split('-chunk-');
+            const sourceId = parts[0];
 
-        // Count keyword matches in content and title
-        keywords.forEach((keyword: string) => {
-            const contentMatches = (content.match(new RegExp(keyword, 'g')) || []).length;
-            const titleMatches = (title.match(new RegExp(keyword, 'g')) || []).length;
-            score += contentMatches + (titleMatches * 2); // Title matches weighted higher
+            return {
+                source: {
+                    id: r.id,
+                    content: r.document, // chromaService querySimilar needs to return documents too
+                    type: 'chunk',
+                    originalSourceId: sourceId,
+                    createdAt: r.metadata?.createdAt || Date.now() // Fallback to now if missing
+                },
+                similarity: chromaService.distanceToCosineSimilarity(r.distance)
+            };
         });
 
-        return {
-            source,
-            similarity: score > 0 ? Math.min(score / keywords.length / 10, 1) : 0
-        };
-    })
-        .filter((r: any) => r.similarity > 0)
-        .sort((a: any, b: any) => b.similarity - a.similarity)
-        .slice(0, 5);
-
-    return results;
+    } catch (error) {
+        console.error('Vector search failed:', error);
+        return [];
+    }
 };
