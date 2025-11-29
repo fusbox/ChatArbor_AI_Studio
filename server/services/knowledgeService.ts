@@ -107,17 +107,9 @@ export const remove = async (id: string) => {
     await storage.deleteKnowledgeSource(id);
 
     try {
-        // We need to delete all chunks for this source
-        // Since we don't track chunk IDs easily, we might need to query by metadata
-        // OR, if we know the ID pattern, we can try to delete.
-        // Chroma delete by metadata is supported in newer versions, but let's stick to ID if possible.
-        // Ideally, we should query Chroma for all IDs where metadata.sourceId == id
-        // For now, we'll try to delete the source ID itself (legacy) and maybe we need a way to delete chunks.
-        // LIMITATION: chromaService.deleteSource only takes an ID.
-        // We might need to extend chromaService to delete by metadata or we just accept orphans for now.
-        // TODO: Implement delete by metadata in chromaService
-        console.warn('Deleting chunks not fully implemented yet - orphans may remain');
-        await chromaService.deleteSource(id);
+        // Delete all chunks for this source using metadata filter
+        console.log(`[KnowledgeService] Deleting vectors for sourceId: ${id}`);
+        await chromaService.deleteWhere({ sourceId: id });
     } catch (error) {
         console.error('Failed to delete from Chroma:', error);
     }

@@ -166,6 +166,14 @@ export const deleteSource = async (id: string): Promise<void> => {
     });
 };
 
+export const deleteWhere = async (where: Record<string, any>): Promise<void> => {
+    const path = await buildCollectionPath('/delete');
+    await request(path, {
+        method: 'POST',
+        body: JSON.stringify({ where }),
+    });
+};
+
 export const querySimilar = async (
     query: string,
     topK: number = 5

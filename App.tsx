@@ -20,7 +20,9 @@ const AppContent: React.FC = () => {
   // ============================================================================
   useEffect(() => {
     const isDev = (import.meta as any).env?.DEV;
-    if (isDev) {
+    const shouldAutoLogin = (import.meta as any).env?.VITE_AUTO_LOGIN === 'true';
+
+    if (isDev && shouldAutoLogin) {
       apiService.login('fu@dev.local', 'dev123')
         .then(() => console.log('✅ Auto-logged in as Fu (dev mode)'))
         .catch(err => console.warn('Auto-login failed (expected on first run):', err.message));

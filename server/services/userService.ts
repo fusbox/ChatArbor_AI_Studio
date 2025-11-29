@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'node:crypto';
-
-// Mock user database
-const users = new Map();
+import bcrypt from 'bcryptjs';
+import db from './db.js';
 
 let _jwtSecret: string | null = null;
 
@@ -23,11 +22,26 @@ const generateToken = (userId: string, email: string): string => {
 };
 
 export const createUser = async (name: string, email: string, password: string) => {
-    if (users.has(email)) {
+    const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
+    if (existing) {
         throw new Error('User already exists');
     }
-    const newUser = { id: Date.now().toString(), name, email, password }; // In real app, hash password!
-    users.set(email, newUser);
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+        id: crypto.randomUUID(),
+        name,
+        email,
+        password: hashedPassword,
+        createdAt: Date.now()
+    };
+
+    const insert = db.prepare(`
+        INSERT INTO users (id, name, email, password, createdAt)
+        VALUES (@id, @name, @email, @password, @createdAt)
+    `);
+
+    insert.run(newUser);
 
     // Return user without password + token
     const { password: _, ...safeUser } = newUser;
@@ -36,15 +50,21 @@ export const createUser = async (name: string, email: string, password: string) 
 };
 
 export const validateCredentials = async (email: string, password: string) => {
-    const user = users.get(email);
-    if (!user || user.password !== password) {
+    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email) as any;
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
         return null;
     }
+
     const { password: _, ...safeUser } = user;
     const token = generateToken(user.id, user.email);
     return { user: safeUser, token };
 };
 
 export const getUser = async (email: string) => {
-    return users.get(email);
+    const user = db.prepare('SELECT id, name, email, createdAt FROM users WHERE email = ?').get(email);
+    return user;
 };
+
+// Export getJwtSecret for middleware to use
+export { getJwtSecret };

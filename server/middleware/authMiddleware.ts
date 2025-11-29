@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { getJwtSecret } from '../services/userService.js';
 
 // Extend Express Request type to include user
 declare global {
@@ -13,12 +14,6 @@ declare global {
     }
 }
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
-if (!JWT_SECRET) {
-    throw new Error('JWT_SECRET environment variable is required');
-}
-
 export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
     const authHeader = req.headers.authorization;
 
@@ -30,7 +25,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; email: string };
+        const decoded = jwt.verify(token, getJwtSecret()) as { userId: string; email: string };
         req.user = decoded;
         next();
     } catch (error) {
