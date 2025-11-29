@@ -50,40 +50,36 @@ const PromptManager: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4 text-neutral-800">Greeting Manager</h2>
-      <p className="text-sm text-neutral-600 mb-6">Manage the initial messages the chatbot uses to greet users. Only one greeting can be active at a time.</p>
+      <h2 className="text-2xl font-bold mb-4 text-text">Greeting Manager</h2>
+      <p className="text-sm text-text-muted mb-6">Manage the initial messages the chatbot uses to greet users. Only one greeting can be active at a time.</p>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <h3 className="text-lg font-semibold mb-3">Add New Greeting</h3>
+      <div className="bg-surface p-6 rounded-lg shadow-sm border border-border mb-6">
+        <h3 className="text-lg font-semibold mb-3 text-text">Add New Greeting</h3>
         <div className="flex space-x-2">
           <input
             type="text"
             value={newGreetingText}
             onChange={(e) => setNewGreetingText(e.target.value)}
             placeholder="Enter a new greeting message..."
-            className="flex-grow p-2 border rounded-lg"
+            className="flex-grow p-2 border border-border rounded-lg bg-background text-text focus:ring-primary focus:border-primary"
             data-testid="new-greeting-input"
           />
-          <button onClick={handleAddGreeting} className="bg-secondary text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors" data-testid="add-greeting-button">Add</button>
+          <button onClick={handleAddGreeting} className="bg-secondary text-brand-dark px-4 py-2 rounded-lg hover:bg-secondary/90 transition-colors" data-testid="add-greeting-button">Add</button>
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h3 className="text-lg font-semibold mb-3">Available Greetings</h3>
+      <div className="bg-surface p-6 rounded-lg shadow-sm border border-border">
+        <h3 className="text-lg font-semibold mb-3 text-text">Available Greetings</h3>
         {isLoading ? <Spinner /> : (
           <div className="space-y-3">
             {greetings.map(greeting => (
-              <div key={greeting.id} className="flex justify-between items-center p-3 bg-neutral-50 rounded-lg border" data-testid={`greeting-item-${greeting.id}`}>
-                <p className="text-sm text-neutral-800">{greeting.text}</p>
+              <div key={greeting.id} className="flex justify-between items-center p-3 bg-background rounded-lg border border-border" data-testid={`greeting-item-${greeting.id}`}>
+                <p className="text-sm text-text">{greeting.text}</p>
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => handleSetActive(greeting.id)}
                     disabled={greeting.isActive}
-                    className="text-xs px-3 py-1 rounded-full transition-colors disabled:cursor-not-allowed enabled:hover:bg-primary-light enabled:hover:text-white"
-                    style={{
-                      backgroundColor: greeting.isActive ? '#0284c7' : '#e2e8f0',
-                      color: greeting.isActive ? 'white' : '#475569'
-                    }}
+                    className={`text-xs px-3 py-1 rounded-full transition-colors disabled:cursor-not-allowed ${greeting.isActive ? 'bg-primary text-white' : 'bg-text-muted/20 text-text-muted hover:bg-primary/20 hover:text-primary'}`}
                     data-testid={`set-active-greeting-${greeting.id}`}
                   >
                     {greeting.isActive ? 'Active' : 'Set Active'}

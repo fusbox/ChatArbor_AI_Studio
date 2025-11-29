@@ -33,7 +33,7 @@ describe('urlScraperService', () => {
         it('should block localhost', async () => {
             mockLookup.mockResolvedValue({ address: '127.0.0.1', family: 4 });
 
-            const result = await scrapeUrl('http://localhost:3000');
+            const result = await scrapeUrl('http://localhost:3001');
             expect(result.success).toBe(false);
             expect(result.message).toContain('Access to private or local network resources is blocked');
         });

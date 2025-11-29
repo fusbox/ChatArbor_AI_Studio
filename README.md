@@ -222,7 +222,7 @@ docker run -p 8000:8000 ghcr.io/chroma-core/chroma:latest
 
 # 6. Start dev servers
 npm run dev          # Frontend (port 5173)
-cd server && npm run dev  # Backend (port 3000)
+cd server && npm run dev  # Backend (port 3001)
 ```
 
 ### Project Structure

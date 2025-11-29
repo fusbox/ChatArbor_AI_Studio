@@ -138,6 +138,7 @@ export const reindex = async () => {
     for (const item of kb) {
         console.log(`[Reindex] Processing item ${item.id}: Type=${item.type}, ContentLength=${(item.content || item.data || '').length}`);
         const chunks = prepareChunks(item);
+        item.chunkCount = chunks.length;
         console.log(`[Reindex] Generated ${chunks.length} chunks for item ${item.id}`);
 
         const chunkSources = chunks.map(c => ({
@@ -157,6 +158,9 @@ export const reindex = async () => {
         await chromaService.upsertSources(batch);
         console.log(`Re-indexed chunks ${i} to ${Math.min(i + BATCH_SIZE, allChunks.length)}`);
     }
+
+    // Save updated chunk counts to storage
+    await storage.saveKnowledgeBase(kb);
 
     return kb.length;
 };

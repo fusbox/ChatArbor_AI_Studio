@@ -174,14 +174,14 @@ const KnowledgeBaseManager: React.FC = () => {
   const renderInput = () => {
     switch (newSourceType) {
       case KnowledgeSourceType.TEXT:
-        return <textarea value={textContent} onChange={e => setTextContent(e.target.value)} placeholder="Paste plain text content here..." className="w-full p-2 border border-brand-grey/20 rounded min-h-[120px] focus:ring-brand-purple focus:border-brand-purple" data-testid="kb-content-input" />;
+        return <textarea value={textContent} onChange={e => setTextContent(e.target.value)} placeholder="Paste plain text content here..." className="w-full p-2 border border-border rounded min-h-[120px] focus:ring-primary focus:border-primary bg-background text-text placeholder-text-muted" data-testid="kb-content-input" />;
       case KnowledgeSourceType.URL:
-        return <input type="url" value={urlContent} onChange={e => setUrlContent(e.target.value)} placeholder="https://example.com/job-resources" className="w-full p-2 border border-brand-grey/20 rounded focus:ring-brand-purple focus:border-brand-purple" data-testid="kb-url-input" />;
+        return <input type="url" value={urlContent} onChange={e => setUrlContent(e.target.value)} placeholder="https://example.com/job-resources" className="w-full p-2 border border-border rounded focus:ring-primary focus:border-primary bg-background text-text placeholder-text-muted" data-testid="kb-url-input" />;
       case KnowledgeSourceType.FILE:
         return (
           <div>
-            <input id="file-input" type="file" onChange={handleFileChange} accept=".txt,.md,.pdf,.docx" className="w-full p-2 border border-brand-grey/20 rounded file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-purple file:text-white hover:file:bg-brand-dark" data-testid="kb-file-input" />
-            <p className="text-xs text-brand-grey mt-2">Accepted formats: PDF, DOCX, TXT, MD. Note: PDF and DOCX content is simulated in this demo.</p>
+            <input id="file-input" type="file" onChange={handleFileChange} accept=".txt,.md,.pdf,.docx" className="w-full p-2 border border-border rounded file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary-dark bg-background text-text" data-testid="kb-file-input" />
+            <p className="text-xs text-text-muted mt-2">Accepted formats: PDF, DOCX, TXT, MD. Note: PDF and DOCX content is simulated in this demo.</p>
           </div>
         );
     }
@@ -198,14 +198,14 @@ const KnowledgeBaseManager: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col space-y-6">
-      <h2 className="text-2xl font-bold text-brand-dark flex-shrink-0">Knowledge Base Manager</h2>
+      <h2 className="text-2xl font-bold text-text flex-shrink-0">Knowledge Base Manager</h2>
 
-      <div className="bg-brand-surface p-6 rounded-lg shadow-sm border border-brand-grey/10 flex-shrink-0">
-        <h3 className="text-lg font-semibold mb-3 text-brand-dark">Add New Source</h3>
+      <div className="bg-surface p-6 rounded-lg shadow-sm border border-border flex-shrink-0 transition-colors duration-300">
+        <h3 className="text-lg font-semibold mb-3 text-text">Add New Source</h3>
         <form onSubmit={handleSubmit}>
-          <div className="flex space-x-2 mb-4 border-b border-brand-grey/20">
+          <div className="flex space-x-2 mb-4 border-b border-border">
             {(Object.values(KnowledgeSourceType)).map(type => (
-              <button key={type} type="button" onClick={() => { setNewSourceType(type); setValidationError(null); }} className={`capitalize px-4 py-2 text-sm font-medium border-b-2 transition-colors ${newSourceType === type ? 'border-brand-purple text-brand-purple' : 'border-transparent text-brand-grey hover:text-brand-dark'}`}>
+              <button key={type} type="button" onClick={() => { setNewSourceType(type); setValidationError(null); }} className={`capitalize px-4 py-2 text-sm font-medium border-b-2 transition-colors ${newSourceType === type ? 'border-primary text-primary' : 'border-transparent text-text-muted hover:text-text'}`}>
                 {type}
               </button>
             ))}
@@ -218,7 +218,7 @@ const KnowledgeBaseManager: React.FC = () => {
             type="submit"
             aria-busy={isSubmitting}
             disabled={isSubmitting}
-            className="bg-brand-blue text-brand-dark font-medium px-4 py-2 rounded-lg hover:bg-brand-blue/90 transition-colors disabled:bg-brand-grey/30 disabled:cursor-wait flex items-center justify-center min-w-[140px]"
+            className="bg-secondary text-brand-dark font-medium px-4 py-2 rounded-lg hover:bg-secondary/90 transition-colors disabled:bg-text-muted/30 disabled:cursor-wait flex items-center justify-center min-w-[140px]"
             data-testid="add-kb-source-button"
           >
             {isSubmitting ? (
@@ -239,13 +239,13 @@ const KnowledgeBaseManager: React.FC = () => {
         </form>
       </div>
 
-      <div className="bg-brand-surface p-6 rounded-lg shadow-sm border border-brand-grey/10 flex-shrink-0 flex flex-col" style={{ maxHeight: '460px' }}>
+      <div className="bg-surface p-6 rounded-lg shadow-sm border border-border flex-shrink-0 flex flex-col transition-colors duration-300" style={{ maxHeight: '460px' }}>
         <div className="flex justify-between items-center mb-3 flex-shrink-0">
-          <h3 className="text-lg font-semibold text-brand-dark">Existing Sources ({filteredSources.length})</h3>
+          <h3 className="text-lg font-semibold text-text">Existing Sources ({filteredSources.length})</h3>
           <button
             onClick={handleReIndex}
             disabled={isIndexing}
-            className="bg-brand-purple/10 text-brand-purple px-4 py-2 text-sm font-semibold rounded-lg hover:bg-brand-purple/20 transition-colors disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-wait flex items-center justify-center gap-2"
+            className="bg-primary/10 text-primary px-4 py-2 text-sm font-semibold rounded-lg hover:bg-primary/20 transition-colors disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-wait flex items-center justify-center gap-2"
             data-testid="reindex-kb-button"
           >
             {isIndexing && <Spinner />}
@@ -259,10 +259,10 @@ const KnowledgeBaseManager: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search sources by type or content..."
-            className="w-full p-2 pl-10 border border-brand-grey/20 rounded-lg focus:ring-brand-purple focus:border-brand-purple"
+            className="w-full p-2 pl-10 border border-border rounded-lg focus:ring-primary focus:border-primary bg-background text-text placeholder-text-muted"
             data-testid="kb-search-input"
           />
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-brand-grey" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -271,14 +271,14 @@ const KnowledgeBaseManager: React.FC = () => {
           {isLoading ? <Spinner /> : error ? <p className="text-red-500">{error}</p> : (
             <div className="space-y-3">
               {filteredSources.map(source => (
-                <div key={source.id} className="flex justify-between items-center p-3 bg-brand-bg-light rounded-lg border border-brand-grey/10" data-testid={`kb-source-${source.id}`}>
+                <div key={source.id} className="flex justify-between items-center p-3 bg-background rounded-lg border border-border" data-testid={`kb-source-${source.id}`}>
                   <div className="flex-1 min-w-0 flex items-center">
-                    <span className={`flex-shrink-0 w-2 h-2 rounded-full mr-3 ${source.embedding ? 'bg-emerald-500' : 'bg-brand-grey/30'}`} title={source.embedding ? 'Indexed' : 'Not Indexed'}></span>
-                    <span className="inline-flex w-16 justify-center font-mono text-xs px-2 py-1 bg-brand-surface border border-brand-grey/20 text-brand-grey rounded mr-3 capitalize">{source.type}</span>
-                    <span className="text-sm text-brand-dark truncate">{source.type === 'text' ? `${source.content.substring(0, 70)}...` : source.content}</span>
+                    <span className={`flex-shrink-0 w-2 h-2 rounded-full mr-3 ${source.embedding || (source.chunkCount && source.chunkCount > 0) ? 'bg-emerald-500' : 'bg-text-muted/30'}`} title={source.embedding || (source.chunkCount && source.chunkCount > 0) ? 'Indexed' : 'Not Indexed'}></span>
+                    <span className="inline-flex w-16 justify-center font-mono text-xs px-2 py-1 bg-surface border border-border text-text-muted rounded mr-3 capitalize">{source.type}</span>
+                    <span className="text-sm text-text truncate">{source.type === 'text' ? `${source.content.substring(0, 70)}...` : source.content}</span>
                   </div>
                   <div className="flex space-x-2">
-                    <button onClick={() => setEditingSource(source)} aria-label="Edit source" className="text-brand-purple hover:text-brand-dark p-1 rounded-full hover:bg-brand-purple/10 transition-colors" data-testid={`edit-kb-source-${source.id}`}>
+                    <button onClick={() => setEditingSource(source)} aria-label="Edit source" className="text-primary hover:text-text p-1 rounded-full hover:bg-primary/10 transition-colors" data-testid={`edit-kb-source-${source.id}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" /></svg>
                     </button>
                     <button onClick={() => handleDelete(source.id)} aria-label="Delete source" className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 transition-colors" data-testid={`delete-kb-source-${source.id}`}>
@@ -288,9 +288,9 @@ const KnowledgeBaseManager: React.FC = () => {
                 </div>
               ))}
               {sources.length > 0 && filteredSources.length === 0 && (
-                <p className="text-brand-grey text-center py-4">No sources match your search.</p>
+                <p className="text-text-muted text-center py-4">No sources match your search.</p>
               )}
-              {sources.length === 0 && <p className="text-brand-grey text-center py-4">No knowledge sources found.</p>}
+              {sources.length === 0 && <p className="text-text-muted text-center py-4">No knowledge sources found.</p>}
             </div>
           )}
         </div>
@@ -299,19 +299,19 @@ const KnowledgeBaseManager: React.FC = () => {
 
       {/* Edit Modal */}
       {editingSource && (
-        <div className="fixed inset-0 bg-brand-dark/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-brand-surface rounded-lg shadow-xl p-6 w-full max-w-lg border border-brand-grey/20">
-            <h3 className="text-lg font-semibold mb-4 text-brand-dark">Edit Source</h3>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-surface rounded-lg shadow-xl p-6 w-full max-w-lg border border-border">
+            <h3 className="text-lg font-semibold mb-4 text-text">Edit Source</h3>
             <textarea
               value={editingSource.type === 'text' ? editingSource.content : editingSource.data || ''}
               onChange={e => setEditingSource({ ...editingSource, [editingSource.type === 'text' ? 'content' : 'data']: e.target.value })}
-              className="w-full p-2 border border-brand-grey/20 rounded min-h-[200px] focus:ring-brand-purple focus:border-brand-purple"
+              className="w-full p-2 border border-border rounded min-h-[200px] focus:ring-primary focus:border-primary bg-background text-text"
               disabled={editingSource.type !== 'text'}
             />
-            <p className="text-xs text-brand-grey mt-2">Note: Editing content for URL or file sources is disabled. To update, please delete and re-add. Saving changes will re-generate the vector embedding.</p>
+            <p className="text-xs text-text-muted mt-2">Note: Editing content for URL or file sources is disabled. To update, please delete and re-add. Saving changes will re-generate the vector embedding.</p>
             <div className="mt-4 flex justify-end space-x-2">
-              <button onClick={() => setEditingSource(null)} className="px-4 py-2 bg-brand-bg-light text-brand-dark rounded-lg hover:bg-brand-grey/20">Cancel</button>
-              <button onClick={handleUpdate} className="px-4 py-2 bg-brand-purple text-white rounded-lg hover:bg-brand-purple/90">Save Changes</button>
+              <button onClick={() => setEditingSource(null)} className="px-4 py-2 bg-background text-text rounded-lg hover:bg-text-muted/20 border border-border">Cancel</button>
+              <button onClick={handleUpdate} className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Save Changes</button>
             </div>
           </div>
         </div>

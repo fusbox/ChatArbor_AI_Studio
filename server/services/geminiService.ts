@@ -175,17 +175,29 @@ export const generateEmbedding = async (text: string): Promise<number[]> => {
  * Generate streaming chat response using Gemini API
  * @param contents - Array of chat messages
  * @param systemInstruction - System prompt/instruction
+ * @param context - Retrieved knowledge context
  * @returns Async iterable stream of response chunks
  */
-export const generateChatResponseStream = async (contents: GeminiChatMessage[], systemInstruction: string) => {
+export const generateChatResponseStream = async (contents: GeminiChatMessage[], systemInstruction: string, context?: string) => {
     const client = getGeminiClient();
     if (!client) {
         throw new Error('Gemini API not configured');
     }
 
+    const finalSystemInstruction = context ? `
+${systemInstruction}
+
+Use the following pieces of context to answer the user's question.
+If the context contains specific instructions or "Pro Tips", you MUST follow them.
+If the answer is not in the context, say you don't know, but do not ignore the context if it is relevant.
+
+Context:
+${context}
+`.trim() : systemInstruction;
+
     return client.models.generateContentStream({
         model: DEFAULT_CHAT_MODEL,
         contents,
-        config: { systemInstruction }
+        config: { systemInstruction: finalSystemInstruction }
     });
 };

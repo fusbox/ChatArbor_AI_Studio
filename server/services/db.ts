@@ -47,6 +47,7 @@ const initSchema = () => {
             content TEXT NOT NULL,
             data TEXT,
             embedding TEXT, -- Stored as JSON string
+            chunkCount INTEGER DEFAULT 0,
             createdAt INTEGER NOT NULL
         )
     `);

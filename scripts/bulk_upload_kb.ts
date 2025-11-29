@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const API_URL = 'http://localhost:3000/api/knowledge/bulk';
+const API_URL = 'http://localhost:3001/api/knowledge/bulk';
 const REPO_ROOT = path.resolve(__dirname, '..');
 const DEFAULT_KB_DIR_CANDIDATES = ['kb_content', 'kbfiles'];
 
@@ -76,7 +76,7 @@ async function main() {
             id: path.basename(file, '.md'), // Use filename as ID for stability
             title,
             content,
-            type: 'document',
+            type: 'text',
             tags: ['bulk-upload']
         });
     }

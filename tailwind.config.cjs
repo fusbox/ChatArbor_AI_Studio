@@ -17,20 +17,29 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: '#554971', // Purple
-          light: '#63768d',   // Greyish Blue
-          dark: '#36213e',    // Dark Purple/Black
+          DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
+          light: 'rgb(var(--color-primary-light) / <alpha-value>)',
+          dark: 'rgb(var(--color-primary-dark) / <alpha-value>)',
         },
-        secondary: '#8ac6d0', // Light Blue
-        accent: '#b8f3ff',    // Pale Blue
+        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+
+        // Semantic Colors
+        background: 'rgb(var(--color-bg) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        text: 'rgb(var(--color-text) / <alpha-value>)',
+        'text-muted': 'rgb(var(--color-text-muted) / <alpha-value>)',
+        border: 'rgb(var(--color-border) / <alpha-value>)',
+
+        // Legacy/Brand mappings (for backward compatibility where possible, or updated to use vars)
         brand: {
-          dark: '#1B1120',
-          purple: '#554971',
-          grey: '#63768d',
-          blue: '#8ac6d0',
-          pale: '#b8f3ff',
-          surface: '#ffffff',
-          'bg-light': '#f8fafc', // Slate-50, crisp and clean
+          dark: 'rgb(var(--color-primary-dark) / <alpha-value>)', // Mapped to primary-dark
+          purple: 'rgb(var(--color-primary) / <alpha-value>)',    // Mapped to primary
+          grey: 'rgb(var(--color-primary-light) / <alpha-value>)', // Mapped to primary-light
+          blue: 'rgb(var(--color-secondary) / <alpha-value>)',     // Mapped to secondary
+          pale: 'rgb(var(--color-accent) / <alpha-value>)',       // Mapped to accent
+          surface: 'rgb(var(--color-surface) / <alpha-value>)',
+          'bg-light': 'rgb(var(--color-bg) / <alpha-value>)',
         },
         neutral: {
           50: '#f8fafc',

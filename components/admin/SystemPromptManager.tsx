@@ -35,25 +35,25 @@ const SystemPromptManager: React.FC = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-4 text-neutral-800">System Prompt Manager</h2>
-            <p className="text-sm text-neutral-600 mb-6">
+            <h2 className="text-2xl font-bold mb-4 text-text">System Prompt Manager</h2>
+            <p className="text-sm text-text-muted mb-6">
                 This prompt defines the AI's core identity, instructions, and constraints for every conversation.
                 Changes saved here will apply to all new AI responses.
             </p>
 
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-surface p-6 rounded-lg shadow-sm border border-border">
                 {isLoading ? (
                     <div className="flex justify-center items-center h-64">
                         <Spinner />
                     </div>
                 ) : (
                     <>
-                        <h3 className="text-lg font-semibold mb-3 text-neutral-700">AI System Prompt</h3>
+                        <h3 className="text-lg font-semibold mb-3 text-text">AI System Prompt</h3>
                         <textarea
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
                             placeholder="Enter the system prompt here..."
-                            className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition resize-y min-h-[250px] font-mono text-sm"
+                            className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition resize-y min-h-[250px] font-mono text-sm bg-background text-text"
                             data-testid="system-prompt-input"
                         />
                         <div className="mt-4 flex justify-end items-center space-x-4">
@@ -62,7 +62,7 @@ const SystemPromptManager: React.FC = () => {
                             <button
                                 onClick={handleSave}
                                 disabled={isSaving}
-                                className="bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary-dark transition-colors disabled:bg-neutral-400 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px]"
+                                className="bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary-dark transition-colors disabled:bg-text-muted/30 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px]"
                                 data-testid="save-system-prompt-button"
                             >
                                 {isSaving ? <Spinner /> : 'Save Changes'}

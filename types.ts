@@ -24,6 +24,7 @@ export interface KnowledgeSource {
   data?: string; // For FILE, this is the file content.
   createdAt: number;
   embedding?: number[]; // Vector embedding for similarity search
+  chunkCount?: number; // Number of chunks indexed in ChromaDB
 }
 
 export interface KnowledgeSourceWithSimilarity {
@@ -34,8 +35,7 @@ export interface KnowledgeSourceWithSimilarity {
 export interface ChatLog {
   id: string;
   userId: string;
-  startTime: number;
-  endTime: number;
+  timestamp: number;
   messages: Message[];
 }
 
@@ -61,9 +61,9 @@ export interface UserFeedback {
 
 
 export interface Greeting {
-    id: string;
-    text: string;
-    isActive: boolean;
+  id: string;
+  text: string;
+  isActive: boolean;
 }
 
 export interface User {
@@ -71,5 +71,5 @@ export interface User {
   name: string;
   email: string;
   // In a real app, this would be a securely hashed password, not plain text.
-  password: string; 
+  password: string;
 }

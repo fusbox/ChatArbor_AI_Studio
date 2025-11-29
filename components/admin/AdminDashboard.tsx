@@ -33,16 +33,16 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col bg-brand-bg-light h-full">
-      <nav className="bg-brand-surface border-b border-brand-grey/20 px-4 flex-shrink-0 shadow-sm">
+    <div className="flex flex-col bg-background h-full transition-colors duration-300">
+      <nav className="bg-surface border-b border-border px-4 flex-shrink-0 shadow-sm transition-colors duration-300">
         <div className="flex items-center space-x-2">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center px-4 py-3 text-sm font-medium border-b-2 transition-colors duration-200 ${activeTab === tab.id
-                ? 'border-brand-purple text-brand-purple'
-                : 'border-transparent text-brand-grey hover:text-brand-purple hover:bg-brand-purple/5'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-text-muted hover:text-primary hover:bg-primary/5'
                 }`}
               data-testid={`tab-${tab.id}`}
             >

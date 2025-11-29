@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as geminiService from '../services/geminiService.js';
 import * as storage from '../utils/storage.js';
+import * as knowledgeService from '../services/knowledgeService.js';
 
 export const chatStreamRouter = Router();
 
@@ -33,8 +34,24 @@ chatStreamRouter.post('/', async (req, res) => {
             parts: [{ text: message }]
         });
 
-        // Get streaming response
-        const stream = await geminiService.generateChatResponseStream(geminiHistory, systemPrompt);
+        // --- RAG: Retrieve Context ---
+        console.log(`🔍 Tracing: Searching knowledge base for "${message}"...`);
+        const searchResults = await knowledgeService.search(message);
+
+        let context = '';
+        if (searchResults.length > 0) {
+            console.log(`📄 Tracing: Found ${searchResults.length} relevant chunks.`);
+            context = searchResults.map((r, i) => {
+                const content = r.source.content || '';
+                console.log(`   - Chunk ${i + 1} (Similarity: ${(r.similarity * 100).toFixed(1)}%): ${content.substring(0, 50)}...`);
+                return `Source ${i + 1} (${r.source.type}):\n${content}`;
+            }).join('\n\n');
+        } else {
+            console.log('⚠️ Tracing: No relevant knowledge found.');
+        }
+
+        // Get streaming response with context
+        const stream = await geminiService.generateChatResponseStream(geminiHistory, systemPrompt, context);
 
         let fullText = '';
         let usageMetadata: any = null;

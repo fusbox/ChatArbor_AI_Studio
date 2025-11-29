@@ -155,7 +155,7 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
       */}
       <form
         onSubmit={handleSubmit}
-        className="flex items-end gap-2 p-2 border border-brand-purple/50 bg-brand-purple/10 rounded-3xl shadow-inner focus-within:ring-2 focus-within:ring-brand-blue focus-within:border-brand-blue transition-all"
+        className="flex items-end gap-2 p-2 border border-border bg-surface/50 rounded-3xl shadow-inner focus-within:ring-2 focus-within:ring-primary focus-within:border-primary transition-all"
       >
         <textarea
           ref={ref}
@@ -163,7 +163,7 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="Ask about job resources, resume tips, and more..."
-          className="flex-1 p-3 bg-transparent border-none outline-none text-brand-pale placeholder-brand-grey focus:ring-0 resize-none max-h-[150px] min-h-[44px]"
+          className="flex-1 p-3 bg-transparent border-none outline-none text-text placeholder-text-muted focus:ring-0 resize-none max-h-[150px] min-h-[44px]"
           rows={1}
           disabled={disabled}
           data-testid="chat-input"
@@ -177,7 +177,7 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
               disabled={disabled}
               className={`p-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 ${isRecording
                 ? 'bg-red-500/80 text-white hover:bg-red-600 shadow-[0_0_10px_rgba(239,68,68,0.5)]'
-                : 'text-brand-blue hover:text-brand-pale hover:bg-brand-purple/30'
+                : 'text-primary hover:text-text hover:bg-primary/10'
                 } disabled:opacity-50 disabled:cursor-not-allowed`}
               aria-label={isRecording ? 'Stop dictation' : 'Start dictation'}
             >
@@ -192,8 +192,8 @@ const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({ onSen
             disabled={disabled || !text.trim()}
             aria-label="Send message"
             className={`p-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 ${text.trim() && !disabled
-              ? 'bg-brand-blue text-brand-dark hover:bg-brand-blue/90 shadow-[0_0_10px_rgba(138,198,208,0.4)]'
-              : 'text-brand-grey hover:bg-brand-purple/30 cursor-not-allowed opacity-50'
+              ? 'bg-primary text-white hover:bg-primary/90 shadow-md'
+              : 'text-text-muted hover:bg-primary/10 cursor-not-allowed opacity-50'
               }`}
             data-testid="send-message-button"
           >

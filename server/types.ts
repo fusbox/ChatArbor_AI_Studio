@@ -13,8 +13,9 @@ export interface KnowledgeSource {
     type: KnowledgeSourceType;
     content: string;
     data?: string;
-    createdAt: number;
     embedding?: number[];
+    chunkCount?: number;
+    createdAt: number;
 }
 
 export interface ChatLog {

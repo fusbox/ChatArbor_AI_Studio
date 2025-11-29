@@ -14,8 +14,8 @@ export const getKnowledgeBase = async (): Promise<KnowledgeSource[]> => {
 
 export const saveKnowledgeBase = async (kb: KnowledgeSource[]): Promise<void> => {
     const insert = db.prepare(`
-        INSERT INTO knowledge_sources (id, type, content, data, embedding, createdAt)
-        VALUES (@id, @type, @content, @data, @embedding, @createdAt)
+        INSERT INTO knowledge_sources (id, type, content, data, embedding, chunkCount, createdAt)
+        VALUES (@id, @type, @content, @data, @embedding, @chunkCount, @createdAt)
     `);
 
     const deleteMany = db.transaction((sources: KnowledgeSource[]) => {
@@ -24,7 +24,8 @@ export const saveKnowledgeBase = async (kb: KnowledgeSource[]): Promise<void> =>
             insert.run({
                 ...source,
                 data: source.data || null,
-                embedding: source.embedding ? JSON.stringify(source.embedding) : null
+                embedding: source.embedding ? JSON.stringify(source.embedding) : null,
+                chunkCount: source.chunkCount || 0
             });
         }
     });
@@ -35,21 +36,22 @@ export const saveKnowledgeBase = async (kb: KnowledgeSource[]): Promise<void> =>
 // Append-only operations (race-condition safe)
 export const addKnowledgeSource = async (source: KnowledgeSource): Promise<void> => {
     const insert = db.prepare(`
-        INSERT INTO knowledge_sources (id, type, content, data, embedding, createdAt)
-        VALUES (@id, @type, @content, @data, @embedding, @createdAt)
+        INSERT INTO knowledge_sources (id, type, content, data, embedding, chunkCount, createdAt)
+        VALUES (@id, @type, @content, @data, @embedding, @chunkCount, @createdAt)
     `);
 
     insert.run({
         ...source,
         data: source.data || null,
-        embedding: source.embedding ? JSON.stringify(source.embedding) : null
+        embedding: source.embedding ? JSON.stringify(source.embedding) : null,
+        chunkCount: source.chunkCount || 0
     });
 };
 
 export const addKnowledgeSources = async (sources: KnowledgeSource[]): Promise<void> => {
     const insert = db.prepare(`
-        INSERT INTO knowledge_sources (id, type, content, data, embedding, createdAt)
-        VALUES (@id, @type, @content, @data, @embedding, @createdAt)
+        INSERT INTO knowledge_sources (id, type, content, data, embedding, chunkCount, createdAt)
+        VALUES (@id, @type, @content, @data, @embedding, @chunkCount, @createdAt)
     `);
 
     const insertMany = db.transaction((items: KnowledgeSource[]) => {
@@ -57,7 +59,8 @@ export const addKnowledgeSources = async (sources: KnowledgeSource[]): Promise<v
             insert.run({
                 ...source,
                 data: source.data || null,
-                embedding: source.embedding ? JSON.stringify(source.embedding) : null
+                embedding: source.embedding ? JSON.stringify(source.embedding) : null,
+                chunkCount: source.chunkCount || 0
             });
         }
     });
