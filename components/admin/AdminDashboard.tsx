@@ -40,10 +40,7 @@ const AdminDashboard: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center px-4 py-3 text-sm font-medium border-b-2 transition-colors duration-200 ${activeTab === tab.id
-                ? 'border-primary text-primary'
-                : 'border-transparent text-text-muted hover:text-primary hover:bg-primary/5'
-                }`}
+              className={`app-tab ${activeTab === tab.id ? 'is-active' : ''}`}
               data-testid={`tab-${tab.id}`}
             >
               {tab.icon}

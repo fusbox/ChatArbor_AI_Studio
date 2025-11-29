@@ -62,7 +62,7 @@ const SystemPromptManager: React.FC = () => {
                             <button
                                 onClick={handleSave}
                                 disabled={isSaving}
-                                className="bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary-dark transition-colors disabled:bg-text-muted/30 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px]"
+                                className="app-button app-button-primary min-w-[120px]"
                                 data-testid="save-system-prompt-button"
                             >
                                 {isSaving ? <Spinner /> : 'Save Changes'}
