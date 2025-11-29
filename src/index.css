@@ -26,6 +26,24 @@
     /* #64748b (Slate-500) */
     --color-border: 226 232 240;
     /* #e2e8f0 (Slate-200) */
+
+    /* Button + Tab Tokens (default to Mystic Light) */
+    --btn-primary-bg: rgb(var(--color-primary));
+    --btn-primary-bg-hover: rgb(var(--color-primary) / 0.9);
+    --btn-primary-border: rgb(var(--color-primary-dark) / 0.7);
+    --btn-primary-text: #ffffff;
+
+    --btn-secondary-bg: rgb(var(--color-primary) / 0.08);
+    --btn-secondary-bg-hover: rgb(var(--color-primary) / 0.14);
+    --btn-secondary-border: rgb(var(--color-border));
+    --btn-secondary-text: rgb(var(--color-text));
+
+    --btn-ghost-color: rgb(var(--color-text-muted));
+    --btn-ghost-hover-bg: rgb(var(--color-primary) / 0.08);
+
+    --tab-hover-bg: rgb(var(--color-primary) / 0.08);
+    --tab-active-border: rgb(var(--color-primary));
+    --tab-active-text: rgb(var(--color-primary));
   }
 
   /* Mystic Theme */
@@ -48,6 +66,14 @@
     /* Slate-400 */
     --color-border: 63 55 75;
     /* Darker border */
+
+    --btn-secondary-bg: rgb(var(--color-surface) / 0.35);
+    --btn-secondary-bg-hover: rgb(var(--color-surface) / 0.48);
+    --btn-secondary-border: rgb(var(--color-border));
+    --btn-secondary-text: rgb(var(--color-text));
+
+    --btn-ghost-color: rgb(var(--color-text));
+    --btn-ghost-hover-bg: rgb(var(--color-primary) / 0.18);
   }
 
   /* Corporate Theme */
@@ -62,6 +88,11 @@
     /* #64748b (Slate-500) - Professional Grey */
     --color-accent: 20 184 166;
     /* #14b8a6 (Teal-500) - "Tech-forward" accent */
+
+    --btn-secondary-bg: rgb(var(--color-primary) / 0.06);
+    --btn-secondary-bg-hover: rgb(var(--color-primary) / 0.12);
+    --btn-secondary-border: rgb(var(--color-border));
+    --btn-secondary-text: rgb(var(--color-text));
   }
 
   [data-theme="corporate"].dark {
@@ -81,10 +112,82 @@
     /* Adjust accent for dark mode visibility if needed */
     --color-accent: 45 212 191;
     /* #2dd4bf (Teal-400) - Brighter teal */
+
+    --btn-secondary-bg: rgb(var(--color-surface) / 0.42);
+    --btn-secondary-bg-hover: rgb(var(--color-surface) / 0.58);
+    --btn-secondary-border: rgb(var(--color-border));
+    --btn-secondary-text: rgb(var(--color-text));
+
+    --btn-ghost-color: rgb(var(--color-text));
+    --btn-ghost-hover-bg: rgb(var(--color-primary) / 0.2);
   }
 
   body {
     @apply bg-background text-text font-sans transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .app-button {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .app-button-primary {
+    @apply shadow-sm;
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border: 1px solid var(--btn-primary-border);
+  }
+
+  .app-button-primary:hover:not(:disabled) {
+    background-color: var(--btn-primary-bg-hover);
+  }
+
+  .app-button-secondary {
+    background-color: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+    border: 1px solid var(--btn-secondary-border);
+  }
+
+  .app-button-secondary:hover:not(:disabled) {
+    background-color: var(--btn-secondary-bg-hover);
+    border-color: var(--btn-active-border, var(--btn-secondary-border));
+  }
+
+  .app-button-ghost {
+    color: var(--btn-ghost-color);
+    border: 1px solid transparent;
+  }
+
+  .app-button-ghost:hover:not(:disabled) {
+    background-color: var(--btn-ghost-hover-bg);
+    color: rgb(var(--color-text));
+  }
+
+  .app-button-danger {
+    @apply text-white;
+    background-color: rgb(239 68 68 / 0.9);
+    border: 1px solid rgb(239 68 68 / 0.8);
+  }
+
+  .app-button-danger:hover:not(:disabled) {
+    background-color: rgb(220 38 38 / 0.95);
+    border-color: rgb(248 113 113 / 0.9);
+  }
+
+  .app-tab {
+    @apply inline-flex items-center px-4 py-2 text-sm font-medium border-b-2 border-transparent transition-colors duration-200 rounded-t-lg;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .app-tab:hover {
+    background-color: var(--tab-hover-bg);
+    color: rgb(var(--color-text));
+  }
+
+  .app-tab.is-active {
+    border-color: var(--tab-active-border);
+    color: var(--tab-active-text);
   }
 }
 
