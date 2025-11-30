@@ -79,7 +79,7 @@ const PromptManager: React.FC = () => {
                   <button
                     onClick={() => handleSetActive(greeting.id)}
                     disabled={greeting.isActive}
-                    className={`disabled:cursor-not-allowed ${greeting.isActive ? "app-button-pill app-button-primary" : "app-button-pill app-button-secondary"}`}
+                    className={greeting.isActive ? "app-button-pill app-button-primary" : "app-button-pill app-button-secondary"}
                     data-testid={`set-active-greeting-${greeting.id}`}
                   >
                     {greeting.isActive ? 'Active' : 'Set Active'}
