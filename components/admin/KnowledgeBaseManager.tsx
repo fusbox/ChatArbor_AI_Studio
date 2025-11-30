@@ -278,10 +278,10 @@ const KnowledgeBaseManager: React.FC = () => {
                     <span className="text-sm text-text truncate">{source.type === 'text' ? `${source.content.substring(0, 70)}...` : source.content}</span>
                   </div>
                   <div className="flex space-x-2">
-                    <button onClick={() => setEditingSource(source)} aria-label="Edit source" className="app-button app-button-ghost p-1 rounded-full" data-testid={`edit-kb-source-${source.id}`}>
+                    <button onClick={() => setEditingSource(source)} aria-label="Edit source" className="app-button-icon app-button-ghost" data-testid={`edit-kb-source-${source.id}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" /></svg>
                     </button>
-                    <button onClick={() => handleDelete(source.id)} aria-label="Delete source" className="app-button app-button-danger p-1 rounded-full" data-testid={`delete-kb-source-${source.id}`}>
+                    <button onClick={() => handleDelete(source.id)} aria-label="Delete source" className="app-button-icon app-button-danger" data-testid={`delete-kb-source-${source.id}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     </button>
                   </div>

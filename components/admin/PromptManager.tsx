@@ -79,12 +79,12 @@ const PromptManager: React.FC = () => {
                   <button
                     onClick={() => handleSetActive(greeting.id)}
                     disabled={greeting.isActive}
-                    className={`text-xs rounded-full disabled:cursor-not-allowed ${greeting.isActive ? "app-button app-button-primary" : "app-button app-button-secondary"}`}
+                    className={greeting.isActive ? "app-button-pill app-button-primary" : "app-button-pill app-button-secondary"}
                     data-testid={`set-active-greeting-${greeting.id}`}
                   >
                     {greeting.isActive ? 'Active' : 'Set Active'}
                   </button>
-                  <button onClick={() => handleDeleteGreeting(greeting.id)} className="app-button app-button-danger rounded-full" data-testid={`delete-greeting-${greeting.id}`}>
+                  <button onClick={() => handleDeleteGreeting(greeting.id)} className="app-button-icon app-button-danger" data-testid={`delete-greeting-${greeting.id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
                 </div>
