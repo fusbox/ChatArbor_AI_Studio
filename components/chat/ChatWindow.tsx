@@ -135,7 +135,7 @@ const ChatWindow: React.FC = () => {
       {/* New Session Button - Fixed at bottom left */}
       <button
         onClick={clearChat}
-        className="app-button app-button-secondary fixed bottom-8 left-8 px-4 py-2 text-sm z-50 shadow-lg"
+        className="app-button app-button-secondary fixed bottom-8 left-8 text-sm z-50 shadow-lg"
         data-testid="new-chat-button"
       >
         New Session
