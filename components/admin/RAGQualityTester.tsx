@@ -99,7 +99,7 @@ const RAGQualityTester: React.FC = () => {
           <button
             type="submit"
             disabled={isSearching || !testQuery.trim()}
-            className="w-full bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors disabled:bg-text-muted/30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="app-button app-button-primary w-full flex items-center justify-center gap-2"
           >
             {isSearching && <Spinner />}
             <span>{isSearching ? 'Searching...' : 'Test Query'}</span>

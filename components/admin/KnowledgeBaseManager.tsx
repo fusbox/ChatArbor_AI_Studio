@@ -205,7 +205,7 @@ const KnowledgeBaseManager: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex space-x-2 mb-4 border-b border-border">
             {(Object.values(KnowledgeSourceType)).map(type => (
-              <button key={type} type="button" onClick={() => { setNewSourceType(type); setValidationError(null); }} className={`capitalize px-4 py-2 text-sm font-medium border-b-2 transition-colors ${newSourceType === type ? 'border-primary text-primary' : 'border-transparent text-text-muted hover:text-text'}`}>
+              <button key={type} type="button" onClick={() => { setNewSourceType(type); setValidationError(null); }} className={`app-tab capitalize ${newSourceType === type ? 'is-active' : ''}`}>
                 {type}
               </button>
             ))}
@@ -218,7 +218,7 @@ const KnowledgeBaseManager: React.FC = () => {
             type="submit"
             aria-busy={isSubmitting}
             disabled={isSubmitting}
-            className="bg-secondary text-brand-dark font-medium px-4 py-2 rounded-lg hover:bg-secondary/90 transition-colors disabled:bg-text-muted/30 disabled:cursor-wait flex items-center justify-center min-w-[140px]"
+            className="app-button app-button-primary min-w-[140px]"
             data-testid="add-kb-source-button"
           >
             {isSubmitting ? (
@@ -245,7 +245,7 @@ const KnowledgeBaseManager: React.FC = () => {
           <button
             onClick={handleReIndex}
             disabled={isIndexing}
-            className="bg-primary/10 text-primary px-4 py-2 text-sm font-semibold rounded-lg hover:bg-primary/20 transition-colors disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-wait flex items-center justify-center gap-2"
+            className="app-button app-button-secondary text-sm"
             data-testid="reindex-kb-button"
           >
             {isIndexing && <Spinner />}
@@ -278,10 +278,10 @@ const KnowledgeBaseManager: React.FC = () => {
                     <span className="text-sm text-text truncate">{source.type === 'text' ? `${source.content.substring(0, 70)}...` : source.content}</span>
                   </div>
                   <div className="flex space-x-2">
-                    <button onClick={() => setEditingSource(source)} aria-label="Edit source" className="text-primary hover:text-text p-1 rounded-full hover:bg-primary/10 transition-colors" data-testid={`edit-kb-source-${source.id}`}>
+                    <button onClick={() => setEditingSource(source)} aria-label="Edit source" className="app-button-icon app-button-ghost" data-testid={`edit-kb-source-${source.id}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" /></svg>
                     </button>
-                    <button onClick={() => handleDelete(source.id)} aria-label="Delete source" className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 transition-colors" data-testid={`delete-kb-source-${source.id}`}>
+                    <button onClick={() => handleDelete(source.id)} aria-label="Delete source" className="app-button-icon app-button-danger" data-testid={`delete-kb-source-${source.id}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     </button>
                   </div>
@@ -310,8 +310,8 @@ const KnowledgeBaseManager: React.FC = () => {
             />
             <p className="text-xs text-text-muted mt-2">Note: Editing content for URL or file sources is disabled. To update, please delete and re-add. Saving changes will re-generate the vector embedding.</p>
             <div className="mt-4 flex justify-end space-x-2">
-              <button onClick={() => setEditingSource(null)} className="px-4 py-2 bg-background text-text rounded-lg hover:bg-text-muted/20 border border-border">Cancel</button>
-              <button onClick={handleUpdate} className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Save Changes</button>
+              <button onClick={() => setEditingSource(null)} className="app-button app-button-secondary">Cancel</button>
+              <button onClick={handleUpdate} className="app-button app-button-primary">Save Changes</button>
             </div>
           </div>
         </div>

@@ -64,7 +64,7 @@ const PromptManager: React.FC = () => {
             className="flex-grow p-2 border border-border rounded-lg bg-background text-text focus:ring-primary focus:border-primary"
             data-testid="new-greeting-input"
           />
-          <button onClick={handleAddGreeting} className="bg-secondary text-brand-dark px-4 py-2 rounded-lg hover:bg-secondary/90 transition-colors" data-testid="add-greeting-button">Add</button>
+          <button onClick={handleAddGreeting} className="app-button app-button-primary" data-testid="add-greeting-button">Add</button>
         </div>
       </div>
 
@@ -79,12 +79,12 @@ const PromptManager: React.FC = () => {
                   <button
                     onClick={() => handleSetActive(greeting.id)}
                     disabled={greeting.isActive}
-                    className={`text-xs px-3 py-1 rounded-full transition-colors disabled:cursor-not-allowed ${greeting.isActive ? 'bg-primary text-white' : 'bg-text-muted/20 text-text-muted hover:bg-primary/20 hover:text-primary'}`}
+                    className={greeting.isActive ? "app-button-pill app-button-primary" : "app-button-pill app-button-secondary"}
                     data-testid={`set-active-greeting-${greeting.id}`}
                   >
                     {greeting.isActive ? 'Active' : 'Set Active'}
                   </button>
-                  <button onClick={() => handleDeleteGreeting(greeting.id)} className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 transition-colors" data-testid={`delete-greeting-${greeting.id}`}>
+                  <button onClick={() => handleDeleteGreeting(greeting.id)} className="app-button-icon app-button-danger" data-testid={`delete-greeting-${greeting.id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
                 </div>

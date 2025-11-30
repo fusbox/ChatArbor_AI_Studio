@@ -43,7 +43,7 @@ const ChatLogsViewer: React.FC = () => {
                   <li key={log.id}>
                     <button
                       onClick={() => setSelectedLog(log)}
-                      className={`w-full text-left p-3 rounded-lg transition-colors ${selectedLog?.id === log.id ? 'bg-primary text-white' : 'hover:bg-primary/5 text-text'}`}
+                      className={`app-button w-full text-left justify-start ${selectedLog?.id === log.id ? 'app-button-primary' : 'app-button-secondary'}`}
                     >
                       <p className="font-semibold text-sm">User: {log.userId}</p>
                       <p className="text-xs opacity-80">{new Date(log.timestamp).toLocaleString()}</p>
