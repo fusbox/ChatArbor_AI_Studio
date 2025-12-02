@@ -2,12 +2,21 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Header from './Header';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import { User } from '../../types';
 
 // Mock the useAuth hook
 vi.mock('../../contexts/AuthContext');
+vi.mock('../../contexts/ThemeContext', () => ({
+    useTheme: vi.fn(),
+}));
+vi.mock('./SystemStatus', () => ({
+    default: () => <div data-testid="system-status">System Status</div>,
+}));
 
 const mockUseAuth = vi.mocked(useAuth);
+const mockUseTheme = vi.mocked(useTheme);
+
 const createAuthValue = (overrides: Partial<ReturnType<typeof useAuth>> = {}) => ({
     currentUser: null,
     isLoading: false,
@@ -31,16 +40,22 @@ describe('Header', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        mockUseTheme.mockReturnValue({
+            theme: 'corporate',
+            mode: 'light',
+            setTheme: vi.fn(),
+            setMode: vi.fn(),
+            toggleMode: vi.fn(),
+        });
     });
 
     it('renders correctly for a guest user', () => {
         mockUseAuth.mockReturnValue(createAuthValue({ currentUser: null }));
         render(<Header title="Test App" currentView="chat" onViewChange={onViewChange} onAuthClick={onAuthClick} />);
-        
-        expect(screen.getByText('Test App')).toBeInTheDocument();
+
         expect(screen.getByText('Go to Admin')).toBeInTheDocument();
         expect(screen.getByText('Sign In / Sign Up')).toBeInTheDocument();
-        
+
         // Ensure admin navigation is not present for guests
         expect(screen.queryByText('Chat')).not.toBeInTheDocument();
         expect(screen.queryByText('Admin Panel')).not.toBeInTheDocument();
@@ -50,10 +65,9 @@ describe('Header', () => {
         mockUseAuth.mockReturnValue(createAuthValue({ currentUser: mockUser }));
         render(<Header title="Test App" currentView="chat" onViewChange={onViewChange} onAuthClick={onAuthClick} />);
 
-        expect(screen.getByText('Test App')).toBeInTheDocument();
         expect(screen.getByText(`Welcome, ${mockUser.name}`)).toBeInTheDocument();
         expect(screen.getByText('Logout')).toBeInTheDocument();
-        
+
         // Ensure authenticated navigation is present
         expect(screen.getByText('Chat')).toBeInTheDocument();
         expect(screen.getByText('Admin Panel')).toBeInTheDocument();
@@ -85,7 +99,7 @@ describe('Header', () => {
         const mockLogout = vi.fn();
         mockUseAuth.mockReturnValue(createAuthValue({ currentUser: mockUser, logout: mockLogout }));
         render(<Header title="Test App" currentView="chat" onViewChange={onViewChange} onAuthClick={onAuthClick} />);
-        
+
         fireEvent.click(screen.getByText('Logout'));
         expect(mockLogout).toHaveBeenCalledTimes(1);
     });

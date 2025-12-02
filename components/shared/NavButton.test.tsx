@@ -4,20 +4,20 @@ import NavButton from './NavButton';
 
 describe('NavButton', () => {
   it('renders with the correct label', () => {
-    render(<NavButton label="Test Button" isActive={false} onClick={() => {}} />);
+    render(<NavButton label="Test Button" isActive={false} onClick={() => { }} />);
     expect(screen.getByText('Test Button')).toBeInTheDocument();
   });
 
   it('applies active styles when isActive is true', () => {
-    render(<NavButton label="Active Button" isActive={true} onClick={() => {}} />);
+    render(<NavButton label="Active Button" isActive={true} onClick={() => { }} />);
     const button = screen.getByText('Active Button');
     expect(button).toHaveClass('bg-primary text-white');
   });
 
   it('applies inactive styles when isActive is false', () => {
-    render(<NavButton label="Inactive Button" isActive={false} onClick={() => {}} />);
+    render(<NavButton label="Inactive Button" isActive={false} onClick={() => { }} inactiveClassName="text-text-muted hover:text-primary" />);
     const button = screen.getByText('Inactive Button');
-    expect(button).toHaveClass('text-neutral-100 hover:bg-primary-dark');
+    expect(button).toHaveClass('text-text-muted hover:text-primary');
     expect(button).not.toHaveClass('bg-primary text-white');
   });
 

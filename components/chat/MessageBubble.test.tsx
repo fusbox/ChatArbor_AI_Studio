@@ -3,12 +3,25 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MessageBubble from './MessageBubble';
 import { Message, MessageAuthor } from '../../types';
+import { useTheme } from '../../contexts/ThemeContext';
+
+// Mock useTheme
+vi.mock('../../contexts/ThemeContext', () => ({
+    useTheme: vi.fn(),
+}));
 
 describe('MessageBubble', () => {
     const mockOnFeedback = vi.fn();
+    const mockUseTheme = vi.mocked(useTheme);
 
     beforeEach(() => {
         mockOnFeedback.mockClear();
+        mockUseTheme.mockReturnValue({
+            theme: 'corporate',
+            mode: 'light',
+            setTheme: vi.fn(),
+            toggleMode: vi.fn(),
+        });
     });
 
     describe('User Messages', () => {
@@ -26,8 +39,6 @@ describe('MessageBubble', () => {
             expect(messageText).toBeInTheDocument();
 
             // Find the bubble container (parent of the prose div)
-            // The text is inside ReactMarkdown -> p -> div(prose) -> div(bubble)
-            // closest('div') gets the prose div. We need its parent.
             const proseDiv = messageText.closest('div');
             const bubbleContainer = proseDiv?.parentElement;
 
@@ -63,12 +74,12 @@ describe('MessageBubble', () => {
             const messageText = screen.getByText(/I can help you with that!/);
             expect(messageText).toBeInTheDocument();
 
-            // AI messages should have white background
+            // AI messages should have transparent background
             const proseDiv = messageText.closest('div');
             const bubbleContainer = proseDiv?.parentElement;
 
             expect(bubbleContainer).not.toHaveClass('bg-primary');
-            expect(bubbleContainer).toHaveClass('bg-white');
+            expect(bubbleContainer).toHaveClass('bg-transparent');
         });
 
         it('shows feedback buttons for AI messages', () => {

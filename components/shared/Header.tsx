@@ -38,19 +38,31 @@ const Header: React.FC<HeaderProps> = ({ title, currentView, onViewChange, onAut
         </div>
 
         {/* Theme Controls */}
-        <div className="flex items-center space-x-2 bg-surface/50 rounded-lg p-1 border border-border backdrop-blur-sm">
-          <select
-            value={theme}
-            onChange={(e) => setTheme(e.target.value as any)}
-            className="bg-transparent text-xs font-medium text-text focus:outline-none cursor-pointer"
-          >
-            <option value="mystic">🔮 Mystic</option>
-            <option value="corporate">🏢 Corporate</option>
-          </select>
+        <div className="flex items-center space-x-3 bg-surface/50 rounded-lg p-1 border border-border backdrop-blur-sm">
+          <div className="flex space-x-1">
+            <button
+              onClick={() => setTheme('mystic')}
+              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 ${theme === 'mystic'
+                ? 'bg-primary text-white shadow'
+                : 'text-text-muted hover:text-primary hover:bg-primary/10'
+                }`}
+            >
+              🔮 Mystic
+            </button>
+            <button
+              onClick={() => setTheme('corporate')}
+              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 ${theme === 'corporate'
+                ? 'bg-primary text-white shadow'
+                : 'text-text-muted hover:text-primary hover:bg-primary/10'
+                }`}
+            >
+              🏢 Corporate
+            </button>
+          </div>
           <div className="w-px h-4 bg-border"></div>
           <button
             onClick={toggleMode}
-            className="p-1 hover:bg-primary/10 rounded-md transition-colors text-text"
+            className="p-1.5 hover:bg-primary/10 rounded-md transition-colors text-text"
             title={`Switch to ${mode === 'light' ? 'Dark' : 'Light'} Mode`}
           >
             {mode === 'light' ? '🌙' : '☀️'}

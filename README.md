@@ -51,10 +51,11 @@
 - **Test-Driven Development (TDD) Setup**
 - **Secure URL Scraping** (SSRF protection, robots.txt compliance)
 - **Production ChromaDB configuration** (Docker Compose with persistence & auth)
+- **Auth Hardening** (SQLite persistence, bcrypt hashing, secure JWTs)
+- **Vector Cleanup** (Automated orphan vector deletion)
+- **Theme Picker Refactor** (Segmented control UI)
 
 🚧 **In Progress:**
-- Agentic job search feature
-- Widget deployment strategy
 - Agentic job search feature
 - Widget deployment strategy
 
@@ -118,9 +119,8 @@ ChatArbor v2:
            │
            ▼
     ┌─────────────┐
-    │ JSON Files  │
-    │ (Settings,  │
-    │  KB, Logs)  │
+    │  SQLite DB  │
+    │ (Users/Auth)│
     └─────────────┘
 ```
 
@@ -152,11 +152,11 @@ ChatArbor v2:
 ### Frontend
 | Technology | Purpose | Version |
 |------------|---------|---------|
-| **React** | UI framework | 18.3+ |
+| **React** | UI framework | 19.0 RC |
 | **TypeScript** | Type safety | 5.6+ |
 | **Tailwind CSS** | Styling | 3.4+ |
-| **Vite** | Build tool | 6.0+ |
-| **React Markdown** | Message rendering | 9.0+ |
+| **Vite** | Build tool | 5.0+ |
+| **React Markdown** | Message rendering | 10.1+ |
 
 ### Backend
 | Technology | Purpose | Version |
@@ -164,6 +164,8 @@ ChatArbor v2:
 | **Express** | API server | 4.21+ |
 | **TypeScript** | Type safety | 5.6+ |
 | **Node.js** | Runtime | 20+ |
+| **SQLite** | User/Auth persistence | 9.0+ |
+| **bcryptjs** | Password hashing | 3.0+ |
 | **robots-parser** | Robots.txt compliance | 3.0+ |
 | **@mozilla/readability** | Content extraction | 0.5+ |
 
@@ -177,10 +179,10 @@ ChatArbor v2:
 ### Testing
 | Technology | Purpose | Version |
 |------------|---------|---------|
-| **Vitest** | Unit tests | 2.1+ |
-| **React Testing Library** | Component tests | 16.1+ |
-| **Playwright** | E2E tests | 1.49+ |
-| **MSW** | API mocking | 2.7+ |
+| **Vitest** | Unit tests | 2.0+ |
+| **React Testing Library** | Component tests | 16.0+ |
+| **Playwright** | E2E tests | 1.45+ |
+| **MSW** | API mocking | 2.12+ |
 
 ---
 
@@ -243,7 +245,8 @@ ChatArbor_AI_Studio/
 │   ├── apiService.ts       # API client
 │   ├── chromaService.ts    # Vector DB client
 │   └── geminiService.ts    # AI service
-├── tests/                   # Test files
+├── tests/                   # Test setup & mocks
+├── e2e/                     # End-to-end tests
 ├── docs/                    # Documentation
 └── .env.local              # Environment config
 ```
@@ -252,12 +255,15 @@ ChatArbor_AI_Studio/
 
 ```bash
 # Run tests (TDD approach)
-npm test                     # All tests
+npm test                     # All unit/component tests
 npm run test:watch          # Watch mode
 npm run test:ui             # Vitest UI
 
 # Run specific test file
 npm test -- MessageBubble.test.tsx
+
+# Run E2E tests
+npm run test:e2e
 
 # Type checking
 npm run type-check
@@ -310,9 +316,9 @@ ChatArbor_AI_Studio/
 ├── tests/
 │   ├── setup.ts                    # Test setup
 │   ├── mocks.ts                    # Global mocks
-│   └── e2e/                        # End-to-end tests
-│       ├── chat.spec.ts
-│       └── admin.spec.ts
+├── e2e/                        # End-to-end tests
+│   ├── chat.spec.ts
+│   └── admin.spec.ts
 ```
 
 ### Testing Tools
@@ -325,10 +331,21 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
+    include: ['**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**', '**/tests/**'],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html', 'lcov'],
-      exclude: ['**/*.test.{ts,tsx}', '**/node_modules/**']
+      reporter: ['text', 'html', 'lcov', 'json'],
+      exclude: [
+        '**/*.test.{ts,tsx}',
+        '**/*.spec.{ts,tsx}',
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/.{idea,git,cache,output,temp}/**',
+        '**/tests/**',
+        '**/e2e/**',
+        '**/*.config.{ts,js}',
+      ],
     }
   }
 });
@@ -638,7 +655,7 @@ test: add MessageBubble tests
 
 ### Questions or Issues?
 
-Contact: Fu Huang (@fusbox)
+Contact: Fu Chen (@fusbox)
 
 ---
 
